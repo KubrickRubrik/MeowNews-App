@@ -3,6 +3,8 @@ import 'package:news_test/presentation/ui/pages/c_news/controller.dart';
 import 'package:news_test/presentation/ui/pages/c_news_detail/controller.dart';
 
 abstract final class PagesNavigator {
+  static final newsDetailRoute = "/news_detail";
+
   static Route<dynamic>? goRoutes(RouteSettings settings) {
     ({String? route, Object? arguments}) path = (route: settings.name, arguments: settings.arguments);
 
@@ -10,11 +12,11 @@ abstract final class PagesNavigator {
     if (path.route == '/') {
       return PageRouteBuilder(
         pageBuilder: (_, __, ___) => const NewsPage(),
-        transitionsBuilder: _transitSlide,
+        transitionsBuilder: _transitFade,
       );
-    } else if (path.route == '/news_detail') {
+    } else if (path.route == newsDetailRoute) {
       return PageRouteBuilder(
-        pageBuilder: (_, __, ___) => DetailNewsItemPage(path.arguments),
+        pageBuilder: (_, __, ___) => NewsDetailsPage(path.arguments),
         transitionsBuilder: _transitFade,
       );
     } else {

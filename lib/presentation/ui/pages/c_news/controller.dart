@@ -1,55 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:news_test/presentation/ui/components/toast.dart';
-part 'widgets/widget.dart';
+import 'package:news_test/presentation/locator/locator.dart';
+import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/pages/c_news/widgets/button.dart';
+import 'package:news_test/presentation/ui/pages/c_news/widgets/featured_news.dart';
+import 'package:news_test/presentation/ui/pages/c_news/widgets/latest_news.dart';
+import 'package:provider/provider.dart';
 
 class NewsPage extends StatelessWidget {
   const NewsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey.shade800,
-        centerTitle: false,
-        title: const Text(
-          "News",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+    return ChangeNotifierProvider(
+        create: (context) => locator<NewsProvider>(),
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.blueGrey.shade800,
+            centerTitle: false,
+            title: const Text(
+              "News",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            actions: const [
+              ButtonettingViewedNews(),
+            ],
           ),
-        ),
-        actions: const [
-          ButtonettingViewedNews(),
-        ],
-      ),
-      body: const SafeArea(
-        child: Placeholder(),
-      ),
-    );
-  }
-}
-
-class ButtonettingViewedNews extends StatelessWidget {
-  const ButtonettingViewedNews({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      width: 60,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.hardEdge,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            ToastMassage.toast(context, "The news is all marked as viewed");
-          },
-          child: const Icon(
-            Icons.done_all_outlined,
+          body: const Flex(
+            direction: Axis.vertical,
+            children: [
+              //? Featured news (horizontal scrolllist)
+              FeaturedNews(),
+              //? Featured news (vertical scrolllist)
+              LatestNews(),
+            ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

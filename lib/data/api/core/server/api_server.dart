@@ -1,3 +1,4 @@
+import 'package:news_test/data/api/core/server/request/request.dart';
 import 'package:news_test/data/api/interfaces/api.dart';
 import 'package:news_test/data/models/news.dart';
 
@@ -6,7 +7,8 @@ class ApiServer implements ApiEnvelope {
   /// Description getNews
   @override
   Future<List<NewsModel>?> getNews(int offset) async {
-    // TODO: implement getNews
-    throw UnimplementedError();
+    final response = await ConfigRequestServer.request();
+    if (response == null) return null;
+    return response.values.map((value) => NewsModel(value)).toList();
   }
 }

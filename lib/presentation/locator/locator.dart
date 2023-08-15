@@ -4,6 +4,8 @@ import 'package:news_test/data/api/interfaces/api.dart';
 import 'package:news_test/data/repository/news.dart';
 import 'package:news_test/domain/repository/news.dart';
 import 'package:news_test/domain/use_cases/news.dart';
+import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/manager/session/provider.dart';
 
 final locator = GetIt.I;
 
@@ -16,7 +18,8 @@ abstract final class ServicesLocator {
     // Use Cases
     locator.registerLazySingleton<NewsCase>(() => NewsCase(locator()));
     // Manager
-    // locator.registerLazySingleton<SessionProvider>(() => SessionProvider());
+    locator.registerLazySingleton<SessionProvider>(() => SessionProvider());
     // Pages
+    locator.registerLazySingleton<NewsProvider>(() => NewsProvider(locator()));
   }
 }
