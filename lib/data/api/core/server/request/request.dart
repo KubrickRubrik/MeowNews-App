@@ -8,9 +8,9 @@ import 'package:http/testing.dart';
 import 'package:news_test/core/errors/exception.dart';
 import 'package:news_test/data/models/dto/dto.dart';
 
-/// Class for forming a request object and making requests to the server
+/// Class for forming a request object and making requests to the server.
 final class ConfigRequestServer {
-  // Makes a request to the server
+  // Makes a request to the server.
   static Future<Map<String, dynamic>?> request() async {
     //  final response = await apiServer.post(
     //   ConfigActionsApi.linkServer,
@@ -22,7 +22,7 @@ final class ConfigRequestServer {
     return jsonDecode(response.body);
   }
 
-// Forming a data object for a request
+// Forming a data object for a request.
   static String _formDataObject(Dto dto) {
     return jsonEncode({
       ...dto.toMapRequest(),
@@ -30,7 +30,7 @@ final class ConfigRequestServer {
     });
   }
 
-  // Checking Server Response Codes
+  // Checking Server Response Codes.
   static void _checkResponse(Response response) {
     if (response.statusCode != 200) throw ApiException("${response.statusCode}");
   }

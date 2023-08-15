@@ -21,13 +21,13 @@ class NewsDetailsPage extends StatelessWidget {
         padding: EdgeInsets.only(left: 8, right: 8, top: 8),
         child: Column(
           children: [
-            //? Banner of news
+            //? Banner of news.
             ItemBannerNews(),
             SizedBox(height: 16),
-            //? Title of news
+            //? Title of news.
             ItemTitleNews(),
             SizedBox(height: 16),
-            //? Description of news
+            //? Description of news.
             ItemDescriptionNews(),
           ],
         ),

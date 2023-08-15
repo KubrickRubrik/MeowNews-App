@@ -1,4 +1,4 @@
-/// Extension class for passing data from the `Presentation` -> `Data`
+/// Extension class for passing data from the `Presentation` -> `Data`.
 abstract base class Dto {
   String? actionApi;
 

@@ -2,7 +2,7 @@ import 'package:news_test/core/errors/failure.dart';
 import 'package:news_test/domain/entities/news.dart';
 import 'package:news_test/domain/repository/news.dart';
 
-/// Description case of NewsCase
+/// Description case of NewsCase.
 class NewsCase implements NewsRepository {
   NewsCase(this._newsRepository);
   final NewsRepository _newsRepository;

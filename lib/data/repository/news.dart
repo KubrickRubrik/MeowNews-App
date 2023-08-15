@@ -5,7 +5,7 @@ import 'package:news_test/data/mapper/news.dart';
 import 'package:news_test/domain/entities/news.dart';
 import 'package:news_test/domain/repository/news.dart';
 
-/// Description of implements NewsRepository
+/// Description of implements NewsRepository.
 class NewsRepositoryImpl implements NewsRepository {
   NewsRepositoryImpl(this._apiEnvelope);
   final ApiEnvelope _apiEnvelope;
