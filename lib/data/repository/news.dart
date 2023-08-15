@@ -2,7 +2,8 @@ import 'package:news_test/core/errors/exception.dart';
 import 'package:news_test/core/errors/failure.dart';
 import 'package:news_test/data/api/interfaces/api.dart';
 import 'package:news_test/data/mapper/news.dart';
-import 'package:news_test/domain/entities/news.dart';
+import 'package:news_test/data/models/dto/dto.dart';
+import 'package:news_test/domain/entities/vo/news.dart';
 import 'package:news_test/domain/repository/news.dart';
 
 /// Description of implements NewsRepository.
@@ -11,9 +12,9 @@ class NewsRepositoryImpl implements NewsRepository {
   final ApiEnvelope _apiEnvelope;
 
   @override
-  Future<({List<NewsEntity>? data, Failure? fail})> getNews(int offset) async {
+  Future<({List<NewsEntity>? data, Failure? fail})> getInitNews({required Dto featuredNews, required Dto latestNews}) async {
     try {
-      final response = await _apiEnvelope.getNews(offset);
+      final response = await _apiEnvelope.getInitNews(featuredNews: featuredNews, latestNews: latestNews);
       if (response == null || response.isEmpty) return (data: null, fail: null);
       final result = response.map((e) => EntitiesNewsMapper.newsMapper(e)).toList();
       return (data: result, fail: null);
