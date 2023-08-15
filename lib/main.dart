@@ -7,7 +7,7 @@ import 'package:device_preview/device_preview.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ServicesLocator.setup();
-  await locator<NewsProvider>().getAllNews();
+  await locator<NewsProvider>().getInitNews();
   runApp(
     DevicePreview(
       enabled: true,

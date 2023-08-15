@@ -1,9 +1,9 @@
 class NewsEntity {
   final String author;
   final String banner;
-  final ContentNews content;
+  final ContentNewsEntity content;
   final String published;
-  final SourceNews source;
+  final SourceNewsEntity source;
 
   NewsEntity({
     required this.author,
@@ -14,12 +14,12 @@ class NewsEntity {
   });
 }
 
-final class ContentNews {
+final class ContentNewsEntity {
   final String title;
   final String description;
   final String content;
 
-  ContentNews({
+  ContentNewsEntity({
     required this.title,
     required this.description,
     required this.content,
@@ -37,11 +37,11 @@ final class BannersNewsEntity {
   }) : additionsUrls = [...additionsUrls];
 }
 
-final class SourceNews {
-  final int id;
+final class SourceNewsEntity {
+  final int? id;
   final String name;
 
-  SourceNews({
+  SourceNewsEntity({
     required this.id,
     required this.name,
   });

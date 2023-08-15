@@ -7,14 +7,17 @@ final class ConfigRequestServer {
   // Makes a request to the server.
   static Future<Map<String, dynamic>?> request(Client api, {required String query}) async {
     final request = Uri.parse(_formDataObject(query));
-    final response = await api.post(request);
+    final response = await api.get(request);
     _checkResponse(response);
+    print(">>REPONSE: ${jsonEncode(response.body)}");
     return jsonDecode(response.body);
   }
 
   // Forming a data object for a request.
   static String _formDataObject(String query) {
+    // &pageSize=2
     final request = 'https://newsapi.org/v2/$query&apiKey=b0b6c5d2af35492ab5a95bd1e63c9561';
+    // final request = 'https://newsapi.org/v2/everything?q=bitcoin&pageSize=2&page=2&apiKey=b0b6c5d2af35492ab5a95bd1e63c9561';
     print("REQUEST: $request");
     return request;
   }
