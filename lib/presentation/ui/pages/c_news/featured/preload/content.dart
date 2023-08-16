@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured/preload/item.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/preload/item.dart';
 
 class PreloadFeaturedContent extends StatelessWidget {
   const PreloadFeaturedContent({super.key});

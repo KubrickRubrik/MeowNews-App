@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured/available/content.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured/not_available/content.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured/preload/content.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/available/content.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/not_available/content.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/preload/content.dart';
 import 'package:provider/provider.dart';
 
 class FeaturedNews extends StatelessWidget {

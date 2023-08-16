@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/available/content.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/not_available/content.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/preload/content.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/available/content.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/not_available/content.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/preload/content.dart';
 import 'package:provider/provider.dart';
 
 class LatestNews extends StatelessWidget {

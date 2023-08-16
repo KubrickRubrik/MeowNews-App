@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/available/item.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/available/item.dart';
 import 'package:provider/provider.dart';
 
-class AvailableLatestContent extends StatefulWidget {
-  const AvailableLatestContent({super.key});
+class AvailableFeatureContent extends StatefulWidget {
+  const AvailableFeatureContent({super.key});
 
   @override
-  State<AvailableLatestContent> createState() => _AvailableLatestContentState();
+  State<AvailableFeatureContent> createState() => _AvailableFeatureContentState();
 }
 
-class _AvailableLatestContentState extends State<AvailableLatestContent> {
+class _AvailableFeatureContentState extends State<AvailableFeatureContent> {
   final scrollController = ScrollController();
   @override
   void initState() {
@@ -19,7 +19,7 @@ class _AvailableLatestContentState extends State<AvailableLatestContent> {
       scrollController.addListener(() {
         if (scrollController.position.atEdge) {
           if (scrollController.position.pixels != 0) {
-            context.read<NewsProvider>().getLatestNews();
+            context.read<NewsProvider>().getFeaturedNews();
           }
         }
       });
@@ -37,21 +37,22 @@ class _AvailableLatestContentState extends State<AvailableLatestContent> {
   Widget build(BuildContext context) {
     return Selector<NewsProvider, ({int length, StatusContent status})>(
       selector: (_, Model) => (
-        length: Model.pageData.newSet.listLatestdNews.length,
-        status: Model.status.statusLatestNews,
+        length: Model.pageData.newSet.listFeaturedNews.length,
+        status: Model.status.statusFeaturedNews,
       ),
       builder: (_, model, __) {
         return ListView.separated(
-          shrinkWrap: true,
           controller: scrollController,
+          padding: const EdgeInsets.only(bottom: 4),
+          scrollDirection: Axis.horizontal,
           itemCount: model.length + 1,
-          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          separatorBuilder: (_, __) => const SizedBox(width: 8),
           itemBuilder: (_, index) {
             if (index == model.length) {
               switch (model.status) {
                 case StatusContent.isLoadContent:
                   return const SizedBox(
-                    height: 60,
+                    width: 60,
                     child: CircularProgressIndicator.adaptive(),
                   );
                 case StatusContent.isEmptyContent:
@@ -60,7 +61,7 @@ class _AvailableLatestContentState extends State<AvailableLatestContent> {
                   return const SizedBox.shrink();
               }
             }
-            return ItemLatestNewsBanner(index: index);
+            return ItemFeaturedNews(index: index);
           },
         );
       },

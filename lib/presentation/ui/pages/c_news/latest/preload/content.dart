@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/preload/item.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/preload/item.dart';
 
 class PreloadLatestContent extends StatelessWidget {
   const PreloadLatestContent({super.key});

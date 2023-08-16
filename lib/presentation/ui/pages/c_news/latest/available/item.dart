@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/available/item/title.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/available/item/viewed.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/title.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/viewed.dart';
 import 'package:provider/provider.dart';
 
 class ItemLatestNewsBanner extends StatelessWidget {

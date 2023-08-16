@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured/available/item/featured.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured/available/item/navigate.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured/available/item/title.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured/available/item/viewed.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/featured.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/navigate.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/title.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/viewed.dart';
 import 'package:provider/provider.dart';
 
 class ItemFeaturedNews extends StatelessWidget {

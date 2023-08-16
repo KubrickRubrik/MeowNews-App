@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/button.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured_news.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest_news.dart';
+import 'package:news_test/presentation/ui/pages/c_news/news_bar.dart/bar.dart';
+import 'package:news_test/presentation/ui/pages/c_news/appbar/button.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/featured_news.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/latest_news.dart';
 import 'package:provider/provider.dart';
 
 class NewsPage extends StatelessWidget {
@@ -33,6 +34,8 @@ class NewsPage extends StatelessWidget {
             children: [
               //? Featured news (horizontal scrolllist)
               FeaturedNews(),
+              //? Set news and search options.
+              NewsOptionsBar(),
               //? Featured news (vertical scrolllist)
               LatestNews(),
             ],
