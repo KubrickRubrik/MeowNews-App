@@ -1,30 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/core/errors/failure.dart';
-import 'package:news_test/domain/entities/news.dart';
+import 'package:news_test/domain/entities/dto/news.dart';
+import 'package:news_test/domain/entities/vo/news_set.dart';
 import 'package:news_test/domain/use_cases/news.dart';
 part 'state.dart';
 part 'entity/page_data.dart';
+part 'entity/status.dart';
 
 final class NewsProvider extends ChangeNotifier with _State {
   NewsProvider(this._newsCase);
   final NewsCase _newsCase;
 
-  // Series request.
-  Future<void> getNews() async {
+  // News request.
+  Future<void> getInitNews() async {
     if (super.actionStatus == ActionStatus.isAction) return;
     _setActions(ActionStatus.isAction);
+    //? Formation of request parameters.
+    final featuredNews = NewsDTO(
+      1,
+      target: TargetNews.featured,
+      country: AvailableCountryNews.ru,
+      language: AvailableLanguageNews.ru,
+      pageSize: 5,
+    );
+    final latestNews = NewsDTO(
+      1,
+      target: TargetNews.latest,
+      pageSize: 10,
+    );
     //? Request.
-    _setStatusPage(StatusContent.isLoadContent);
-    final response = await _newsCase.getNews(0);
+    status.setAll(StatusContent.isLoadContent);
+    notifyListeners();
+    final response = await _newsCase.getInitNews(featuredNews: featuredNews, latestNews: latestNews);
     _setActions(ActionStatus.isDone);
     //? Checking for failure.
-    if (isFail(response.fail)) return;
+    if (_isFail(response.fail)) return;
     //? Data verification.
-    if (!isCorrectData(response.data)) return;
+    if (!_isCorrectData(response.data)) return;
+
     //? Adding new data.
     pageData.overwritingPageData(response.data!);
-    _setStatusPage(StatusContent.isViewContent);
+    _setDisplayingDownloadedData();
   }
 
   // Setting the operation status.
@@ -32,30 +49,45 @@ final class NewsProvider extends ChangeNotifier with _State {
     actionStatus = value;
   }
 
-  // Setting page status when loading data.
-  void _setStatusPage(StatusContent val) {
-    statusPage = val;
-    notifyListeners();
-  }
-
   /// Performs a check for an error in receiving or generating data.
-  bool isFail(Failure? fail) {
+  bool _isFail(Failure? fail) {
     if (fail == null) return false;
     _setActions(ActionStatus.isDone);
     print(fail.msg); // Block for error logging.
     return true;
   }
 
+  /// Setting the data display status for the `featured` and `latest` list news
+  void _setDisplayingDownloadedData() {
+    if (pageData.newSet.listFeaturedNews.isNotEmpty) status.setFeatured(StatusContent.isViewContent);
+    if (pageData.newSet.listLatestdNews.isNotEmpty) status.setFeatured(StatusContent.isViewContent);
+    notifyListeners();
+  }
+
   /// Checking for correct data
-  bool isCorrectData(List<NewsEntity>? data) {
+  /// The featured and latest news lists have their own statuses.
+  /// The statuses are different for the state when the content has
+  /// already been loaded or is being loaded for the first time.
+  bool _isCorrectData(NewsSet? data) {
     if (data != null) return true;
-    if (pageData.listNews.isEmpty) {
+    if (pageData.newSet.listFeaturedNews.isEmpty && pageData.newSet.listLatestdNews.isEmpty) {
       // Used if the data could not be loaded at all.
-      _setStatusPage(StatusContent.isNoContent);
+      status.setAll(StatusContent.isNoContent);
     } else {
-      // Used when the data to download has run out.
-      _setStatusPage(StatusContent.isEmptyContent);
+      //? Checking previously uploaded data for featured news
+      if (pageData.newSet.listFeaturedNews.isEmpty) {
+        status.setFeatured(StatusContent.isNoContent);
+      } else {
+        status.setFeatured(StatusContent.isEmptyContent);
+      }
+      //? Checking previously uploaded data for latest news
+      if (pageData.newSet.listLatestdNews.isEmpty) {
+        status.setLatest(StatusContent.isNoContent);
+      } else {
+        status.setLatest(StatusContent.isEmptyContent);
+      }
     }
+    notifyListeners();
     return false;
   }
 }

@@ -46,7 +46,7 @@ class _StartPageState extends State<StartPage> {
             supportedLocales: AppLocalization.supportedLocales,
             localizationsDelegates: AppLocalization.localizationsDelegates,
             //? Main
-            title: context.lcz.titleApp,
+            // title: context.lcz.titleApp,
             home: const NewsPage(),
             scrollBehavior: AppScrollBehavior(),
             //? Layout correction

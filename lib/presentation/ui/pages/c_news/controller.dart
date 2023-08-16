@@ -37,6 +37,15 @@ class NewsPage extends StatelessWidget {
               LatestNews(),
             ],
           ),
+          bottomNavigationBar: SizedBox(
+            height: 80,
+            child: FloatingActionButton(
+              onPressed: () {
+                locator<NewsProvider>().getInitNews();
+              },
+              child: const Icon(Icons.touch_app),
+            ),
+          ),
         ));
   }
 }

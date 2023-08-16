@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:news_test/presentation/locator/locator.dart';
+import 'package:news_test/presentation/manager/pages/news/provider.dart';
 
 class NewsDetailsPage extends StatelessWidget {
   const NewsDetailsPage(this.data, {super.key});
@@ -59,7 +61,7 @@ class ItemTitleNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       "Очень длинное длинное описание новости, которое может занимать много места.",
       style: TextStyle(
         fontWeight: FontWeight.bold,
@@ -74,7 +76,7 @@ class ItemDescriptionNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       "Очень длинное длинное описание новости, которое может занимать много места.",
       style: TextStyle(
         fontWeight: FontWeight.bold,

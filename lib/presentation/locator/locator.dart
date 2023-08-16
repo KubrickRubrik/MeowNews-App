@@ -9,17 +9,18 @@ import 'package:news_test/presentation/manager/session/provider.dart';
 
 final locator = GetIt.I;
 
+/// A service locator is used to keep all `DI` in one place.
 abstract final class ServicesLocator {
   static void setup() {
-    // API
+    //? API
     locator.registerLazySingleton<ApiEnvelope>(() => ApiServer());
-    // Repository
+    //? Repository
     locator.registerLazySingleton<NewsRepository>(() => NewsRepositoryImpl(locator()));
-    // Use Cases
+    //? Use Cases
     locator.registerLazySingleton<NewsCase>(() => NewsCase(locator()));
-    // Manager
+    //? Manager
     locator.registerLazySingleton<SessionProvider>(() => SessionProvider());
-    // Pages
+    //? Pages
     locator.registerLazySingleton<NewsProvider>(() => NewsProvider(locator()));
   }
 }

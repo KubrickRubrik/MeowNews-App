@@ -20,3 +20,12 @@ enum StatusContent {
 
 /// Type of toast.
 enum TypeMassage { massage, error, warning }
+
+/// Тews country
+enum TargetNews { latest, featured }
+
+enum AvailableCountryNews { us, ru }
+
+enum AvailableLanguageNews { en, ru }
+
+enum AvailableCategoryNews { business, general, science, technology }
