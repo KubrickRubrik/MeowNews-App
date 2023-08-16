@@ -1,9 +1,9 @@
 class NewsModel {
-  final String author;
+  final String? author;
   final String titleNews;
-  final String descriptionNews;
-  final String contentNews;
-  final String urlToImage;
+  final String? descriptionNews;
+  final String? contentNews;
+  final String? urlToImage;
   final String publishedAt;
   final SourceNewsModel source;
 
@@ -18,7 +18,7 @@ class NewsModel {
 }
 
 final class SourceNewsModel {
-  final int? id;
+  final String? id;
   final String name;
 
   SourceNewsModel(Map<String, dynamic> data)

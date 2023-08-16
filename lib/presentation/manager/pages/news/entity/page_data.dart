@@ -1,12 +1,13 @@
 part of '../provider.dart';
 
 final class _PageData {
-  final newSete = NewsSet.empty();
-  final listNews = <NewsEntity>[];
+  final newSet = NewsSet.empty();
 
   // Overwriting the used idSeries and clean for new data
   void overwritingPageData(NewsSet data) {
-    if (data.listFeaturedNews != null) newSete.listFeaturedNews?.addAll(data.listFeaturedNews!);
-    if (data.listLatestdNews != null) newSete.listLatestdNews?.addAll(data.listLatestdNews!);
+    print("FEATURED: ${data.listFeaturedNews.length}");
+    print("LATEST: ${data.listLatestdNews.length}");
+    if (data.listFeaturedNews.isNotEmpty) newSet.listFeaturedNews.addAll(data.listFeaturedNews);
+    if (data.listLatestdNews.isNotEmpty) newSet.listLatestdNews.addAll(data.listLatestdNews);
   }
 }

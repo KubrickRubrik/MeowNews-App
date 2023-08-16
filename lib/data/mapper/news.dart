@@ -7,7 +7,7 @@ abstract final class EntitiesNewsMapper {
   static NewsEntity newsMapper(NewsModel model) {
     return NewsEntity(
       author: model.author,
-      banner: model.urlToImage,
+      banner: BannersNewsEntity(mainUrl: model.urlToImage),
       content: ContentNewsEntity(
         title: model.titleNews,
         description: model.descriptionNews,

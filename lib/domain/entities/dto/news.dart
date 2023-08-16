@@ -24,14 +24,16 @@ final class NewsDTO extends Dto<String> {
   String getDataRequest() {
     String requestString = '';
     if (target == TargetNews.featured) {
+      // requestString = 'top-headlines?';
       requestString = 'everything?';
       requestString += (searchWord == null) ? 'q=IT' : 'q=$searchWord';
+      requestString += '&sortBy=popularity';
     } else {
-      requestString = 'top-headlines?';
-      if (searchWord != null) requestString += 'q=$searchWord';
-      if (country != null) requestString += 'country=${country!.name}';
+      requestString = 'everything?';
+      requestString += (searchWord == null) ? 'q=IT' : 'q=$searchWord';
+      requestString += '&sortBy=publishedAt';
+      // requestString += (country == null) ? '&country=ru' : '&country=${country!.name}';
     }
-
     if (language != null) requestString += '&language=${language!.name}';
     if (category != null) requestString += '&category=${category!.name}';
     requestString += '&pageSize=$pageSize&page=$page';
@@ -39,6 +41,3 @@ final class NewsDTO extends Dto<String> {
     return requestString;
   }
 }
-
-// https://newsapi.org/v2/everything?country=ru&languagelanguage=ru&pageSize=10&page=0&apiKey=b0b6c5d2af35492ab5a95bd1e63c9561
-// https://newsapi.org/v2/everything?q=apple&from=2023-08-14&to=2023-08-14&sortBy=popularity&apiKey=b0b6c5d2af35492ab5a95bd1e63c9561

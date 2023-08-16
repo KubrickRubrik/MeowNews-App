@@ -35,6 +35,8 @@ class ApiServer implements ApiEnvelope {
   List<NewsModel>? _prepareResponse(Map<String, dynamic>? data) {
     if (data == null) return null;
     if (data['status'] == 'error') throw ApiException("Error server api: ${data['message']}");
-    return data['articles'].map((value) => NewsModel(value)).toList();
+    final listArticles = data['articles'] as List<dynamic>;
+    if (listArticles.isEmpty) return null;
+    return listArticles.map((value) => NewsModel(value)).toList();
   }
 }

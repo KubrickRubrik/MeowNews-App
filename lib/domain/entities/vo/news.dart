@@ -1,23 +1,23 @@
 class NewsEntity {
-  final String author;
-  final String banner;
+  final String? author;
+  final BannersNewsEntity banner;
   final ContentNewsEntity content;
-  final String published;
+  final DateTime? publishedAt;
   final SourceNewsEntity source;
 
   NewsEntity({
     required this.author,
     required this.banner,
     required this.content,
-    required this.published,
+    required String published,
     required this.source,
-  });
+  }) : publishedAt = DateTime.tryParse(published);
 }
 
 final class ContentNewsEntity {
   final String title;
-  final String description;
-  final String content;
+  final String? description;
+  final String? content;
 
   ContentNewsEntity({
     required this.title,
@@ -27,18 +27,13 @@ final class ContentNewsEntity {
 }
 
 final class BannersNewsEntity {
-  final String mainUrl;
-  // Not use now
-  final List<String> additionsUrls;
+  final String? mainUrl;
 
-  BannersNewsEntity({
-    required this.mainUrl,
-    List<String> additionsUrls = const [],
-  }) : additionsUrls = [...additionsUrls];
+  BannersNewsEntity({required this.mainUrl});
 }
 
 final class SourceNewsEntity {
-  final int? id;
+  final String? id;
   final String name;
 
   SourceNewsEntity({
