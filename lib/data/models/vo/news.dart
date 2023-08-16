@@ -2,7 +2,6 @@ class NewsModel {
   final String? author;
   final String titleNews;
   final String? descriptionNews;
-  final String? contentNews;
   final String? urlToImage;
   final String publishedAt;
   final SourceNewsModel source;
@@ -11,7 +10,6 @@ class NewsModel {
       : author = data['author'],
         titleNews = data['title'],
         descriptionNews = data['description'],
-        contentNews = data['content'],
         urlToImage = data['urlToImage'],
         publishedAt = data['publishedAt'],
         source = SourceNewsModel(data['source']);

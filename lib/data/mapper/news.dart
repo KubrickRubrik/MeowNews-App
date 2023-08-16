@@ -11,7 +11,6 @@ abstract final class EntitiesNewsMapper {
       content: ContentNewsEntity(
         title: model.titleNews,
         description: model.descriptionNews,
-        content: model.contentNews,
       ),
       published: model.publishedAt,
       source: SourceNewsEntity(

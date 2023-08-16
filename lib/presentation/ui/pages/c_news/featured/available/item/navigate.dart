@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:news_test/core/config/entity.dart';
+import 'package:news_test/presentation/manager/entity/dto/signpost.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
 
 class NavigateFeaturedNews extends StatelessWidget {
-  const NavigateFeaturedNews({super.key});
+  const NavigateFeaturedNews(this.index, {super.key});
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class NavigateFeaturedNews extends StatelessWidget {
           Navigator.pushNamed(
             context,
             PagesNavigator.newsDetailRoute,
-            arguments: 1,
+            arguments: NewsSignpost(TargetNews.featured, index),
           );
         },
         child: Container(

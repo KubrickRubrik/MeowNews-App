@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/domain/entities/vo/news.dart';
+import 'package:news_test/presentation/manager/entity/dto/signpost.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
 
 class TitleFeaturedNews extends StatefulWidget {
@@ -25,7 +27,7 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
           Navigator.pushNamed(
             context,
             PagesNavigator.newsDetailRoute,
-            arguments: widget.index,
+            arguments: NewsSignpost(TargetNews.featured, widget.index),
           );
           isDisplayTitle = false;
           setState(() {});
@@ -41,10 +43,10 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
           ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
               child: Text(
                 widget.news.content.title,
-                maxLines: 6,
+                maxLines: 5,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,

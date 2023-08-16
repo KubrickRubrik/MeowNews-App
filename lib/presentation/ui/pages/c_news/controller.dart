@@ -32,10 +32,13 @@ class NewsPage extends StatelessWidget {
           body: const Flex(
             direction: Axis.vertical,
             children: [
+              SizedBox(height: 8),
               //? Featured news (horizontal scrolllist)
               FeaturedNews(),
+              SizedBox(height: 4),
               //? Set news and search options.
               NewsOptionsBar(),
+              SizedBox(height: 8),
               //? Featured news (vertical scrolllist)
               LatestNews(),
             ],
