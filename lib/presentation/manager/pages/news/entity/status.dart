@@ -1,5 +1,6 @@
 part of '../provider.dart';
 
+/// Statuses of the list of news that are involved in updating the interface.
 final class _StatusData {
   var statusFeaturedNews = StatusContent.isLoadContent;
   var statusLatestNews = StatusContent.isLoadContent;

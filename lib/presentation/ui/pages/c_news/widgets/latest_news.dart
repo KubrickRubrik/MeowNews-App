@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:news_test/presentation/ui/navigator/navigator.dart';
+import 'package:news_test/core/config/entity.dart';
+import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/available/content.dart';
+import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/not_available/content.dart';
+import 'package:news_test/presentation/ui/pages/c_news/widgets/latest/preload/content.dart';
+import 'package:provider/provider.dart';
 
 class LatestNews extends StatelessWidget {
   const LatestNews({super.key});
@@ -8,50 +13,36 @@ class LatestNews extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8),
-        child: ListView.separated(
-          itemCount: 10,
-          separatorBuilder: (_, __) => const SizedBox(height: 8),
-          itemBuilder: (context, index) {
-            return ItemLatestNewsBanner(index: index);
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Selector<NewsProvider, StatusContent>(
+          selector: (_, Model) => Model.status.statusLatestNews,
+          builder: (_, status, child) {
+            return switch (status) {
+              StatusContent.isNoContent => const NotAvailableLatestContent(),
+              _ => child!,
+            };
           },
+          child: const WrapLatestContent(),
         ),
       ),
     );
   }
 }
 
-class ItemLatestNewsBanner extends StatelessWidget {
-  const ItemLatestNewsBanner({super.key, required this.index});
-  final int index;
+class WrapLatestContent extends StatelessWidget {
+  const WrapLatestContent({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.5,
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFFE0E0E0),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        clipBehavior: Clip.hardEdge,
-        child: Stack(
-          children: [
-            Material(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(16),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    PagesNavigator.newsDetailRoute,
-                    arguments: index,
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+    return Selector<NewsProvider, StatusContent>(
+      selector: (_, Model) => Model.status.statusFeaturedNews,
+      builder: (_, status, child) {
+        return switch (status) {
+          StatusContent.isLoadContent => const PreloadLatestContent(),
+          _ => child!,
+        };
+      },
+      child: const AvailableLatestContent(),
     );
   }
 }

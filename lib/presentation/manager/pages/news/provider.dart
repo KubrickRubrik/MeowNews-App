@@ -12,10 +12,10 @@ final class NewsProvider extends ChangeNotifier with _State {
   NewsProvider(this._newsCase);
   final NewsCase _newsCase;
 
-  // News request.
+  /// Getting featured and latest news
   Future<void> getInitNews() async {
     if (super.actionStatus == ActionStatus.isAction) return;
-    _setActions(ActionStatus.isAction);
+    _setActionsPage(ActionStatus.isAction);
     //? Formation of request parameters.
     final featuredNews = NewsDTO(
       1,
@@ -33,7 +33,7 @@ final class NewsProvider extends ChangeNotifier with _State {
     status.setAll(StatusContent.isLoadContent);
     notifyListeners();
     final response = await _newsCase.getInitNews(featuredNews: featuredNews, latestNews: latestNews);
-    _setActions(ActionStatus.isDone);
+    _setActionsPage(ActionStatus.isDone);
     //? Checking for failure.
     if (_isFail(response.fail)) return;
     //? Data verification.
@@ -44,23 +44,52 @@ final class NewsProvider extends ChangeNotifier with _State {
     _setDisplayingDownloadedData();
   }
 
-  // Setting the operation status.
-  void _setActions(ActionStatus value) {
-    actionStatus = value;
+  /// Getting featured news on scroll
+  Future<void> getFeaturedNews() async {
+    if (super.actionStatusFeaturedContent == ActionStatus.isAction) return;
+    _setActionsFeatured(ActionStatus.isAction);
+    //? Formation of request parameters.
+    final featuredNews = NewsDTO(
+      1,
+      target: TargetNews.featured,
+      country: AvailableCountryNews.ru,
+      language: AvailableLanguageNews.ru,
+      pageSize: 5,
+    );
+    //? Request.
+    //? Checking for failure.
+    //? Data verification.
+    //? Adding new data.
   }
 
-  /// Performs a check for an error in receiving or generating data.
-  bool _isFail(Failure? fail) {
-    if (fail == null) return false;
-    _setActions(ActionStatus.isDone);
-    print(fail.msg); // Block for error logging.
-    return true;
+  /// Getting the latest news on scroll
+  Future<void> getLatestNews() async {
+    if (super.actionStatusLatestNews == ActionStatus.isAction) return;
+    _setActionsLatest(ActionStatus.isAction);
+    //? Formation of request parameters.
+    final latestNews = NewsDTO(
+      1,
+      target: TargetNews.latest,
+      pageSize: 10,
+    );
+    //? Request.
+    //? Checking for failure.
+    //? Data verification.
+    //? Adding new data.
   }
 
   /// Setting the data display status for the `featured` and `latest` list news
   void _setDisplayingDownloadedData() {
-    if (pageData.newSet.listFeaturedNews.isNotEmpty) status.setFeatured(StatusContent.isViewContent);
-    if (pageData.newSet.listLatestdNews.isNotEmpty) status.setFeatured(StatusContent.isViewContent);
+    if (pageData.newSet.listFeaturedNews.isNotEmpty) {
+      status.setFeatured(StatusContent.isViewContent);
+    } else {
+      status.setFeatured(StatusContent.isEmptyContent);
+    }
+    if (pageData.newSet.listLatestdNews.isNotEmpty) {
+      status.setFeatured(StatusContent.isViewContent);
+    } else {
+      status.setFeatured(StatusContent.isEmptyContent);
+    }
     notifyListeners();
   }
 
