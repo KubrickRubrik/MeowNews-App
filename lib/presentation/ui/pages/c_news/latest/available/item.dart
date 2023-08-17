@@ -1,14 +1,18 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:news_test/core/config/entity.dart';
+import 'package:news_test/presentation/locator/locator.dart';
+import 'package:news_test/presentation/manager/entity/dto/signpost.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/manager/pages/news_item/provider.dart';
+import 'package:news_test/presentation/ui/components/toast.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/title.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/viewed.dart';
 import 'package:provider/provider.dart';
 
 class ItemLatestNewsBanner extends StatelessWidget {
-  const ItemLatestNewsBanner({super.key, required this.index});
+  const ItemLatestNewsBanner(this.index, {super.key});
   final int index;
 
   @override
@@ -16,11 +20,17 @@ class ItemLatestNewsBanner extends StatelessWidget {
     final news = context.read<NewsProvider>().pageData.newSet.listLatestdNews.elementAt(index);
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          PagesNavigator.newsDetailRoute,
-          arguments: index,
-        );
+        locator<ItemNewsProvider>().getDetailNews(TargetNews.latest, news.source.id, index).then((value) {
+          if (value) {
+            Navigator.pushNamed(
+              context,
+              PagesNavigator.newsDetailRoute,
+              arguments: NewsSignpost(TargetNews.latest, index),
+            );
+          } else {
+            ToastMassage.toast(context, "View news unavailable", code: TypeMassage.warning);
+          }
+        });
       },
       child: AspectRatio(
         aspectRatio: 1.5,
@@ -67,7 +77,6 @@ class ItemLatestNewsBanner extends StatelessWidget {
 
 // Make image
   _makeImage(String? url) {
-    // return AssetImage('assets/images/${Random().nextInt(5) + 1}.webp');
     return switch (url) {
       null => AssetImage('assets/images/${Random().nextInt(5) + 1}.webp'),
       _ => NetworkImage(url),

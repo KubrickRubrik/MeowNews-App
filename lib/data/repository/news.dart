@@ -16,9 +16,7 @@ class NewsRepositoryImpl implements NewsRepository {
   @override
   Future<({NewsSet? data, Failure? fail})> getInitNews({required Dto featuredNews, required Dto latestNews}) async {
     try {
-      //?
       final response = await _apiEnvelope.getInitNews(featuredNews: featuredNews, latestNews: latestNews);
-      if (response == null) return (data: null, fail: null);
       //?
       final resFeaturedNews = _prepareResponse(response.featuredNews);
       final resLatestNews = _prepareResponse(response.latestNews);
@@ -27,6 +25,34 @@ class NewsRepositoryImpl implements NewsRepository {
         data: NewsSet(featuredNews: resFeaturedNews, latestdNews: resLatestNews),
         fail: null,
       );
+    } on ApiException catch (e) {
+      return (data: null, fail: ApiFailure(e.msg));
+    } catch (e) {
+      return (data: null, fail: DataFormatFailuer('Error parsing data: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<({List<NewsEntity>? data, Failure? fail})> getMoreNews(Dto dto) async {
+    try {
+      final response = await _apiEnvelope.getMoreNews(dto);
+      //?
+      final result = _prepareResponse(response);
+      //? Parsing
+      return (data: result, fail: null);
+    } on ApiException catch (e) {
+      return (data: null, fail: ApiFailure(e.msg));
+    } catch (e) {
+      return (data: null, fail: DataFormatFailuer('Error parsing data: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<({List<String>? data, Failure? fail})> setViewedNews(Dto dto) async {
+    try {
+      final response = await _apiEnvelope.setViewedNews(dto);
+      //? Parsing
+      return (data: response, fail: null);
     } on ApiException catch (e) {
       return (data: null, fail: ApiFailure(e.msg));
     } catch (e) {

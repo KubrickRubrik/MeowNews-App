@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:news_test/domain/entities/vo/news.dart';
+import 'package:news_test/core/config/entity.dart';
+import 'package:news_test/presentation/locator/locator.dart';
+import 'package:news_test/presentation/manager/entity/dto/signpost.dart';
+import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/manager/pages/news_item/provider.dart';
+import 'package:news_test/presentation/ui/components/toast.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
+import 'package:provider/provider.dart';
 
 class TitleFeaturedNews extends StatefulWidget {
-  const TitleFeaturedNews(this.index, this.news, {super.key});
+  const TitleFeaturedNews(this.index, {super.key});
   final int index;
-  final NewsEntity news;
 
   @override
   State<TitleFeaturedNews> createState() => _TitleFeaturedNewsState();
@@ -16,19 +21,28 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
 
   @override
   Widget build(BuildContext context) {
+    final news = context.read<NewsProvider>().pageData.newSet.listFeaturedNews.elementAt(widget.index);
     return InkWell(
       onTap: () {
         if (!isDisplayTitle) {
           isDisplayTitle = !isDisplayTitle;
           setState(() {});
         } else {
-          Navigator.pushNamed(
-            context,
-            PagesNavigator.newsDetailRoute,
-            arguments: widget.index,
-          );
-          isDisplayTitle = false;
-          setState(() {});
+          locator<ItemNewsProvider>().getDetailNews(TargetNews.featured, news.source.id, widget.index).then((isDone) {
+            if (isDone) {
+              //
+              Navigator.pushNamed(
+                context,
+                PagesNavigator.newsDetailRoute,
+                arguments: NewsSignpost(TargetNews.featured, widget.index),
+              );
+              //
+              isDisplayTitle = false;
+              setState(() {});
+            } else {
+              ToastMassage.toast(context, "View news unavailable", code: TypeMassage.warning);
+            }
+          });
         }
       },
       child: AnimatedOpacity(
@@ -43,7 +57,7 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.news.content.title,
+                news.content.title,
                 maxLines: 6,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(

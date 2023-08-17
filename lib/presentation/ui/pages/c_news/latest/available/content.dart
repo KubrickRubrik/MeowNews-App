@@ -60,7 +60,7 @@ class _AvailableLatestContentState extends State<AvailableLatestContent> {
                   return const SizedBox.shrink();
               }
             }
-            return ItemLatestNewsBanner(index: index);
+            return ItemLatestNewsBanner(index);
           },
         );
       },

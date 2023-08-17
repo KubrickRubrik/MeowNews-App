@@ -24,15 +24,13 @@ final class NewsDTO extends Dto<String> {
   String getDataRequest() {
     String requestString = '';
     if (target == TargetNews.featured) {
-      // requestString = 'top-headlines?';
-      requestString = 'everything?';
+      requestString = 'top-headlines?';
       requestString += (searchWord == null) ? 'q=IT' : 'q=$searchWord';
       requestString += '&sortBy=popularity';
     } else {
       requestString = 'everything?';
       requestString += (searchWord == null) ? 'q=IT' : 'q=$searchWord';
       requestString += '&sortBy=publishedAt';
-      // requestString += (country == null) ? '&country=ru' : '&country=${country!.name}';
     }
     if (language != null) requestString += '&language=${language!.name}';
     if (category != null) requestString += '&category=${category!.name}';

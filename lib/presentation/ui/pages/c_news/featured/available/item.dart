@@ -38,7 +38,7 @@ class ItemFeaturedNews extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: TitleFeaturedNews(index, news),
+              child: TitleFeaturedNews(index),
             ),
             //? Mark feature news (don't use)
             const Positioned(
@@ -53,10 +53,10 @@ class ItemFeaturedNews extends StatelessWidget {
               child: ViewedFeaturedNews(),
             ),
             //? Navigate to detail news
-            const Positioned(
+            Positioned(
               bottom: -60,
               right: -60,
-              child: NavigateFeaturedNews(),
+              child: NavigateFeaturedNews(index),
             ),
           ],
         ),

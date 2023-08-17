@@ -1,4 +1,4 @@
-class NewsEntity {
+final class NewsEntity {
   final String? author;
   final BannersNewsEntity banner;
   final ContentNewsEntity content;
