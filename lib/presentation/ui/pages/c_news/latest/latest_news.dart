@@ -14,15 +14,18 @@ class LatestNews extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Selector<NewsProvider, StatusContent>(
-          selector: (_, Model) => Model.status.statusLatestNews,
-          builder: (_, status, child) {
-            return switch (status) {
-              StatusContent.isNoContent => const NotAvailableLatestContent(),
-              _ => child!,
-            };
-          },
-          child: const WrapLatestContent(),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Selector<NewsProvider, StatusContent>(
+            selector: (_, Model) => Model.status.statusLatestNews,
+            builder: (_, status, child) {
+              return switch (status) {
+                StatusContent.isNoContent => const NotAvailableLatestContent(),
+                _ => child!,
+              };
+            },
+            child: const WrapLatestContent(),
+          ),
         ),
       ),
     );

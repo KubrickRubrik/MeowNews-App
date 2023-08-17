@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/banner.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/featured.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/navigate.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/title.dart';
@@ -21,17 +22,21 @@ class ItemFeaturedNews extends StatelessWidget {
         decoration: BoxDecoration(
           color: const Color(0xFFE0E0E0),
           borderRadius: BorderRadius.circular(16),
-          image: DecorationImage(
-            image: _makeImage(news.banner.mainUrl),
-            fit: BoxFit.cover,
-          ),
           boxShadow: const [
-            BoxShadow(offset: Offset(0, 3), blurRadius: 2, spreadRadius: -1),
+            BoxShadow(offset: Offset(0, 1), blurRadius: 2, spreadRadius: -1),
           ],
         ),
         clipBehavior: Clip.hardEdge,
         child: Stack(
           children: [
+            //? Banner
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: BannerFeaturedNews(news.banner.mainUrl),
+            ),
             //? Title news
             Positioned(
               top: 0,

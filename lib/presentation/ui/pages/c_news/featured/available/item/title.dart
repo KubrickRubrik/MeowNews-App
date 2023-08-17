@@ -55,10 +55,10 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
           ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
               child: Text(
                 news.content.title,
-                maxLines: 6,
+                maxLines: 5,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,

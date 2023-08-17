@@ -39,4 +39,8 @@ final class ItemNewsProvider extends ChangeNotifier with _State {
     status.statusItemNews = val;
     notifyListeners();
   }
+
+  void reset() {
+    pageData.reset();
+  }
 }

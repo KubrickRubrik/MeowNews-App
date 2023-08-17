@@ -18,12 +18,10 @@ final class NewsEntity {
 final class ContentNewsEntity {
   final String title;
   final String? description;
-  final String? content;
 
   ContentNewsEntity({
     required this.title,
     required this.description,
-    required this.content,
   });
 }
 

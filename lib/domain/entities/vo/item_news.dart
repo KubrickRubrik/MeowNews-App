@@ -1,4 +1,5 @@
 final class ItemNewsEntity {
+  bool isAvailable = false;
   final String? author;
   final BannersItemNewsEntity banner;
   final ContentItemNewsEntity content;

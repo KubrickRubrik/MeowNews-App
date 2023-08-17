@@ -142,6 +142,11 @@ final class NewsProvider extends ChangeNotifier with _State {
     notifyListeners();
   }
 
+  /// Loading news data and setting the mark `viewed`
+  Future<bool> getDetailNews(int item) async {
+    return true;
+  }
+
   /// Setting the data display status for the `featured` and `latest` list news
   void _setDisplayingDownloadedData() {
     if (pageData.newSet.listFeaturedNews.isNotEmpty) {
