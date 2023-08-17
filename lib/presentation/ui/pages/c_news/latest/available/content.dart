@@ -38,27 +38,25 @@ class _AvailableLatestContentState extends State<AvailableLatestContent> {
     return Selector<NewsProvider, ({int length, StatusContent status})>(
       selector: (_, Model) => (
         length: Model.pageData.newSet.listLatestdNews.length,
-        status: Model.status.statusLatestNews,
+        status: Model.status.latest.statusScroll,
       ),
       builder: (_, model, __) {
         return ListView.separated(
           shrinkWrap: true,
           controller: scrollController,
+          padding: const EdgeInsets.only(bottom: 56),
           itemCount: model.length + 1,
           separatorBuilder: (_, __) => const SizedBox(height: 8),
           itemBuilder: (_, index) {
             if (index == model.length) {
-              switch (model.status) {
-                case StatusContent.isLoadContent:
-                  return const SizedBox(
-                    height: 60,
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                case StatusContent.isEmptyContent:
-                  return const SizedBox.shrink();
-                default:
-                  return const SizedBox.shrink();
-              }
+              return SizedBox(
+                  height: 56,
+                  child: switch (model.status) {
+                    StatusContent.isLoadContent => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    _ => const SizedBox.shrink(),
+                  });
             }
             return ItemLatestNewsBanner(index);
           },

@@ -10,11 +10,18 @@ enum AvailableAppLocale { ru, en }
 /// Activity activity status.
 enum ActionStatus { isAction, isDone }
 
-/// Page loading status.
+/// Content loading status.
 enum StatusContent {
   isLoadContent,
   isNoContent,
   isEmptyContent,
+  isViewContent,
+}
+
+/// Section loading status.
+enum StatusSection {
+  isLoadContent,
+  isNoContent,
   isViewContent,
 }
 

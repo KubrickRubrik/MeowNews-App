@@ -38,7 +38,7 @@ class _AvailableFeatureContentState extends State<AvailableFeatureContent> {
     return Selector<NewsProvider, ({int length, StatusContent status})>(
       selector: (_, Model) => (
         length: Model.pageData.newSet.listFeaturedNews.length,
-        status: Model.status.statusFeaturedNews,
+        status: Model.status.featured.statusScroll,
       ),
       builder: (_, model, __) {
         return ListView.separated(
@@ -49,17 +49,14 @@ class _AvailableFeatureContentState extends State<AvailableFeatureContent> {
           separatorBuilder: (_, __) => const SizedBox(width: 8),
           itemBuilder: (_, index) {
             if (index == model.length) {
-              switch (model.status) {
-                case StatusContent.isLoadContent:
-                  return const SizedBox(
-                    width: 60,
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                case StatusContent.isEmptyContent:
-                  return const SizedBox.shrink();
-                default:
-                  return const SizedBox.shrink();
-              }
+              return SizedBox(
+                  width: 100,
+                  child: switch (model.status) {
+                    StatusContent.isLoadContent => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    _ => const SizedBox.shrink(),
+                  });
             }
             return ItemFeaturedNews(index: index);
           },

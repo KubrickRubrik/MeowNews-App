@@ -1,17 +1,25 @@
 part of '../provider.dart';
 
 final class _PageData {
-  // Number of downloaded news in one request.
+  // Number of downloaded news in one request (for one page).
   final featuredNewsCount = 5;
   final latestNewsCount = 10;
+  // Main data list of news
   final newSet = NewsSet.empty();
 
   // Overwriting the used idSeries and clean for new data.
-  void overwritingPageData(NewsSet data) {
+  void _overwritingPageData(NewsSet data) {
     print("FEATURED: ${data.listFeaturedNews.length}");
     print("LATEST: ${data.listLatestdNews.length}");
     newSet.listFeaturedNews.clear();
     newSet.listLatestdNews.clear();
+    if (data.listFeaturedNews.isNotEmpty) newSet.listFeaturedNews.addAll(data.listFeaturedNews);
+    if (data.listLatestdNews.isNotEmpty) newSet.listLatestdNews.addAll(data.listLatestdNews);
+  }
+
+  void _addingNewData(NewsSet data) {
+    print("FEATURED: ${data.listFeaturedNews.length}");
+    print("LATEST: ${data.listLatestdNews.length}");
     if (data.listFeaturedNews.isNotEmpty) newSet.listFeaturedNews.addAll(data.listFeaturedNews);
     if (data.listLatestdNews.isNotEmpty) newSet.listLatestdNews.addAll(data.listLatestdNews);
   }
@@ -34,6 +42,7 @@ final class _PageData {
       }
       page = page + 1;
     }
+    print(">> PAGE: $page");
     return page;
   }
 

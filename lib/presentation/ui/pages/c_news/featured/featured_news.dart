@@ -17,11 +17,11 @@ class FeaturedNews extends StatelessWidget {
         height: (MediaQuery.of(context).size.height / 4),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Selector<NewsProvider, StatusContent>(
-            selector: (_, Model) => Model.status.statusFeaturedNews,
+          child: Selector<NewsProvider, StatusSection>(
+            selector: (_, Model) => Model.status.featured.statusSection,
             builder: (_, status, child) {
               return switch (status) {
-                StatusContent.isNoContent => const NotAvailableFeaturedContent(),
+                StatusSection.isNoContent => const NotAvailableFeaturedContent(),
                 _ => child!,
               };
             },
@@ -38,11 +38,11 @@ class WrapFeaturedContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<NewsProvider, StatusContent>(
-      selector: (_, Model) => Model.status.statusFeaturedNews,
+    return Selector<NewsProvider, StatusSection>(
+      selector: (_, Model) => Model.status.featured.statusSection,
       builder: (_, status, child) {
         return switch (status) {
-          StatusContent.isLoadContent => const PreloadFeaturedContent(),
+          StatusSection.isLoadContent => const PreloadFeaturedContent(),
           _ => child!,
         };
       },

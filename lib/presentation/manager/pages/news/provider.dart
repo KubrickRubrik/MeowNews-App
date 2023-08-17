@@ -19,14 +19,16 @@ final class NewsProvider extends ChangeNotifier with _State {
 
   /// Getting featured and latest news
   Future<void> getInitNews() async {
+    //? Launchability check
     if (super.actionStatus == ActionStatus.isAction) return;
     _setActionsPage(ActionStatus.isAction);
+    status.reset();
     //? Formation of request parameters.
     final featuredNewsDTO = NewsDTO(
       1,
       target: TargetNews.featured,
-      country: AvailableCountryNews.ru,
-      language: AvailableLanguageNews.ru,
+      country: AvailableCountryNews.us,
+      language: AvailableLanguageNews.en,
       pageSize: pageData.featuredNewsCount,
     );
     final latestNewsDTO = NewsDTO(
@@ -35,60 +37,67 @@ final class NewsProvider extends ChangeNotifier with _State {
       pageSize: pageData.latestNewsCount,
     );
     //? Request.
-    status.setAll(StatusContent.isLoadContent);
+    status._setAll(StatusSection.isLoadContent);
     notifyListeners(); // to display the loading screen
     final response = await _newsCase.getInitNews(featuredNews: featuredNewsDTO, latestNews: latestNewsDTO);
     _setActionsPage(ActionStatus.isDone);
     //? Checking for failure.
-    if (_isFail(response.fail)) return;
+    if (_isFail(response.fail)) {
+      status._setAll(StatusSection.isNoContent);
+      return;
+    }
     //? Data verification.
     if (!_isCorrectData(response.data)) return;
-
     //? Adding new data.
-    pageData.overwritingPageData(response.data!);
+    pageData._overwritingPageData(response.data!);
     _setDisplayingDownloadedData();
   }
 
   /// Getting featured news on scroll
   Future<void> getFeaturedNews() async {
-    if (super.actionStatusFeaturedContent == ActionStatus.isAction || status.isEmptyFeature) return;
-    _setActionsFeatured(ActionStatus.isAction);
+    //? Launchability check
+    if (status.featured.statusScroll != StatusContent.isViewContent) return;
+    status.featured._setScroll(StatusContent.isLoadContent);
+    notifyListeners();
+
+    await Future.delayed(Duration(milliseconds: 500));
     //? Formation of request parameters.
     final dto = NewsDTO(
       pageData.getItemPage(TargetNews.featured),
       target: TargetNews.featured,
-      country: AvailableCountryNews.ru,
-      language: AvailableLanguageNews.ru,
+      country: AvailableCountryNews.us,
+      language: AvailableLanguageNews.en,
       pageSize: pageData.featuredNewsCount,
     );
     //? Request.
-    status.setFeatured(StatusContent.isLoadContent);
-    notifyListeners(); // to display the loading screen
     final response = await _newsCase.getMoreNews(dto);
-    _setActionsFeatured(ActionStatus.isDone);
     //? Checking for failure.
     if (_isFail(response.fail)) {
-      status.setFeatured(StatusContent.isEmptyContent);
+      status.featured._setScroll(StatusContent.isEmptyContent);
       notifyListeners();
+      return;
     }
     //? Data verification.
     if (response.data == null || response.data!.isEmpty) {
-      status.setFeatured(StatusContent.isEmptyContent);
+      status.featured._setScroll(StatusContent.isEmptyContent);
       notifyListeners();
+      return;
     }
     //? Adding new data.
-    pageData.overwritingPageData(NewsSet(
+    pageData._addingNewData(NewsSet(
       featuredNews: response.data,
       latestdNews: null,
     ));
-    status.setFeatured(StatusContent.isViewContent);
+    status.featured._setScroll(StatusContent.isViewContent);
     notifyListeners();
   }
 
   /// Getting the latest news on scroll
   Future<void> getLatestNews() async {
-    if (super.actionStatusLatestNews == ActionStatus.isAction || status.isEmptyLatest) return;
-    _setActionsLatest(ActionStatus.isAction);
+    //? Launchability check
+    if (status.latest.statusScroll != StatusContent.isViewContent) return;
+    status.latest._setScroll(StatusContent.isLoadContent);
+    notifyListeners();
     //? Formation of request parameters.
     final dto = NewsDTO(
       pageData.getItemPage(TargetNews.latest),
@@ -96,25 +105,27 @@ final class NewsProvider extends ChangeNotifier with _State {
       pageSize: pageData.latestNewsCount,
     );
     //? Request.
-    status.setFeatured(StatusContent.isLoadContent);
     notifyListeners(); // to display the loading screen
     final response = await _newsCase.getMoreNews(dto);
-    _setActionsFeatured(ActionStatus.isDone);
     //? Checking for failure.
     if (_isFail(response.fail)) {
-      status.setFeatured(StatusContent.isEmptyContent);
+      status.latest._setScroll(StatusContent.isEmptyContent);
       notifyListeners();
+      return;
     }
     //? Data verification.
     if (response.data == null || response.data!.isEmpty) {
-      status.setFeatured(StatusContent.isEmptyContent);
+      status.latest._setScroll(StatusContent.isEmptyContent);
+      notifyListeners();
+      return;
     }
     //? Adding new data.
-    pageData.overwritingPageData(NewsSet(
+    pageData._addingNewData(NewsSet(
       featuredNews: null,
       latestdNews: response.data,
     ));
-    status.setLatest(StatusContent.isViewContent);
+
+    status.latest._setScroll(StatusContent.isViewContent);
     notifyListeners();
   }
 
@@ -142,22 +153,17 @@ final class NewsProvider extends ChangeNotifier with _State {
     notifyListeners();
   }
 
-  /// Loading news data and setting the mark `viewed`
-  Future<bool> getDetailNews(int item) async {
-    return true;
-  }
-
   /// Setting the data display status for the `featured` and `latest` list news
   void _setDisplayingDownloadedData() {
     if (pageData.newSet.listFeaturedNews.isNotEmpty) {
-      status.setFeatured(StatusContent.isViewContent);
+      status.featured._setSection(StatusSection.isViewContent);
     } else {
-      status.setFeatured(StatusContent.isEmptyContent);
+      status.featured._setSection(StatusSection.isNoContent);
     }
     if (pageData.newSet.listLatestdNews.isNotEmpty) {
-      status.setFeatured(StatusContent.isViewContent);
+      status.latest._setSection(StatusSection.isViewContent);
     } else {
-      status.setFeatured(StatusContent.isEmptyContent);
+      status.latest._setSection(StatusSection.isNoContent);
     }
     notifyListeners();
   }
@@ -168,23 +174,24 @@ final class NewsProvider extends ChangeNotifier with _State {
   /// already been loaded or is being loaded for the first time.
   bool _isCorrectData(NewsSet? data) {
     if (data != null) return true;
-    if (pageData.newSet.listFeaturedNews.isEmpty && pageData.newSet.listLatestdNews.isEmpty) {
-      // Used if the data could not be loaded at all.
-      status.setAll(StatusContent.isNoContent);
-    } else {
-      //? Checking previously uploaded data for featured news
-      if (pageData.newSet.listFeaturedNews.isEmpty) {
-        status.setFeatured(StatusContent.isNoContent);
-      } else {
-        status.setFeatured(StatusContent.isEmptyContent);
-      }
-      //? Checking previously uploaded data for latest news
-      if (pageData.newSet.listLatestdNews.isEmpty) {
-        status.setLatest(StatusContent.isNoContent);
-      } else {
-        status.setLatest(StatusContent.isEmptyContent);
-      }
-    }
+    status._setAll(StatusSection.isNoContent);
+    // if (pageData.newSet.listFeaturedNews.isEmpty && pageData.newSet.listLatestdNews.isEmpty) {
+    //   // Used if the data could not be loaded at all.
+
+    // } else {
+    //   //? Checking previously uploaded data for featured news
+    //   if (pageData.newSet.listFeaturedNews.isEmpty) {
+    //     status.setFeatured(StatusContent.isNoContent);
+    //   } else {
+    //     status.setFeatured(StatusContent.isEmptyContent);
+    //   }
+    //   //? Checking previously uploaded data for latest news
+    //   if (pageData.newSet.listLatestdNews.isEmpty) {
+    //     status.setLatest(StatusContent.isNoContent);
+    //   } else {
+    //     status.setLatest(StatusContent.isEmptyContent);
+    //   }
+    // }
     notifyListeners();
     return false;
   }

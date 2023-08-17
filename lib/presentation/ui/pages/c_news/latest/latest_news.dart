@@ -16,11 +16,11 @@ class LatestNews extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Selector<NewsProvider, StatusContent>(
-            selector: (_, Model) => Model.status.statusLatestNews,
+          child: Selector<NewsProvider, StatusSection>(
+            selector: (_, Model) => Model.status.latest.statusSection,
             builder: (_, status, child) {
               return switch (status) {
-                StatusContent.isNoContent => const NotAvailableLatestContent(),
+                StatusSection.isNoContent => const NotAvailableLatestContent(),
                 _ => child!,
               };
             },
@@ -37,11 +37,11 @@ class WrapLatestContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<NewsProvider, StatusContent>(
-      selector: (_, Model) => Model.status.statusFeaturedNews,
+    return Selector<NewsProvider, StatusSection>(
+      selector: (_, Model) => Model.status.latest.statusSection,
       builder: (_, status, child) {
         return switch (status) {
-          StatusContent.isLoadContent => const PreloadLatestContent(),
+          StatusSection.isLoadContent => const PreloadLatestContent(),
           _ => child!,
         };
       },

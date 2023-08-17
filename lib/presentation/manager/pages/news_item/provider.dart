@@ -21,21 +21,21 @@ final class ItemNewsProvider extends ChangeNotifier with _State {
     _setActionsPage(ActionStatus.isAction);
     //? Formation of request parameters.
     final newstDTO = ItemNewsDTO(index, idSource: idSource, target: target);
-    _setContentStatus(StatusContent.isLoadContent);
+    _setContentStatus(StatusSection.isLoadContent);
     final response = await _newsCase.getItemNews(newstDTO);
     _setActionsPage(ActionStatus.isDone);
     //? Checking for failure.
     if (_isFail(response.fail) || response.data == null) {
-      _setContentStatus(StatusContent.isLoadContent);
+      _setContentStatus(StatusSection.isLoadContent);
       return false;
     }
     //?
     pageData.overwritingPageData(response.data!);
-    _setContentStatus(StatusContent.isViewContent);
+    _setContentStatus(StatusSection.isViewContent);
     return true;
   }
 
-  void _setContentStatus(StatusContent val) {
+  void _setContentStatus(StatusSection val) {
     status.statusItemNews = val;
     notifyListeners();
   }

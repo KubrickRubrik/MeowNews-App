@@ -4,9 +4,9 @@ import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/entity/dto/signpost.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:news_test/presentation/manager/pages/news_item/provider.dart';
+import 'package:news_test/presentation/ui/components/image.dart';
 import 'package:news_test/presentation/ui/components/toast.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
-import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/banner.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/title.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/viewed.dart';
 import 'package:provider/provider.dart';
@@ -57,16 +57,8 @@ class ItemLatestNewsBanner extends StatelessWidget {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: BannerLatestNews(news.banner.mainUrl),
+                    child: ComponentImage(news.banner.mainUrl),
                   ),
-
-                  //? Title news
-                  // Positioned(
-                  //   bottom: 0,
-                  //   left: 0,
-                  //   right: 0,
-                  //   child: TitleLatestNews(news),
-                  // ),
                   //? PublishedAt
                   // Positioned(
                   //   top: 0,

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/banner.dart';
+import 'package:news_test/presentation/ui/components/image.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/featured.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/navigate.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/item/title.dart';
@@ -35,7 +35,7 @@ class ItemFeaturedNews extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: BannerFeaturedNews(news.banner.mainUrl),
+              child: ComponentImage(news.banner.mainUrl),
             ),
             //? Title news
             Positioned(

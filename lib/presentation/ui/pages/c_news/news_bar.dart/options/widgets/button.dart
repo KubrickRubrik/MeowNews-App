@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
-import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +19,12 @@ class SectionButtonSearch extends StatelessWidget {
       ),
       clipBehavior: Clip.hardEdge,
       alignment: Alignment.center,
-      child: Selector<NewsProvider, (StatusContent, StatusContent)>(
-        selector: (_, Model) => (Model.status.statusFeaturedNews, Model.status.statusLatestNews),
+      child: Selector<NewsProvider, (StatusSection, StatusSection)>(
+        selector: (_, Model) => (Model.status.featured.statusSection, Model.status.latest.statusSection),
         builder: (_, model, child) {
-          return switch ((model.$1, model.$2)) {
-            (StatusContent.isLoadContent || StatusContent.isLoadContent) => const CircularProgressIndicator.adaptive(),
-            (StatusContent.isNoContent || StatusContent.isNoContent) => const _ButtonUpdateSearch(),
-            _ => child!,
-          };
+          if ([model.$1, model.$2].contains(StatusSection.isLoadContent)) return const CircularProgressIndicator.adaptive();
+          if ([model.$1, model.$2].contains(StatusSection.isNoContent)) return const _ButtonUpdateSearch();
+          return child!;
         },
         child: Material(
           color: Colors.transparent,
