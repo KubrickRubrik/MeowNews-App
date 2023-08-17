@@ -1,28 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:news_test/core/config/entity.dart';
+import 'package:news_test/presentation/manager/entity/dto/signpost.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
 
-class LatestNews extends StatelessWidget {
-  const LatestNews({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8),
-        child: ListView.separated(
-          itemCount: 10,
-          separatorBuilder: (_, __) => const SizedBox(height: 8),
-          itemBuilder: (context, index) {
-            return ItemLatestNewsBanner(index: index);
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class ItemLatestNewsBanner extends StatelessWidget {
-  const ItemLatestNewsBanner({super.key, required this.index});
+class ItemPreloadedLatestNews extends StatelessWidget {
+  const ItemPreloadedLatestNews({super.key, required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -32,6 +14,9 @@ class ItemLatestNewsBanner extends StatelessWidget {
         decoration: BoxDecoration(
           color: const Color(0xFFE0E0E0),
           borderRadius: BorderRadius.circular(16),
+          boxShadow: const [
+            BoxShadow(offset: Offset(0, 1), blurRadius: 2, spreadRadius: -1),
+          ],
         ),
         clipBehavior: Clip.hardEdge,
         child: Stack(
@@ -44,7 +29,7 @@ class ItemLatestNewsBanner extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     PagesNavigator.newsDetailRoute,
-                    arguments: index,
+                    arguments: NewsSignpost(TargetNews.featured, index),
                   );
                 },
               ),

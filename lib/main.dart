@@ -8,6 +8,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ServicesLocator.setup();
   await locator<NewsProvider>().getInitNews();
+  // runApp(const StartPage());
   runApp(
     DevicePreview(
       enabled: true,

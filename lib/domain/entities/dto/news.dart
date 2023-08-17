@@ -1,22 +1,18 @@
 import 'package:news_test/core/config/entity.dart';
-import 'package:news_test/data/models/dto/dto.dart';
+import 'package:news_test/domain/entities/interfaces/dto.dart';
 
 final class NewsDTO extends Dto<String> {
   final String? searchWord;
   final TargetNews target;
   final int page;
-  final AvailableCountryNews? country;
   final AvailableLanguageNews? language;
-  final AvailableCategoryNews? category;
   final int pageSize;
 
   NewsDTO(
     this.page, {
     required this.target,
     this.searchWord,
-    this.country,
     this.language,
-    this.category,
     this.pageSize = 30,
   });
 
@@ -24,7 +20,6 @@ final class NewsDTO extends Dto<String> {
   String getDataRequest() {
     String requestString = '';
     if (target == TargetNews.featured) {
-      // requestString = 'top-headlines?';
       requestString = 'everything?';
       requestString += (searchWord == null) ? 'q=IT' : 'q=$searchWord';
       requestString += '&sortBy=popularity';
@@ -32,12 +27,10 @@ final class NewsDTO extends Dto<String> {
       requestString = 'everything?';
       requestString += (searchWord == null) ? 'q=IT' : 'q=$searchWord';
       requestString += '&sortBy=publishedAt';
-      // requestString += (country == null) ? '&country=ru' : '&country=${country!.name}';
     }
     if (language != null) requestString += '&language=${language!.name}';
-    if (category != null) requestString += '&category=${category!.name}';
     requestString += '&pageSize=$pageSize&page=$page';
-
+    print("REQ: $requestString");
     return requestString;
   }
 }

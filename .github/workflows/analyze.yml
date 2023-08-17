@@ -1,32 +1,30 @@
 name: Analyze code
 
-on: # позволяет указать одно или несколько событий, при регистрации которых мы хотим запускать наш workflow
-  # push:
-  pull_request: #. workflow будет реагировать на создание пул-реквеста и собирать проект из изменённой кодовой базы
-    branches: ["develop"] # только пул-реквесты, направленные в основную ветку проекта.
+on: 
+  pull_request: 
+    branches: ["develop"] 
     paths-ignore:
-      - "docs/**" # игнорирование файлов по маске пути.
-      - "openapi/**" # игнорирование файлов по маске пути.
-      - ".vscode/**" # игнорирование файлов по маске пути.
-jobs: # содержит пошаговое описание действий (steps), которые мы производим с нашим проектом (исполняются параллельно, если не указано иное)
+      - "docs/**" 
+      - "openapi/**" 
+      - ".vscode/**" 
+jobs: 
   build:
     name: Analyze code
-    runs-on: ubuntu-latest # платформа сборки
+    runs-on: ubuntu-latest 
     steps:
-      - uses: actions/checkout@v3 # официальный action для клонирования репозитория с массой настроек. Так как workflow запускается непосредственно в репозитории, который мы клонируем, нам не нужно указывать его явно.
-      - uses: actions/setup-java@v3 # официальный action для настройки Java-окружения;
+      - uses: actions/checkout@v3 
+      - uses: actions/setup-java@v3 
         with:
           distribution: 'zulu'
           java-version: "12.x"
           cache: 'gradle'
 
-      - uses: subosito/flutter-action@v2 # неофициальный action для скачивания и установки Flutter SDK
+      - uses: subosito/flutter-action@v2 
         with:
           channel: "stable"
           cache: true
       - name: Create key.properties
-        run: flutter pub get # - run: sh ./scripts/flutter_pub_get.sh
+        run: flutter pub get 
       
       - name: Show right error 
-        run: sh ./.github/scripts/flutter_analyze.sh # - run: flutter analyze
-      # - run: flutter test # не использовать до тех пор, пока не будет готов хотя бы один тест.
+        run: sh ./.github/scripts/flutter_analyze.sh 

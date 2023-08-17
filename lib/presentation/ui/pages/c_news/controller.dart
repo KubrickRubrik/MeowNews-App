@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/button.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/featured_news.dart';
-import 'package:news_test/presentation/ui/pages/c_news/widgets/latest_news.dart';
+import 'package:news_test/presentation/ui/pages/c_news/news_bar.dart/bar.dart';
+import 'package:news_test/presentation/ui/pages/c_news/appbar/button.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/featured_news.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/latest_news.dart';
 import 'package:provider/provider.dart';
 
 class NewsPage extends StatelessWidget {
@@ -18,7 +19,7 @@ class NewsPage extends StatelessWidget {
             backgroundColor: Colors.blueGrey.shade800,
             centerTitle: false,
             title: const Text(
-              "News",
+              "Meow, news",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -31,21 +32,26 @@ class NewsPage extends StatelessWidget {
           body: const Flex(
             direction: Axis.vertical,
             children: [
+              SizedBox(height: 8),
               //? Featured news (horizontal scrolllist)
               FeaturedNews(),
+              SizedBox(height: 4),
+              //? Set news and search options.
+              NewsOptionsBar(),
+              SizedBox(height: 8),
               //? Featured news (vertical scrolllist)
               LatestNews(),
             ],
           ),
-          bottomNavigationBar: SizedBox(
-            height: 80,
-            child: FloatingActionButton(
-              onPressed: () {
-                locator<NewsProvider>().getInitNews();
-              },
-              child: const Icon(Icons.touch_app),
-            ),
-          ),
+          // bottomNavigationBar: SizedBox(
+          //   height: 80,
+          //   child: FloatingActionButton(
+          //     onPressed: () {
+          //       locator<NewsProvider>().getInitNews();
+          //     },
+          //     child: const Icon(Icons.touch_app),
+          //   ),
+          // ),
         ));
   }
 }

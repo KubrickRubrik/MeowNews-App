@@ -1,44 +1,38 @@
-#! Source https://blog.logrocket.com/flutter-ci-cd-using-github-actions/
 name: Android Release
 
-on: # позволяет указать одно или несколько событий, при регистрации которых мы хотим запускать наш workflow
-  pull_request: #. workflow будет реагировать на создание пул-реквеста и собирать проект из изменённой кодовой базы
-    branches: ["release-**"] # только пул-реквесты, направленные в основную ветку проекта.
+on: 
+  pull_request: 
+    branches: ["release-**"] 
     paths-ignore:
-      - "docs/**" # игнорирование файлов по маске пути.
-      - "openapi/**" # игнорирование файлов по маске пути.
-      - ".vscode/**" # игнорирование файлов по маске пути.
-  # Позволяет запускать этот рабочий процесс вручную на вкладке 
-  # Действия из репозитория GitHub (запуск рабочего процесса состоит 
-  # из одного или нескольких заданий, которые могут выполняться последовательно или параллельно)l  
+      - "docs/**" 
+      - "openapi/**" 
+      - ".vscode/**" 
+
   workflow_dispatch: 
 
 
-jobs: # содержит пошаговое описание действий (steps), которые мы производим с нашим проектом (исполняются параллельно, если не указано иное)
-  #! 1 Создана новая версия задания, которая будет выполняться перед заданием сборки
+jobs: 
   version:
     name: Create version number
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      # 2 Установил GitVersion, инструмент, используемый для управления версиями, просматривая историю Git разработчика
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.10.2
         with:
           versionSpec: "5.12.x" 
+
       - name: Use GitVersion
         id: gitversion
         uses: gittools/actions/gitversion/execute@v0.10.2
-      # 3 Опубликовано с использованием GitVersion, с размещением версии в version.text файле
+  
       - name: Create version.txt with nuGetVersion
         run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
-      # 4 Загрузил version.text файл как артефакт для системы actions с именем, 
-      # gitversion которое будет использоваться позже в задании сборки
+      
       - name: Upload version.txt
         uses: actions/upload-artifact@v2
         with:
@@ -46,107 +40,63 @@ jobs: # содержит пошаговое описание действий (s
           path: version.txt
   build:
     name: Create Android Build
-    # 1 Добавлена зависимость от задания версии для последовательного запуска этого
+  
     needs: version
-    runs-on: ubuntu-latest # платформа сборки
+    runs-on: ubuntu-latest 
     steps:
-      - uses: actions/checkout@v3 # официальный action для клонирования репозитория с массой настроек. Так как workflow запускается непосредственно в репозитории, который мы клонируем, нам не нужно указывать его явно.
-      # 2 Загрузил файл версии, загруженный в первом задании, используя имя
+      - uses: actions/checkout@v3 
+
       - name: Get version.txt
         uses: actions/download-artifact@v2
         with:
           name: gitversion
-        # 3  Создан новый файл без newline char из version.txt
+      
       - name: Create new file without newline char from version.txt
         run: tr -d '\n' < version.txt > version1.txt
-        # 4 Прочитайте обновленную версию из version1.txt файла
+        
       - name: Read version
         id: version
         uses: juliangruber/read-file-action@v1
         with:
           path: version1.txt
-        # 5 Обновил pubspec.yml файл, указав в нем идентификатор версии
+       
       - name: Update version in YAML
         run: sed -i 's/99.99.99+99/${{ steps.version.outputs.content }}+${{ github.run_number }}/g' pubspec.yaml  
-        # 6 Расшифровано base64 закодированное значение хранилища ключей, сохраненное в качестве секрета в ID android_keystore
+     
       - name: Download Android keystore
         id: android_keystore
         uses: timheuer/base64-to-file@v1.0.3
         with:
           fileName: upload-keystore.jks
           encodedString: ${{ secrets.KEYSTORE_BASE64 }}  
-        # 7 Создан key.properties с использованием секретов и android_keystore
+        
       - name: Create key.properties
         run: |
           echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-        # 8 Загрузил пакет выпуска Android в качестве артефакта для использования в следующем задании
-      - uses: actions/setup-java@v3 # официальный action для настройки Java-окружения;
+      - uses: actions/setup-java@v3
         with:
           distribution: "zulu"
           java-version: "12.x"
           cache: "gradle"
 
-      - uses: subosito/flutter-action@v2 # неофициальный action для скачивания и установки Flutter SDK
+      - uses: subosito/flutter-action@v2 
         with:
-          # flutter-version: "3.0.0"
           channel: "stable"
           cache: true
       - name: Create key.properties
-        run: flutter pub get # - run: sh ./scripts/flutter_pub_get.sh
+        run: flutter pub get 
+
       - name: Show right error      
-        run: sh ./.github/scripts/flutter_analyze.sh # - run: flutter analyze
-      # - run: flutter test # не использовать до тех пор, пока не будет готов хотя бы один тест.
-      #  - run: flutter build apk --debug # можно использовать flavors и build type
+        run: sh ./.github/scripts/flutter_analyze.sh 
+     
       - name: Start Android Release Build
-        run: flutter build apk --release # можно использовать flavors и build type
+        run: flutter build apk --release 
         # 9
       - name: Upload Android Release
         uses: actions/upload-artifact@v2  
         with:
           name: android-release
           path: build/app/outputs/apk/release/app-release.apk
-          # tag: v1.0.${{github.run_number}} # уникальный каждый раз
-          # token: ${{secrets.TOKEN}}
-      #  - name: Push to Release
-      #    with:
-      #      artifact: "build/app/outputs/apk/release/*"
-      #      tag: v1.0.${{github.run_number}} # уникальный каждый раз
-      #      token: ${{secrets.TOKEN}}
-
-
-      # - name: Upload artifact to Firebase App Distribution
-      #    uses: wzieba/Firebase-Distribution-Github-Action@v1
-      #    with:
-      #      appId: ${{ secrets.FIREBASE_ANDROID_PROD_APP_ID }}
-      #      token: ${{ secrets.FIREBASE_TOKEN }}
-      #      groups: testers
-      #      file: build/app/outputs/apk/dev/debug/apk_name.apk
-      #      debug: true
-
-  #! Теперь нужно пакет отправить его в Play Store   
-  # deploy:
-  #   name: Deploy Android Build
-  #   # 1 Добавлена зависимость для последовательного выполнения этого задания
-  #   needs: build
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #     # 2 Загрузил сборку Android с artificats, используя имя android-release
-  #   - name: Get Android Build from artifacts
-  #     uses: actions/download-artifact@v2
-  #     with:
-  #       name: android-release
-  #     # 3 Использовал upload-google.play@v1 рабочий процесс с PLAYSTORE_ACCOUNT_KEY секретом, 
-  #     # именем пакета вашего приложения, дорожкой, в которой вы хотите загрузить сборку, и ее статусом
-  #   - name: Release Build to internal track
-  #     uses: r0adkll/upload-google-play@v1
-  #     with:
-  #       serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
-  #       packageName: <YOUR_PACKAGE_NAME>
-  #       releaseFiles: app-release.aab
-  #       track: alpha
-  #       status: completed

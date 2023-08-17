@@ -1,9 +1,10 @@
-class NewsEntity {
+final class NewsEntity {
   final String? author;
   final BannersNewsEntity banner;
   final ContentNewsEntity content;
   final DateTime? publishedAt;
   final SourceNewsEntity source;
+  bool viewed = false;
 
   NewsEntity({
     required this.author,
@@ -17,12 +18,10 @@ class NewsEntity {
 final class ContentNewsEntity {
   final String title;
   final String? description;
-  final String? content;
 
   ContentNewsEntity({
     required this.title,
     required this.description,
-    required this.content,
   });
 }
 
@@ -33,7 +32,7 @@ final class BannersNewsEntity {
 }
 
 final class SourceNewsEntity {
-  final String? id;
+  final String id;
   final String name;
 
   SourceNewsEntity({
