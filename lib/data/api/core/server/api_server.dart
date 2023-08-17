@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:news_test/core/errors/exception.dart';
 import 'package:news_test/data/api/core/server/request/request.dart';
 import 'package:news_test/data/api/interfaces/api.dart';
-import 'package:news_test/data/models/dto/dto.dart';
+import 'package:news_test/domain/entities/interfaces/dto.dart';
 import 'package:news_test/data/models/vo/item_news.dart';
 import 'package:news_test/data/models/vo/news.dart';
 import 'package:news_test/domain/entities/dto/item_news.dart';
@@ -46,7 +48,13 @@ class ApiServer with _AdditionAction implements ApiEnvelope {
 
   @override
   Future<List<String>?> setViewedNews(Dto dto) async {
-    // final queryString = (dto as ViewedNewsDTO).getDataRequest();
+    // The news source API does not have an implementation of
+    // setting the news status to "viewed".
+    //
+    // Therefore, a list of news ID inputs is simply returned as a response.
+    final queryString = (dto as ViewedNewsDTO).getDataRequest();
+    final response = jsonDecode(queryString);
+    return response;
     // //? Get featured news.
     // final response = await ConfigRequestServer.request(apiServer, query: queryString);
     // //? Data existence check.

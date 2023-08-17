@@ -19,7 +19,7 @@ class NewsPage extends StatelessWidget {
             backgroundColor: Colors.blueGrey.shade800,
             centerTitle: false,
             title: const Text(
-              "News",
+              "Meow, news",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -43,15 +43,15 @@ class NewsPage extends StatelessWidget {
               LatestNews(),
             ],
           ),
-          bottomNavigationBar: SizedBox(
-            height: 80,
-            child: FloatingActionButton(
-              onPressed: () {
-                locator<NewsProvider>().getInitNews();
-              },
-              child: const Icon(Icons.touch_app),
-            ),
-          ),
+          // bottomNavigationBar: SizedBox(
+          //   height: 80,
+          //   child: FloatingActionButton(
+          //     onPressed: () {
+          //       locator<NewsProvider>().getInitNews();
+          //     },
+          //     child: const Icon(Icons.touch_app),
+          //   ),
+          // ),
         ));
   }
 }

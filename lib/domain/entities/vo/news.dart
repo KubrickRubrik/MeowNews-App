@@ -32,7 +32,7 @@ final class BannersNewsEntity {
 }
 
 final class SourceNewsEntity {
-  final String? id;
+  final String id;
   final String name;
 
   SourceNewsEntity({

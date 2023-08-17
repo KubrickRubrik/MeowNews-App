@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 final class NewsModel {
   final String? author;
   final String titleNews;
@@ -16,10 +18,11 @@ final class NewsModel {
 }
 
 final class SourceNewsModel {
-  final String? id;
+  final String id;
   final String name;
-
+  // UniqueKey is used because the news api
+  // sometimes provides news without an ID.
   SourceNewsModel(Map<String, dynamic> data)
-      : id = data['id'],
+      : id = UniqueKey().toString(), // Another little trick
         name = data['name'];
 }

@@ -3,12 +3,14 @@ final class ItemNewsEntity {
   final String? author;
   final BannersItemNewsEntity banner;
   final ContentItemNewsEntity content;
+  final SourceItemNewsEntity source;
   final DateTime? publishedAt;
 
   ItemNewsEntity({
     required this.author,
     required this.banner,
     required this.content,
+    required this.source,
     required String? publishedAt,
   }) : publishedAt = DateTime.tryParse(publishedAt!);
 
@@ -16,6 +18,7 @@ final class ItemNewsEntity {
       : author = '',
         banner = BannersItemNewsEntity.empty(),
         content = ContentItemNewsEntity.empty(),
+        source = SourceItemNewsEntity.empty(),
         publishedAt = null;
 }
 
@@ -38,4 +41,18 @@ final class BannersItemNewsEntity {
   BannersItemNewsEntity({required this.mainUrl});
 
   BannersItemNewsEntity.empty() : mainUrl = null;
+}
+
+final class SourceItemNewsEntity {
+  final String? id;
+  final String name;
+
+  SourceItemNewsEntity({
+    required this.id,
+    required this.name,
+  });
+
+  SourceItemNewsEntity.empty()
+      : id = null,
+        name = '';
 }

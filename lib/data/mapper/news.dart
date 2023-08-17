@@ -31,6 +31,7 @@ abstract final class EntitiesNewsMapper {
         title: model.titleNews,
         description: model.descriptionNews,
       ),
+      source: SourceItemNewsEntity(id: model.source.id, name: model.source.name),
       publishedAt: model.publishedAt,
     );
   }

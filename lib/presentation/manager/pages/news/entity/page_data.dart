@@ -9,8 +9,6 @@ final class _PageData {
 
   // Overwriting the used idSeries and clean for new data.
   void _overwritingPageData(NewsSet data) {
-    print("FEATURED: ${data.listFeaturedNews.length}");
-    print("LATEST: ${data.listLatestdNews.length}");
     newSet.listFeaturedNews.clear();
     newSet.listLatestdNews.clear();
     if (data.listFeaturedNews.isNotEmpty) newSet.listFeaturedNews.addAll(data.listFeaturedNews);
@@ -18,13 +16,11 @@ final class _PageData {
   }
 
   void _addingNewData(NewsSet data) {
-    print("FEATURED: ${data.listFeaturedNews.length}");
-    print("LATEST: ${data.listLatestdNews.length}");
     if (data.listFeaturedNews.isNotEmpty) newSet.listFeaturedNews.addAll(data.listFeaturedNews);
     if (data.listLatestdNews.isNotEmpty) newSet.listLatestdNews.addAll(data.listLatestdNews);
   }
 
-  // Getting the page number depending on the number of already loaded news
+  // Getting the page number depending on the number of already loaded news.
   int getItemPage(TargetNews target) {
     int page = 0;
     ({int length, int countInPage}) data = switch (target) {
@@ -46,10 +42,16 @@ final class _PageData {
     return page;
   }
 
+  // Selection of all IDs for all currently loaded news.
   List<String> getAllIdNews() {
-    return [];
+    final listIDNews = <String>[];
+    for (final news in [...newSet.listFeaturedNews, ...newSet.listLatestdNews]) {
+      listIDNews.add(news.source.id);
+    }
+    return listIDNews;
   }
 
+  // Setting for all downloaded news the status "viewed".
   void setAllNewsViewedStatus(List<String> listIdNews) {
     for (final idSource in listIdNews) {
       final itemFeaturedNews = newSet.listFeaturedNews.firstWhereOrNull((element) => element.source.id == idSource);

@@ -1,5 +1,5 @@
 import 'package:news_test/core/config/entity.dart';
-import 'package:news_test/data/models/dto/dto.dart';
+import 'package:news_test/domain/entities/interfaces/dto.dart';
 
 final class ItemNewsDTO extends Dto<String> {
   final String? idSource;

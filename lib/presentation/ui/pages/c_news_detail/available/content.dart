@@ -19,19 +19,35 @@ class AvailableDetailsNews extends StatelessWidget {
           ),
         ),
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.only(left: 8, right: 8),
-        child: Column(
-          children: [
-            //? Title of news.
-            ItemTitleNews(),
-            //? Banner of news.
-            ItemBannerNews(),
-            SizedBox(height: 16),
-            //? Description of news.
-            ItemDescriptionNews(),
-            SizedBox(height: 16),
-          ],
+      body: const DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF1A224A),
+              Color(0xFF34407C),
+              Color(0xFF1A224A),
+            ],
+          ),
+        ),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 8, right: 8),
+            child: Column(
+              children: [
+                //? Title of news.
+                ItemTitleNews(),
+                //? Banner of news.
+                ItemBannerNews(),
+                SizedBox(height: 16),
+                //? Description of news.
+                ItemDescriptionNews(),
+                SizedBox(height: 16),
+              ],
+            ),
+          ),
         ),
       ),
     );

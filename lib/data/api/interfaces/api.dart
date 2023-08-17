@@ -1,4 +1,4 @@
-import 'package:news_test/data/models/dto/dto.dart';
+import 'package:news_test/domain/entities/interfaces/dto.dart';
 import 'package:news_test/data/models/vo/item_news.dart';
 import 'package:news_test/data/models/vo/news.dart';
 

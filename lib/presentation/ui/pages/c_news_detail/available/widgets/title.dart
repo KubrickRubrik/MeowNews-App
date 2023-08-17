@@ -14,10 +14,12 @@ class ItemTitleNews extends StatelessWidget {
         builder: (_, title, __) {
           return Text(
             title,
-            style: TextStyle(
-              color: Colors.indigo.shade700,
+            style: const TextStyle(
+              color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 21,
+              letterSpacing: 1.1,
+              height: 1.5,
             ),
           );
         },

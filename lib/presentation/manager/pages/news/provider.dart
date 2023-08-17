@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/core/errors/failure.dart';
-import 'package:news_test/data/models/dto/dto.dart';
+import 'package:news_test/domain/entities/interfaces/dto.dart';
 import 'package:news_test/domain/entities/dto/item_news.dart';
 import 'package:news_test/domain/entities/dto/news.dart';
 import 'package:news_test/domain/entities/dto/viewed.dart';
@@ -27,13 +27,13 @@ final class NewsProvider extends ChangeNotifier with _State {
     final featuredNewsDTO = NewsDTO(
       1,
       target: TargetNews.featured,
-      country: AvailableCountryNews.us,
-      language: AvailableLanguageNews.en,
+      language: AvailableLanguageNews.ru,
       pageSize: pageData.featuredNewsCount,
     );
     final latestNewsDTO = NewsDTO(
       1,
       target: TargetNews.latest,
+      language: AvailableLanguageNews.ru,
       pageSize: pageData.latestNewsCount,
     );
     //? Request.
@@ -65,7 +65,6 @@ final class NewsProvider extends ChangeNotifier with _State {
     final dto = NewsDTO(
       pageData.getItemPage(TargetNews.featured),
       target: TargetNews.featured,
-      country: AvailableCountryNews.us,
       language: AvailableLanguageNews.en,
       pageSize: pageData.featuredNewsCount,
     );
