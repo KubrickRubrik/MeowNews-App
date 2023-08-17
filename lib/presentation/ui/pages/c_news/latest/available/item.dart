@@ -15,14 +15,13 @@ class ItemLatestNewsBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final news = context.read<NewsProvider>().pageData.newSet.listLatestdNews.elementAt(index);
-    print(news.banner.mainUrl);
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          PagesNavigator.newsDetailRoute,
-          arguments: NewsSignpost(TargetNews.latest, index),
-        );
+        context.read<NewsProvider>().getDetailNews(index).then((value) {
+          if (value) {
+            Navigator.pushNamed(context, PagesNavigator.newsDetailRoute, arguments: NewsSignpost(TargetNews.latest, index));
+          } else {}
+        });
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
