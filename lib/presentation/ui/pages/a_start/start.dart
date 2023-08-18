@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/session/provider.dart';
-import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/components/localization/controller.dart';
 import 'package:news_test/presentation/ui/components/themes/controller.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
@@ -46,7 +45,7 @@ class _StartPageState extends State<StartPage> {
             supportedLocales: AppLocalization.supportedLocales,
             localizationsDelegates: AppLocalization.localizationsDelegates,
             //? Main
-            title: context.lcz.titleApp,
+            title: 'MeowNews',
             home: const NewsPage(),
             scrollBehavior: AppScrollBehavior(),
             //? Layout correction

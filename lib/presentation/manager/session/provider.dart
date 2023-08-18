@@ -9,9 +9,9 @@ part 'entity/page_data.dart';
 /// voice acting (if a more complex configuration model is not required).
 ///
 /// Currently the user session is not in use and the class is added for
-/// demonstration purposes only
+/// demonstration purposes only.
 final class SessionProvider extends ChangeNotifier with _State {
-  // 1. User session data request
-  // 2. Localization settings
-  // 3. Theme customization
+  // 1. User session data request.
+  // 2. Localization settings.
+  // 3. Theme customization.
 }

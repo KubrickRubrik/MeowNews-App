@@ -1,85 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:news_test/presentation/locator/locator.dart';
+import 'package:news_test/presentation/manager/pages/news_item/provider.dart';
+import 'package:news_test/presentation/ui/pages/c_news_detail/available/content.dart';
+import 'package:provider/provider.dart';
 
-class NewsDetailsPage extends StatelessWidget {
-  const NewsDetailsPage(this.data, {super.key});
-  final Object? data;
+class ItemNewsDetailsPage extends StatefulWidget {
+  const ItemNewsDetailsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.indigo,
-        title: const Text(
-          "Reading the news",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-      ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.only(left: 8, right: 8, top: 8),
-        child: Column(
-          children: [
-            //? Banner of news
-            ItemBannerNews(),
-            SizedBox(height: 16),
-            //? Title of news
-            ItemTitleNews(),
-            SizedBox(height: 16),
-            //? Description of news
-            ItemDescriptionNews(),
-          ],
-        ),
-      ),
-    );
-  }
+  State<ItemNewsDetailsPage> createState() => _ItemNewsDetailsPageState();
 }
 
-class ItemBannerNews extends StatelessWidget {
-  const ItemBannerNews({super.key});
+class _ItemNewsDetailsPageState extends State<ItemNewsDetailsPage> {
+  // @override
+  // initState(){
+  // There are two ways to download and display a detailed news description:
+  // 1. Query news details when clicking on an `item news` in the list of news on the page [NewsPage];
+  //    - In this case, will need to display the loading status on this `item news`.
+  //    - The transition to the page for viewing the news is performed after the
+  //      complete download of the necessary data.
+  //
+  // 2. Query news data after navigating to the [NewsDetailsPage] from the [NewsPage]
+  //    - In this case, will need to display the loading status on all page [NewsDetailsPage].
+  //    - The request will have to be executed in the InitState inside `WidgetsBinding.instance.addPostFrameCallback`
+  //
+  // For this example, the first option is chosen.
+  // }
 
   @override
-  Widget build(BuildContext context) {
-    return const AspectRatio(
-      aspectRatio: 1.6,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Color(0xFFE0E0E0),
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-        child: FlutterLogo(),
-      ),
-    );
+  void dispose() {
+    locator<ItemNewsProvider>().reset();
+    super.dispose();
   }
-}
-
-class ItemTitleNews extends StatelessWidget {
-  const ItemTitleNews({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "Очень длинное длинное описание новости, которое может занимать много места.",
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-      ),
-    );
-  }
-}
-
-class ItemDescriptionNews extends StatelessWidget {
-  const ItemDescriptionNews({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      "Очень длинное длинное описание новости, которое может занимать много места.",
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
-      ),
+    return ChangeNotifierProvider.value(
+      value: locator<ItemNewsProvider>(),
+      child: const AvailableDetailsNews(),
     );
   }
 }
