@@ -2,8 +2,8 @@ part of '../provider.dart';
 
 final class _PageData {
   // Number of downloaded news in one request (for one page).
-  final _featuredNewsCount = 5;
-  final _latestNewsCount = 10;
+  final _featuredNewsCount = 6;
+  final _latestNewsCount = 12;
   // Main data list of news
   final newSet = NewsSet.empty();
   final newBar = _NewsBar();

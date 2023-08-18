@@ -19,7 +19,7 @@ class SectionLanguage extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.contain,
               child: Text(
-                "EN",
+                "RU",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

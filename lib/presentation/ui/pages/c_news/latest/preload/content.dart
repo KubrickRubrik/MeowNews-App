@@ -6,15 +6,10 @@ class PreloadLatestContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      controller: ScrollController(),
-      padding: const EdgeInsets.only(left: 8, right: 8),
-      shrinkWrap: true,
-      itemCount: 10,
-      separatorBuilder: (_, __) => const SizedBox(height: 8),
-      itemBuilder: (context, index) {
-        return ItemPreloadedLatestNews(index: index);
-      },
+    return SliverList(
+      delegate: SliverChildListDelegate.fixed(
+        List.generate(10, (index) => ItemPreloadedLatestNews(index: index)),
+      ),
     );
   }
 }

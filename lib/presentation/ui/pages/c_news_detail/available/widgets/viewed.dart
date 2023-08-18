@@ -21,7 +21,7 @@ class IsViewedItemNews extends StatelessWidget {
 }
 
 class _ViewedMessage extends StatefulWidget {
-  const _ViewedMessage({super.key});
+  const _ViewedMessage();
 
   @override
   State<_ViewedMessage> createState() => _ViewedMessageState();

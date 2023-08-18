@@ -16,8 +16,10 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
   @override
   void initState() {
     myFocusNode.addListener(() {
-      isFocus = myFocusNode.hasFocus;
-      setState(() {});
+      if (mounted) {
+        isFocus = myFocusNode.hasFocus;
+        // setState(() {});
+      }
     });
     super.initState();
   }
@@ -34,7 +36,7 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.ease,
       height: 36,
-      width: isFocus ? MediaQuery.of(context).size.width / 4 : 60,
+      width: isFocus ? MediaQuery.of(context).size.width / 3 : 80,
       margin: const EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -52,16 +54,17 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
           ),
         ],
       ),
+      alignment: Alignment.bottomCenter,
       child: TextField(
-        focusNode: myFocusNode,
+        // focusNode: myFocusNode,
         maxLength: 24,
         style: TextStyle(
           overflow: TextOverflow.ellipsis,
           color: Colors.blueGrey.shade800,
           fontWeight: FontWeight.bold,
           fontSize: 16,
-          height: 1.2,
         ),
+        textInputAction: TextInputAction.search,
         onChanged: (value) {
           context.read<NewsProvider>().setSearchWord(value);
         },
@@ -70,8 +73,6 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
           context.read<NewsProvider>().getInitNews();
         },
         textAlign: TextAlign.center,
-        cursorColor: Colors.white,
-        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           isCollapsed: true,
           border: InputBorder.none,
@@ -81,11 +82,9 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
             color: Colors.blueGrey.shade700,
             fontWeight: FontWeight.bold,
             fontSize: 16,
-            height: 1.2,
           ),
-          contentPadding: const EdgeInsets.only(left: 4, top: 8),
-          // isCollapsed: true,
         ),
+        showCursor: false,
       ),
     );
   }
