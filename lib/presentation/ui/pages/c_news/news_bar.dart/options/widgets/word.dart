@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:provider/provider.dart';
 
 class SectionSearchWord extends StatefulWidget {
   const SectionSearchWord({super.key});
@@ -57,9 +59,16 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
           overflow: TextOverflow.ellipsis,
           color: Colors.blueGrey.shade800,
           fontWeight: FontWeight.bold,
-          fontSize: 18,
+          fontSize: 16,
           height: 1.2,
         ),
+        onChanged: (value) {
+          context.read<NewsProvider>().setSearchWord(value);
+        },
+        onSubmitted: (value) {
+          context.read<NewsProvider>().setSearchWord(value);
+          context.read<NewsProvider>().getInitNews();
+        },
         textAlign: TextAlign.center,
         cursorColor: Colors.white,
         textInputAction: TextInputAction.next,
@@ -71,7 +80,7 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
           hintStyle: TextStyle(
             color: Colors.blueGrey.shade700,
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: 16,
             height: 1.2,
           ),
           contentPadding: const EdgeInsets.only(left: 4, top: 8),

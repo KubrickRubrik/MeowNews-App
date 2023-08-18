@@ -16,30 +16,18 @@ class ViewedFeaturedNews extends StatelessWidget {
           true => child!,
         };
       },
-      child: Container(
-        margin: const EdgeInsets.only(left: 4, top: 4),
-        height: 32,
-        width: 32,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(14)),
-          boxShadow: [
+      child: const Padding(
+        padding: EdgeInsets.only(left: 8, top: 8),
+        child: Icon(
+          IconsApp.completed,
+          color: Color(0xFF65F436),
+          size: 30,
+          shadows: [
             BoxShadow(
-              color: Color(0xFF000000),
-              offset: Offset(-0.5, -1.5),
-            ),
-            BoxShadow(
-              color: Color(0xFFffffff),
-              offset: Offset(0, 0),
-              spreadRadius: 0.2,
-              blurRadius: 0,
+              offset: Offset(0, 2),
+              blurRadius: 1,
             ),
           ],
-        ),
-        alignment: Alignment.center,
-        child: const Icon(
-          IconsApp.completed,
-          color: Color(0xFF00A505),
-          size: 20,
         ),
       ),
     );

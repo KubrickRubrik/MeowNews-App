@@ -13,20 +13,22 @@ class FeaturedNews extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: SizedBox(
+      child: Container(
         height: (MediaQuery.of(context).size.height / 4),
-        child: ClipRRect(
+        decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          child: Selector<NewsProvider, StatusSection>(
-            selector: (_, Model) => Model.status.featured.statusSection,
-            builder: (_, status, child) {
-              return switch (status) {
-                StatusSection.isNoContent => const NotAvailableFeaturedContent(),
-                _ => child!,
-              };
-            },
-            child: const WrapFeaturedContent(),
-          ),
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: Selector<NewsProvider, StatusSection>(
+          selector: (_, Model) => Model.status.featured.statusSection,
+          builder: (_, status, child) {
+            return switch (status) {
+              StatusSection.isNoContent => const NotAvailableFeaturedContent(),
+              _ => child!,
+            };
+          },
+          child: const WrapFeaturedContent(),
         ),
       ),
     );

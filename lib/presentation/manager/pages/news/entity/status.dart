@@ -24,6 +24,8 @@ final class _StatusData {
 
   //
   void reset() {
+    statusSetViewed = StatusViewed.isNotViewed;
+    statusPreload = ActionStatus.isDone;
     featured.reset();
     latest.reset();
   }

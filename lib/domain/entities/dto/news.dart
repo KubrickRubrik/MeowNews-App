@@ -21,16 +21,16 @@ final class NewsDTO extends Dto<String> {
     String requestString = '';
     if (target == TargetNews.featured) {
       requestString = 'everything?';
-      requestString += (searchWord == null) ? 'q=IT' : 'q=$searchWord';
+      requestString += 'q=$searchWord';
       requestString += '&sortBy=popularity';
     } else {
       requestString = 'everything?';
-      requestString += (searchWord == null) ? 'q=IT' : 'q=$searchWord';
+      requestString += 'q=$searchWord';
       requestString += '&sortBy=publishedAt';
     }
+
     if (language != null) requestString += '&language=${language!.name}';
     requestString += '&pageSize=$pageSize&page=$page';
-    print("REQ: $requestString");
     return requestString;
   }
 }

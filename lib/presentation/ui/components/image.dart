@@ -91,5 +91,6 @@ class _ComponentImageState extends State<ComponentImage> with AutomaticKeepAlive
         'gdb.voanews.com',
         'ichef.bbci.co.uk',
         'meduza.io',
+        'gagadget.com',
       ];
 }

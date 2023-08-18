@@ -31,6 +31,6 @@ class ItemNewsCase implements ItemNewsRepository {
       content: ContentItemNewsEntity(title: response2.content.title, description: response2.content.description),
       source: SourceItemNewsEntity(id: response2.source.id, name: response2.source.name),
       publishedAt: response2.publishedAt?.toIso8601String(),
-    );
+    )..viewed = response2.viewed;
   }
 }

@@ -13,6 +13,7 @@ import 'package:news_test/domain/use_cases/news.dart';
 import 'package:collection/collection.dart';
 part 'state.dart';
 part 'entity/page_data.dart';
+part 'entity/news_bar.dart';
 part 'entity/status.dart';
 
 final class NewsProvider extends ChangeNotifier with _State {
@@ -30,12 +31,14 @@ final class NewsProvider extends ChangeNotifier with _State {
     final featuredNewsDTO = NewsDTO(
       1,
       target: TargetNews.featured,
+      searchWord: pageData.newBar._searchWord,
       language: AvailableLanguageNews.ru,
       pageSize: pageData._featuredNewsCount,
     );
     final latestNewsDTO = NewsDTO(
       1,
       target: TargetNews.latest,
+      searchWord: pageData.newBar._searchWord,
       language: AvailableLanguageNews.ru,
       pageSize: pageData._latestNewsCount,
     );
@@ -67,6 +70,7 @@ final class NewsProvider extends ChangeNotifier with _State {
     //? Formation of request parameters.
     final dto = NewsDTO(
       pageData.getItemPage(TargetNews.featured),
+      searchWord: pageData.newBar._searchWord,
       target: TargetNews.featured,
       language: AvailableLanguageNews.en,
       pageSize: pageData._featuredNewsCount,
@@ -90,6 +94,7 @@ final class NewsProvider extends ChangeNotifier with _State {
       featuredNews: response.data,
       latestdNews: null,
     ));
+    status.statusSetViewed = StatusViewed.isNotViewed;
     status.featured._setScroll(StatusContent.isViewContent);
     notifyListeners();
   }
@@ -103,6 +108,7 @@ final class NewsProvider extends ChangeNotifier with _State {
     //? Formation of request parameters.
     final dto = NewsDTO(
       pageData.getItemPage(TargetNews.latest),
+      searchWord: pageData.newBar._searchWord,
       target: TargetNews.latest,
       pageSize: pageData._latestNewsCount,
     );
@@ -126,7 +132,7 @@ final class NewsProvider extends ChangeNotifier with _State {
       featuredNews: null,
       latestdNews: response.data,
     ));
-
+    status.statusSetViewed = StatusViewed.isNotViewed;
     status.latest._setScroll(StatusContent.isViewContent);
     notifyListeners();
   }
@@ -138,15 +144,12 @@ final class NewsProvider extends ChangeNotifier with _State {
     if (status.statusPreload != ActionStatus.isDone) return null;
     _setActionPreloadNews(ActionStatus.isAction);
     //? Formation of request parameters.
-    await Future.delayed(const Duration(seconds: 2));
     final newstDTO = ItemNewsDTO(index, idSource: idNews, target: target);
     //? Request
     final response = await _itemNewsCase.getItemNews(newstDTO);
     _setActionPreloadNews(ActionStatus.isDone);
     //? Checking for failure.
     if (_isFail(response.fail) || response.data == null) return null;
-    //? //? Setting the status viewed.
-    setNewsViewedStatus([response.data!.source.id]);
     //? Response
     return response.data!;
   }
@@ -171,11 +174,12 @@ final class NewsProvider extends ChangeNotifier with _State {
     //? Data verification.
     if (response.data == null || response.data!.isEmpty) {
       _setActionSetViewed(StatusViewed.isNotViewed);
-      return true;
+      return false;
     }
     //? Setting the status viewed.
     setNewsViewedStatus(response.data!);
     _setActionSetViewed(StatusViewed.isViewed);
+    return true;
   }
 
   /// Setting the data display status for the `featured` and `latest` list news
@@ -218,5 +222,14 @@ final class NewsProvider extends ChangeNotifier with _State {
   void _setActionPreloadNews(ActionStatus val) {
     status.statusPreload = val;
     notifyListeners();
+  }
+
+  void setDisplayNewsBar([bool? val]) {
+    pageData.newBar._setStatusOpen(val);
+    notifyListeners();
+  }
+
+  void setSearchWord(String val) {
+    pageData.newBar._setSearchWord(val);
   }
 }

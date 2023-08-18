@@ -44,12 +44,12 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
               child: Text(
                 news.content.title,
-                maxLines: 5,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 14,
                   height: 1.4,
                 ),
               ),
@@ -73,6 +73,7 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
         return;
       }
       locator<ItemNewsProvider>().setItemNews(itemNews);
+      context.read<NewsProvider>().setNewsViewedStatus([itemNews.source.id]);
       Navigator.pushNamed(context, PagesNavigator.newsDetailRoute);
       isDisplayTitle = false;
       setState(() {});

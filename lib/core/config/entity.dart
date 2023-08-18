@@ -33,7 +33,7 @@ enum StatusViewed {
 }
 
 /// Type of toast.
-enum TypeMassage { massage, error, warning }
+enum TypeMassage { good, massage, error, warning }
 
 /// Тews country
 enum TargetNews { latest, featured }

@@ -54,6 +54,7 @@ class NavigateFeaturedNews extends StatelessWidget {
         return;
       }
       locator<ItemNewsProvider>().setItemNews(itemNews);
+      context.read<NewsProvider>().setNewsViewedStatus([itemNews.source.id]);
       Navigator.pushNamed(context, PagesNavigator.newsDetailRoute);
     });
   }

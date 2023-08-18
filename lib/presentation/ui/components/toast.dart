@@ -7,6 +7,7 @@ abstract final class ToastMassage {
     final ({Color colorBackground, Color colorText}) data = switch (code) {
       TypeMassage.error => (colorBackground: const Color(0xFFDC0037), colorText: const Color(0xFFFFFFFF)),
       TypeMassage.warning => (colorBackground: const Color(0xFFFF9800), colorText: const Color(0xFF000000)),
+      TypeMassage.good => (colorBackground: const Color(0xFF44FF00), colorText: const Color(0xFF000000)),
       _ => (colorBackground: const Color(0xFF2A363C), colorText: const Color(0xFFFFFFFF)),
     };
     ScaffoldMessenger.of(context).removeCurrentSnackBar();

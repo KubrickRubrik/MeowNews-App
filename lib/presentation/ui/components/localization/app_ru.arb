@@ -11,5 +11,6 @@
    "viewNewsUnavailableToast":"Просмотр новостей недоступен",
    "newsUnavailableToast":"Новости недоступны?\r\nПопробуйте выполнить новый поиск",
    "actionViewedToast":"Все новости отмечены\r\nкак просмотренные",
-   "actionNotViewedToast":"Не удалось отметить новости\r\nкак просмотренные"
+   "actionNotViewedToast":"Не удалось отметить новости\r\nкак просмотренные",
+   "allViewedToast":"Все новости уже прочитаны"
 }

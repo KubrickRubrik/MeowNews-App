@@ -4,6 +4,7 @@ final class ItemNewsEntity {
   final ContentItemNewsEntity content;
   final SourceItemNewsEntity source;
   final DateTime? publishedAt;
+  bool viewed = false;
 
   ItemNewsEntity({
     required this.author,
