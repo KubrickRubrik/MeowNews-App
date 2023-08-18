@@ -9,8 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter  
 
-  # device_preview: ^1.1.0    
   intl: any 
   get_it: ^7.6.0   
   http: ^1.1.0
