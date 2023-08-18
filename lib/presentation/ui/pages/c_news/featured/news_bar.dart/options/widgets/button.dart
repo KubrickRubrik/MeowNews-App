@@ -18,7 +18,6 @@ class SectionButtonSearch extends StatelessWidget {
         ),
       ),
       clipBehavior: Clip.hardEdge,
-      alignment: Alignment.center,
       child: Selector<NewsProvider, (StatusSection, StatusSection)>(
         selector: (_, Model) => (Model.status.featured.statusSection, Model.status.latest.statusSection),
         builder: (_, model, child) {
@@ -33,7 +32,7 @@ class SectionButtonSearch extends StatelessWidget {
 }
 
 class _ButtonGoSearch extends StatelessWidget {
-  const _ButtonGoSearch({super.key});
+  const _ButtonGoSearch();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,7 @@ class _ButtonGoSearch extends StatelessWidget {
 }
 
 class _ButtonUpdateSearch extends StatelessWidget {
-  const _ButtonUpdateSearch({super.key});
+  const _ButtonUpdateSearch();
 
   @override
   Widget build(BuildContext context) {

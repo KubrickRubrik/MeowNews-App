@@ -40,7 +40,7 @@ final class NewsProvider extends ChangeNotifier with _State {
       target: TargetNews.latest,
       searchWord: pageData.newBar.getSearchString(),
       language: AvailableLanguageNews.ru,
-      pageSize: pageData._latestNewsCount,
+      pageSize: 10,
     );
     //? Request.
     status._setAll(StatusSection.isLoadContent);
