@@ -1,6 +1,6 @@
 part of '../provider.dart';
 
 final class _PageData {
-  var locale = AvailableAppLocale.ru;
+  var locale = AvailableAppLocale.en;
   final theme = CurrentThemeApp.light;
 }

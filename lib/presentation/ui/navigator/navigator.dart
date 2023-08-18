@@ -3,7 +3,7 @@ import 'package:news_test/presentation/ui/pages/c_news/controller.dart';
 import 'package:news_test/presentation/ui/pages/c_news_detail/controller.dart';
 
 abstract final class PagesNavigator {
-  static final newsDetailRoute = "/news_detail";
+  static const newsDetailRoute = "/news_detail";
 
   static Route<dynamic>? goRoutes(RouteSettings settings) {
     ({String? route, Object? arguments}) path = (route: settings.name, arguments: settings.arguments);
@@ -16,7 +16,7 @@ abstract final class PagesNavigator {
       );
     } else if (path.route == newsDetailRoute) {
       return PageRouteBuilder(
-        pageBuilder: (_, __, ___) => NewsDetailsPage(path.arguments),
+        pageBuilder: (_, __, ___) => const ItemNewsDetailsPage(),
         transitionsBuilder: _transitFade,
       );
     } else {
@@ -24,27 +24,10 @@ abstract final class PagesNavigator {
     }
   }
 
-  /// Fade
+  /// Fade.
   static Widget _transitFade(_, Animation<double> animation, Animation<double> secAnimation, child) {
     return FadeTransition(
       opacity: animation,
-      child: child,
-    );
-  }
-
-  /// Slide
-  static Widget _transitSlide(_, Animation<double> animation, Animation<double> secAnimation, child) {
-    const begin = Offset(1, 1);
-    const end = Offset.zero;
-    const curve = Curves.easeOut;
-
-    final tween = Tween(begin: begin, end: end);
-    final curvedAnimation = CurvedAnimation(
-      parent: animation,
-      curve: curve,
-    );
-    return SlideTransition(
-      position: tween.animate(curvedAnimation),
       child: child,
     );
   }

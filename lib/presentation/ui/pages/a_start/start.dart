@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/session/provider.dart';
-import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/components/localization/controller.dart';
 import 'package:news_test/presentation/ui/components/themes/controller.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
 import 'package:news_test/presentation/ui/pages/c_news/controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_gen/gen_l10n/app_loc.dart';
-import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/device_preview.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -46,11 +45,11 @@ class _StartPageState extends State<StartPage> {
             supportedLocales: AppLocalization.supportedLocales,
             localizationsDelegates: AppLocalization.localizationsDelegates,
             //? Main
-            title: context.lcz.titleApp,
+            title: 'MeowNews',
             home: const NewsPage(),
             scrollBehavior: AppScrollBehavior(),
             //? Layout correction
-            builder: DevicePreview.appBuilder,
+            // builder: DevicePreview.appBuilder,
             //? Navigation
             onGenerateRoute: PagesNavigator.goRoutes,
           );
