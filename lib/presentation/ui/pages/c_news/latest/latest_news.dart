@@ -11,37 +11,11 @@ class LatestNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Selector<NewsProvider, StatusSection>(
-            selector: (_, Model) => Model.status.latest.statusSection,
-            builder: (_, status, child) {
-              print(123);
-              return switch (status) {
-                StatusSection.isNoContent => const NotAvailableLatestContent(),
-                _ => child!,
-              };
-            },
-            child: const WrapLatestContent(),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class WrapLatestContent extends StatelessWidget {
-  const WrapLatestContent({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return Selector<NewsProvider, StatusSection>(
       selector: (_, Model) => Model.status.latest.statusSection,
       builder: (_, status, child) {
         return switch (status) {
+          StatusSection.isNoContent => const NotAvailableLatestContent(),
           StatusSection.isLoadContent => const PreloadLatestContent(),
           _ => child!,
         };
@@ -50,3 +24,23 @@ class WrapLatestContent extends StatelessWidget {
     );
   }
 }
+
+  // return Expanded(
+  //     child: Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 8),
+  //       child: ClipRRect(
+  //         borderRadius: BorderRadius.circular(16),
+  //         child: Selector<NewsProvider, StatusSection>(
+  //           selector: (_, Model) => Model.status.latest.statusSection,
+  //           builder: (_, status, child) {
+  //             print(123);
+  //             return switch (status) {
+  //               StatusSection.isNoContent => const NotAvailableLatestContent(),
+  //               _ => child!,
+  //             };
+  //           },
+  //           child: const WrapLatestContent(),
+  //         ),
+  //       ),
+  //     ),
+  //   );

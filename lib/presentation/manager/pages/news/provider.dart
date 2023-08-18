@@ -31,14 +31,14 @@ final class NewsProvider extends ChangeNotifier with _State {
     final featuredNewsDTO = NewsDTO(
       1,
       target: TargetNews.featured,
-      searchWord: pageData.newBar._searchWord,
+      searchWord: pageData.newBar.getSearchString(),
       language: AvailableLanguageNews.ru,
       pageSize: pageData._featuredNewsCount,
     );
     final latestNewsDTO = NewsDTO(
       1,
       target: TargetNews.latest,
-      searchWord: pageData.newBar._searchWord,
+      searchWord: pageData.newBar.getSearchString(),
       language: AvailableLanguageNews.ru,
       pageSize: pageData._latestNewsCount,
     );
@@ -65,12 +65,10 @@ final class NewsProvider extends ChangeNotifier with _State {
     if (status.featured.statusScroll != StatusContent.isViewContent) return;
     status.featured._setScroll(StatusContent.isLoadContent);
     notifyListeners();
-
-    await Future.delayed(Duration(milliseconds: 500));
     //? Formation of request parameters.
     final dto = NewsDTO(
       pageData.getItemPage(TargetNews.featured),
-      searchWord: pageData.newBar._searchWord,
+      searchWord: pageData.newBar.getSearchString(),
       target: TargetNews.featured,
       language: AvailableLanguageNews.en,
       pageSize: pageData._featuredNewsCount,
@@ -108,7 +106,7 @@ final class NewsProvider extends ChangeNotifier with _State {
     //? Formation of request parameters.
     final dto = NewsDTO(
       pageData.getItemPage(TargetNews.latest),
-      searchWord: pageData.newBar._searchWord,
+      searchWord: pageData.newBar.getSearchString(),
       target: TargetNews.latest,
       pageSize: pageData._latestNewsCount,
     );

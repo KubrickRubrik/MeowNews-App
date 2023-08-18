@@ -8,6 +8,7 @@ class PreloadLatestContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       controller: ScrollController(),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       shrinkWrap: true,
       itemCount: 10,
       separatorBuilder: (_, __) => const SizedBox(height: 8),

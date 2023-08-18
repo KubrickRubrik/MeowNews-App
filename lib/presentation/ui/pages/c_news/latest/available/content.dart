@@ -44,7 +44,7 @@ class _AvailableLatestContentState extends State<AvailableLatestContent> {
         return ListView.separated(
           shrinkWrap: true,
           controller: scrollController,
-          padding: const EdgeInsets.only(bottom: 56),
+          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 56),
           itemCount: model.length + 1,
           separatorBuilder: (_, __) => const SizedBox(height: 8),
           itemBuilder: (_, index) {
