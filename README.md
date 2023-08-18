@@ -1,6 +1,6 @@
-# News test app
+# MeowNews App
 
-A small news viewer test project.
+Small news viewer application
 
 ## Project settings
 To get and display a list of news, the resource API [newsapi](https://newsapi.org) is used
