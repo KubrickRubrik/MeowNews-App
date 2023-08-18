@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:news_test/presentation/ui/components/image.dart';
@@ -52,10 +51,10 @@ class ItemFeaturedNews extends StatelessWidget {
               child: FeaturedNews(),
             ),
             //? Viewed news
-            const Positioned(
+            Positioned(
               top: 0,
               left: 0,
-              child: ViewedFeaturedNews(),
+              child: ViewedFeaturedNews(index),
             ),
             //? Navigate to detail news
             Positioned(
@@ -67,14 +66,5 @@ class ItemFeaturedNews extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  // Make image
-  _makeImage(String? url) {
-    // return AssetImage('assets/images/${Random().nextInt(5) + 1}.webp');
-    return switch (url) {
-      null => AssetImage('assets/images/${Random().nextInt(5) + 1}.webp'),
-      _ => NetworkImage(url),
-    };
   }
 }

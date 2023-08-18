@@ -1,5 +1,4 @@
 final class ItemNewsEntity {
-  bool isAvailable = false;
   final String? author;
   final BannersItemNewsEntity banner;
   final ContentItemNewsEntity content;
@@ -44,7 +43,7 @@ final class BannersItemNewsEntity {
 }
 
 final class SourceItemNewsEntity {
-  final String? id;
+  final String id;
   final String name;
 
   SourceItemNewsEntity({
@@ -53,6 +52,6 @@ final class SourceItemNewsEntity {
   });
 
   SourceItemNewsEntity.empty()
-      : id = null,
+      : id = '',
         name = '';
 }

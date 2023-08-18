@@ -4,6 +4,9 @@ import 'package:news_test/core/errors/exception.dart';
 
 /// Class for forming a request object and making requests to the server.
 final class ConfigRequestServer {
+  //? Access key
+  static const _apIKey = 'b0b6c5d2af35492ab5a95bd1e63c9561';
+
   // Makes a request to the server.
   static Future<Map<String, dynamic>?> request(Client api, {required String query}) async {
     final request = Uri.parse(_formDataObject(query));
@@ -14,9 +17,7 @@ final class ConfigRequestServer {
 
   // Forming a data object for a request.
   static String _formDataObject(String query) {
-    // &pageSize=2
-    final request = 'https://newsapi.org/v2/$query&apiKey=b0b6c5d2af35492ab5a95bd1e63c9561';
-    print("REQUEST: $request");
+    final request = 'https://newsapi.org/v2/$query&apiKey=$_apIKey';
     return request;
   }
 

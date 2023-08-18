@@ -2,8 +2,8 @@ part of '../provider.dart';
 
 final class _PageData {
   // Number of downloaded news in one request (for one page).
-  final featuredNewsCount = 5;
-  final latestNewsCount = 10;
+  final _featuredNewsCount = 5;
+  final _latestNewsCount = 10;
   // Main data list of news
   final newSet = NewsSet.empty();
 
@@ -24,8 +24,8 @@ final class _PageData {
   int getItemPage(TargetNews target) {
     int page = 0;
     ({int length, int countInPage}) data = switch (target) {
-      TargetNews.featured => (length: newSet.listFeaturedNews.length, countInPage: featuredNewsCount),
-      TargetNews.latest => (length: newSet.listLatestdNews.length, countInPage: latestNewsCount),
+      TargetNews.featured => (length: newSet.listFeaturedNews.length, countInPage: _featuredNewsCount),
+      TargetNews.latest => (length: newSet.listLatestdNews.length, countInPage: _latestNewsCount),
     };
     if (data.length % data.countInPage == 0) {
       page = (data.length ~/ data.countInPage) + 1;
@@ -52,7 +52,7 @@ final class _PageData {
   }
 
   // Setting for all downloaded news the status "viewed".
-  void setAllNewsViewedStatus(List<String> listIdNews) {
+  void _setAllNewsViewedStatus(List<String> listIdNews) {
     for (final idSource in listIdNews) {
       final itemFeaturedNews = newSet.listFeaturedNews.firstWhereOrNull((element) => element.source.id == idSource);
       if (itemFeaturedNews != null) {

@@ -6,7 +6,6 @@ final class _PageData {
   // Overwriting the used idSeries and clean for new data
   void overwritingPageData(ItemNewsEntity data) {
     itemNews = data;
-    itemNews.isAvailable = true;
   }
 
   void reset() {

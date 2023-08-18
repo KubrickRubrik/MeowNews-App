@@ -3,8 +3,6 @@ part of 'provider.dart';
 mixin _State {
   // Basic page data.
   final pageData = _PageData();
-  // Statuses of the list of news that are involved in updating the interface.
-  final status = _StatusData();
 
   // Not involved in UI updates.
   var actionStatus = ActionStatus.isDone;

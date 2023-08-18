@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:news_test/core/config/entity.dart';
+import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
+import 'package:news_test/presentation/ui/components/icons.dart';
 import 'package:news_test/presentation/ui/components/toast.dart';
+import 'package:provider/provider.dart';
 
 class ButtonettingViewedNews extends StatelessWidget {
   const ButtonettingViewedNews({super.key});
@@ -15,11 +20,36 @@ class ButtonettingViewedNews extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            ToastMassage.toast(context, "The news is all marked as viewed");
+            context.read<NewsProvider>().setAllNewsViewed().then((isDone) {
+              if (isDone == null) return;
+              if (!isDone) {
+                ToastMassage.toast(context, context.lcz.actionNotViewedToast, code: TypeMassage.error);
+              } else {
+                ToastMassage.toast(context, context.lcz.actionViewedToast);
+              }
+            });
           },
-          child: const Icon(
-            Icons.done_all_outlined,
-          ),
+          child: Selector<NewsProvider, StatusViewed>(
+              selector: (_, Model) => Model.status.statusSetViewed,
+              builder: (_, statusSetViewed, __) {
+                Widget widget;
+                if (statusSetViewed == StatusViewed.isLoadContent) {
+                  widget = const CircularProgressIndicator.adaptive();
+                } else if (statusSetViewed == StatusViewed.isNotViewed) {
+                  widget = const Icon(
+                    IconsApp.completed,
+                    color: Color(0xFF90A4AE),
+                    size: 30,
+                  );
+                } else {
+                  widget = const Icon(
+                    IconsApp.completed,
+                    color: Color(0xFF65F436),
+                    size: 30,
+                  );
+                }
+                return widget;
+              }),
         ),
       ),
     );

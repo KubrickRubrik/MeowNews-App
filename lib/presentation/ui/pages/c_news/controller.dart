@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/pages/c_news/news_bar.dart/bar.dart';
 import 'package:news_test/presentation/ui/pages/c_news/appbar/button.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/featured_news.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/latest_news.dart';
+import 'package:news_test/presentation/ui/pages/c_news/preloader/preloader.dart';
 import 'package:provider/provider.dart';
 
 class NewsPage extends StatelessWidget {
@@ -16,11 +18,11 @@ class NewsPage extends StatelessWidget {
         create: (context) => locator<NewsProvider>(),
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.blueGrey.shade800,
+            backgroundColor: const Color(0xFF37474F),
             centerTitle: false,
-            title: const Text(
-              "Meow, news",
-              style: TextStyle(
+            title: Text(
+              context.lcz.titleNewsPage,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -29,29 +31,27 @@ class NewsPage extends StatelessWidget {
               ButtonettingViewedNews(),
             ],
           ),
-          body: const Flex(
-            direction: Axis.vertical,
+          body: const Stack(
             children: [
-              SizedBox(height: 8),
-              //? Featured news (horizontal scrolllist)
-              FeaturedNews(),
-              SizedBox(height: 4),
-              //? Set news and search options.
-              NewsOptionsBar(),
-              SizedBox(height: 8),
-              //? Featured news (vertical scrolllist)
-              LatestNews(),
+              //? Main content
+              Flex(
+                direction: Axis.vertical,
+                children: [
+                  SizedBox(height: 8),
+                  //? Featured news (horizontal scrolllist)
+                  FeaturedNews(),
+                  SizedBox(height: 4),
+                  //? Set news and search options.
+                  NewsOptionsBar(),
+                  SizedBox(height: 8),
+                  //? Featured news (vertical scrolllist)
+                  LatestNews(),
+                ],
+              ),
+              //? Spinner for open item news
+              PreloaderContent(),
             ],
           ),
-          // bottomNavigationBar: SizedBox(
-          //   height: 80,
-          //   child: FloatingActionButton(
-          //     onPressed: () {
-          //       locator<NewsProvider>().getInitNews();
-          //     },
-          //     child: const Icon(Icons.touch_app),
-          //   ),
-          // ),
         ));
   }
 }

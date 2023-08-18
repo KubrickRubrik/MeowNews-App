@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/locator/locator.dart';
-import 'package:news_test/presentation/manager/entity/dto/signpost.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:news_test/presentation/manager/pages/news_item/provider.dart';
+import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/components/toast.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
 import 'package:provider/provider.dart';
@@ -19,17 +19,7 @@ class NavigateFeaturedNews extends StatelessWidget {
       angle: 0.75,
       child: InkWell(
         onTap: () {
-          locator<ItemNewsProvider>().getDetailNews(TargetNews.featured, news.source.id, index).then((value) {
-            if (value) {
-              Navigator.pushNamed(
-                context,
-                PagesNavigator.newsDetailRoute,
-                arguments: NewsSignpost(TargetNews.featured, index),
-              );
-            } else {
-              ToastMassage.toast(context, "View news unavailable", code: TypeMassage.warning);
-            }
-          });
+          openItemNewsPage(context, idNews: news.source.id, index: index);
         },
         child: Container(
           height: 100,
@@ -49,5 +39,22 @@ class NavigateFeaturedNews extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Open the page for viewing news details.
+  // - 1. The news data is being loaded by [NewsProvider].
+  //      The user is shown a download spinner.
+  // - 2. If the data is loaded, the transition to the page for viewing
+  //      the details of the news is performed.
+  // - 3. If the data is not loaded, a warning about the lack of news data is displayed.
+  void openItemNewsPage(BuildContext context, {required String idNews, required int index}) {
+    context.read<NewsProvider>().getItemNewsDetail(TargetNews.featured, idNews: idNews, index: index).then((itemNews) {
+      if (itemNews == null) {
+        ToastMassage.toast(context, context.lcz.viewNewsUnavailableToast, code: TypeMassage.warning);
+        return;
+      }
+      locator<ItemNewsProvider>().setItemNews(itemNews);
+      Navigator.pushNamed(context, PagesNavigator.newsDetailRoute);
+    });
   }
 }

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_test/core/config/entity.dart';
-import 'package:news_test/presentation/manager/entity/dto/signpost.dart';
-import 'package:news_test/presentation/ui/navigator/navigator.dart';
 
 class ItemPreloadedLatestNews extends StatelessWidget {
   const ItemPreloadedLatestNews({super.key, required this.index});
@@ -25,13 +22,7 @@ class ItemPreloadedLatestNews extends StatelessWidget {
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(16),
               child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    PagesNavigator.newsDetailRoute,
-                    arguments: NewsSignpost(TargetNews.featured, index),
-                  );
-                },
+                onTap: () {},
               ),
             ),
           ],

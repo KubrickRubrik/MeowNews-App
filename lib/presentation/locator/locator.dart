@@ -27,7 +27,7 @@ abstract final class ServicesLocator {
     //? Session manager
     locator.registerLazySingleton<SessionProvider>(() => SessionProvider());
     //? Pages manager
-    locator.registerLazySingleton<NewsProvider>(() => NewsProvider(locator()));
+    locator.registerLazySingleton<NewsProvider>(() => NewsProvider(locator(), locator()));
     locator.registerLazySingleton<ItemNewsProvider>(() => ItemNewsProvider(locator()));
   }
 }

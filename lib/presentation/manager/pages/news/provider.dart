@@ -5,8 +5,10 @@ import 'package:news_test/domain/entities/interfaces/dto.dart';
 import 'package:news_test/domain/entities/dto/item_news.dart';
 import 'package:news_test/domain/entities/dto/news.dart';
 import 'package:news_test/domain/entities/dto/viewed.dart';
+import 'package:news_test/domain/entities/vo/item_news.dart';
 import 'package:news_test/domain/entities/vo/news.dart';
 import 'package:news_test/domain/entities/vo/news_set.dart';
+import 'package:news_test/domain/use_cases/item_news.dart';
 import 'package:news_test/domain/use_cases/news.dart';
 import 'package:collection/collection.dart';
 part 'state.dart';
@@ -14,13 +16,14 @@ part 'entity/page_data.dart';
 part 'entity/status.dart';
 
 final class NewsProvider extends ChangeNotifier with _State {
-  NewsProvider(this._newsCase);
+  NewsProvider(this._newsCase, this._itemNewsCase);
   final NewsCase _newsCase;
+  final ItemNewsCase _itemNewsCase;
 
   /// Getting featured and latest news
   Future<void> getInitNews() async {
     //? Launchability check
-    if (super.actionStatus == ActionStatus.isAction) return;
+    if (actionStatus == ActionStatus.isAction) return;
     _setActionsPage(ActionStatus.isAction);
     status.reset();
     //? Formation of request parameters.
@@ -28,13 +31,13 @@ final class NewsProvider extends ChangeNotifier with _State {
       1,
       target: TargetNews.featured,
       language: AvailableLanguageNews.ru,
-      pageSize: pageData.featuredNewsCount,
+      pageSize: pageData._featuredNewsCount,
     );
     final latestNewsDTO = NewsDTO(
       1,
       target: TargetNews.latest,
       language: AvailableLanguageNews.ru,
-      pageSize: pageData.latestNewsCount,
+      pageSize: pageData._latestNewsCount,
     );
     //? Request.
     status._setAll(StatusSection.isLoadContent);
@@ -66,7 +69,7 @@ final class NewsProvider extends ChangeNotifier with _State {
       pageData.getItemPage(TargetNews.featured),
       target: TargetNews.featured,
       language: AvailableLanguageNews.en,
-      pageSize: pageData.featuredNewsCount,
+      pageSize: pageData._featuredNewsCount,
     );
     //? Request.
     final response = await _newsCase.getMoreNews(dto);
@@ -101,7 +104,7 @@ final class NewsProvider extends ChangeNotifier with _State {
     final dto = NewsDTO(
       pageData.getItemPage(TargetNews.latest),
       target: TargetNews.latest,
-      pageSize: pageData.latestNewsCount,
+      pageSize: pageData._latestNewsCount,
     );
     //? Request.
     notifyListeners(); // to display the loading screen
@@ -128,28 +131,51 @@ final class NewsProvider extends ChangeNotifier with _State {
     notifyListeners();
   }
 
+  // Loading news data and setting the mark `viewed`
+  // Since the news resource does not allow to
+  // request news by ID, a little trick will be used in [ItemNewsCase].
+  Future<ItemNewsEntity?> getItemNewsDetail(TargetNews target, {required String idNews, required int index}) async {
+    if (status.statusPreload != ActionStatus.isDone) return null;
+    _setActionPreloadNews(ActionStatus.isAction);
+    //? Formation of request parameters.
+    await Future.delayed(const Duration(seconds: 2));
+    final newstDTO = ItemNewsDTO(index, idSource: idNews, target: target);
+    //? Request
+    final response = await _itemNewsCase.getItemNews(newstDTO);
+    _setActionPreloadNews(ActionStatus.isDone);
+    //? Checking for failure.
+    if (_isFail(response.fail) || response.data == null) return null;
+    //? //? Setting the status viewed.
+    setNewsViewedStatus([response.data!.source.id]);
+    //? Response
+    return response.data!;
+  }
+
   /// Marking all downloaded news as `viewed`
-  Future<void> setAllNewsViewed() async {
-    if (super.actionStatus == ActionStatus.isAction) return;
-    _setActionSetViewed(ActionStatus.isAction);
+  Future<bool?> setAllNewsViewed() async {
+    if (status.statusSetViewed == StatusViewed.isLoadContent) return null;
+    _setActionSetViewed(StatusViewed.isLoadContent);
     //? Formation of request parameters.
     final list = pageData.getAllIdNews();
     if (list.isEmpty) {
-      _setActionSetViewed(ActionStatus.isDone);
-      return;
+      _setActionSetViewed(StatusViewed.isNotViewed);
+      return null;
     }
     final dto = ViewedNewsDTO(list);
     //? Request.
-    _setActionSetViewed(ActionStatus.isAction);
+    _setActionSetViewed(StatusViewed.isLoadContent);
     final response = await _newsCase.setViewedNews(dto);
-    _setActionSetViewed(ActionStatus.isDone);
+
     //? Checking for failure.
-    if (_isFail(response.fail)) return;
+    if (_isFail(response.fail)) return false;
     //? Data verification.
-    if (response.data == null || response.data!.isEmpty) return;
-    //? Adding new data.
-    pageData.setAllNewsViewedStatus(response.data!);
-    notifyListeners();
+    if (response.data == null || response.data!.isEmpty) {
+      _setActionSetViewed(StatusViewed.isNotViewed);
+      return true;
+    }
+    //? Setting the status viewed.
+    setNewsViewedStatus(response.data!);
+    _setActionSetViewed(StatusViewed.isViewed);
   }
 
   /// Setting the data display status for the `featured` and `latest` list news
@@ -167,37 +193,30 @@ final class NewsProvider extends ChangeNotifier with _State {
     notifyListeners();
   }
 
+  /// Setting the "viewed" status for one or more news items.
+  void setNewsViewedStatus(List<String> listIDNews) {
+    pageData._setAllNewsViewedStatus(listIDNews);
+  }
+
   /// Checking for correct data
-  /// The featured and latest news lists have their own statuses.
-  /// The statuses are different for the state when the content has
-  /// already been loaded or is being loaded for the first time.
+  /// The featured and latest news lists have their own statuses content
+  /// so use used `status._setAll` to cover all statuses at once.
   bool _isCorrectData(NewsSet? data) {
     if (data != null) return true;
     status._setAll(StatusSection.isNoContent);
-    // if (pageData.newSet.listFeaturedNews.isEmpty && pageData.newSet.listLatestdNews.isEmpty) {
-    //   // Used if the data could not be loaded at all.
-
-    // } else {
-    //   //? Checking previously uploaded data for featured news
-    //   if (pageData.newSet.listFeaturedNews.isEmpty) {
-    //     status.setFeatured(StatusContent.isNoContent);
-    //   } else {
-    //     status.setFeatured(StatusContent.isEmptyContent);
-    //   }
-    //   //? Checking previously uploaded data for latest news
-    //   if (pageData.newSet.listLatestdNews.isEmpty) {
-    //     status.setLatest(StatusContent.isNoContent);
-    //   } else {
-    //     status.setLatest(StatusContent.isEmptyContent);
-    //   }
-    // }
     notifyListeners();
     return false;
   }
 
   /// Setting the status of the news status setting button `viewed`
-  void _setActionSetViewed(ActionStatus val) {
+  void _setActionSetViewed(StatusViewed val) {
     status.statusSetViewed = val;
+    notifyListeners();
+  }
+
+  /// Setting the status of ItemNews
+  void _setActionPreloadNews(ActionStatus val) {
+    status.statusPreload = val;
     notifyListeners();
   }
 }

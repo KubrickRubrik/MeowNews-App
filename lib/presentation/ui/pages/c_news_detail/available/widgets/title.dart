@@ -17,7 +17,7 @@ class ItemTitleNews extends StatelessWidget {
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 21,
+              fontSize: 18,
               letterSpacing: 1.1,
               height: 1.5,
             ),

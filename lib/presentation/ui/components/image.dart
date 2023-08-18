@@ -87,5 +87,9 @@ class _ComponentImageState extends State<ComponentImage> with AutomaticKeepAlive
     return true;
   }
 
-  List<String> get listBadSource => ['gdb.voanews.com', 'ichef.bbci.co.uk'];
+  List<String> get listBadSource => [
+        'gdb.voanews.com',
+        'ichef.bbci.co.uk',
+        'meduza.io',
+      ];
 }

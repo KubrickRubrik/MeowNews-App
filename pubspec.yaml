@@ -20,7 +20,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  mockito: ^5.4.2
   build_runner: any 
 
 flutter:
@@ -29,4 +28,12 @@ flutter:
   
   assets:
     - assets/images/
+    - assets/app/preloader/
 
+  fonts:
+    - family: Comfortaa
+      fonts:
+        - asset: assets/app/fonts/text/comfortaa-medium.ttf
+    - family: meownews
+      fonts:
+        - asset: assets/app/fonts/icons/meownews.ttf

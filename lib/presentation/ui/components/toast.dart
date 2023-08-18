@@ -38,7 +38,7 @@ abstract final class ToastMassage {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: data.colorText,
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.bold,
               fontSize: 17,
               height: 1.4,
             ),

@@ -1,5 +1,15 @@
 {
-    "titleApp": "News",
-    "titleNewsPage": "Newsnews today",
-    "titleNewsDetailPage": "View news,"
+    "titleApp": "MeowNews",
+    "titleNewsPage": "MeowNews",
+    "titleNewsDetailPage":"Meow, reading...",
+
+   "newsNotFound": "Oops, news not found...",
+   "whereIsNews": "Meow, where's my news?",
+
+   "newsUnavailableMessage":"Meow, news????",
+   
+   "viewNewsUnavailableToast":"View news unavailable",
+   "newsUnavailableToast":"No news available?\r\nTry running a new search",
+   "actionViewedToast":"The news is all marked as viewed",
+   "actionNotViewedToast":"Failed to mark news as viewed"
 }

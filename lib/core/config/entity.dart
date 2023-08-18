@@ -25,6 +25,13 @@ enum StatusSection {
   isViewContent,
 }
 
+/// News viewing status.
+enum StatusViewed {
+  isLoadContent,
+  isNotViewed,
+  isViewed,
+}
+
 /// Type of toast.
 enum TypeMassage { massage, error, warning }
 

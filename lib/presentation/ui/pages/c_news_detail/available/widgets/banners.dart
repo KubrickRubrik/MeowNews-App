@@ -25,17 +25,9 @@ class ItemBannerNews extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         child: Selector<ItemNewsProvider, String?>(
           selector: (_, Model) => Model.pageData.itemNews.banner.mainUrl,
-          builder: (_, url, child) {
+          builder: (_, url, __) {
             return ComponentImage(url, asset: ImagesApp.launch);
-            // return switch (url) {
-            //   null => child!,
-            //   _ => FadeInImage.assetNetwork(
-            //       placeholder: ImagesApp.image2,
-            //       image: url,
-            //     ),
-            // };
           },
-          child: Image.asset(ImagesApp.image3),
         ),
       ),
     );
