@@ -20,7 +20,7 @@ class BarOptions extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         direction: Axis.horizontal,
         children: [
-          Flexible(
+          Expanded(
             child: SectionLanguage(),
           ),
           _EdgeSection(),

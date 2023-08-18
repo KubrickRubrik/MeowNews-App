@@ -16,12 +16,15 @@ class SectionLanguage extends StatelessWidget {
         child: const SizedBox(
           width: 56,
           child: Center(
-            child: Text(
-              "EN",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: Text(
+                "EN",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
             ),
           ),

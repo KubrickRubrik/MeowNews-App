@@ -21,8 +21,8 @@ class AvailableDetailsNews extends StatelessWidget {
           ),
         ),
       ),
-      body: const DecoratedBox(
-        decoration: BoxDecoration(
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -33,30 +33,37 @@ class AvailableDetailsNews extends StatelessWidget {
             ],
           ),
         ),
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            children: [
-              //? Viewed news before
-              IsViewedItemNews(),
-              //? Main content
-              SingleChildScrollView(
-                padding: EdgeInsets.only(left: 8, right: 8),
-                child: Column(
-                  children: [
-                    //? Title of news.
-                    ItemTitleNews(),
-                    //? Banner of news.
-                    ItemBannerNews(),
-                    SizedBox(height: 16),
-                    //? Description of news.
-                    ItemDescriptionNews(),
-                    SizedBox(height: 16),
-                  ],
+        child: Column(
+          children: [
+            //? Viewed news before
+            const IsViewedItemNews(),
+            //? Main content
+            Flexible(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 600,
+                    ),
+                    child: const Column(
+                      children: [
+                        //? Title of news.
+                        ItemTitleNews(),
+                        //? Banner of news.
+                        ItemBannerNews(),
+                        SizedBox(height: 16),
+                        //? Description of news.
+                        ItemDescriptionNews(),
+                        SizedBox(height: 16),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

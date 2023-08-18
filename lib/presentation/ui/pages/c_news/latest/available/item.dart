@@ -25,6 +25,7 @@ class ItemLatestNewsBanner extends StatelessWidget {
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //? Title
           TitleLatestNews(news),

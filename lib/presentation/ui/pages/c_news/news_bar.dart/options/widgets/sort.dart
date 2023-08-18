@@ -14,12 +14,15 @@ class SectionSortBy extends StatelessWidget {
           context.read<NewsProvider>().setDisplayNewsBar();
         },
         child: const Center(
-          child: Text(
-            "Relevancy",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: Text(
+              "Relevancy",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
             ),
           ),
         ),
