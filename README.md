@@ -2,22 +2,20 @@
 
 A small news viewer test project.
 
-## Description
+## Project settings
+To get and display a list of news, the resource API [newsapi](https://newsapi.org) is used
 
 ## Errors
-- If an error occurs `Error server api: 429`:
-  Too many API requests made. Access will be restored after a while.
-
-- If an error occurs `Error server api: 400`: 
+- 1.If an error occurs `Error server api: 400`: 
 Query parameters are set incorrectly. It may occur if you manually change the parameters of the GET request.
 - If an error occurs `Error server api: 401`: 
 The current API key is no longer working. 
 How to fix: 
   Go to the site [newsapi](https://newsapi.org) and get a new Api key.
   Change the API key parameter in the file `ConfigRequestServer.dart`
-
-
-You need to get a new API key and change it in the file 
+- If an error occurs `Error server api: 429`:
+  Too many API requests made. Access will be restored after a while.
+  To fix it, select another API key in the `ConfigRequestServer.dart` file or create your own.
 
 
 ## Used packages and plugins

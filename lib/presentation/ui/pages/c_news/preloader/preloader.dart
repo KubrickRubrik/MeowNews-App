@@ -15,7 +15,7 @@ class PreloaderContent extends StatelessWidget {
         return AnimatedPositioned(
           duration: const Duration(milliseconds: 200),
           curve: Curves.ease,
-          top: (statusPreload == ActionStatus.isAction) ? 48 : -64,
+          top: (statusPreload == ActionStatus.isAction) ? 32 : -64,
           left: 0,
           right: 0,
           child: Center(

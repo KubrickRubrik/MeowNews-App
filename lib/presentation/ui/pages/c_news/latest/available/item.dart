@@ -7,6 +7,7 @@ import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/components/image.dart';
 import 'package:news_test/presentation/ui/components/toast.dart';
 import 'package:news_test/presentation/ui/navigator/navigator.dart';
+import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/published.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/title.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/available/item/viewed.dart';
 import 'package:provider/provider.dart';
@@ -50,16 +51,16 @@ class ItemLatestNewsBanner extends StatelessWidget {
                     child: ComponentImage(news.banner.mainUrl),
                   ),
                   //? PublishedAt
-                  // Positioned(
-                  //   top: 0,
-                  //   right: 0,
-                  //   child: PublishedLatestNews(news),
-                  // ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: PublishedLatestNews(news),
+                  ),
                   //? Viewed news
-                  const Positioned(
+                  Positioned(
                     top: 0,
                     left: 0,
-                    child: ViewedLatestNews(),
+                    child: ViewedLatestNews(index),
                   ),
                 ],
               ),
@@ -83,6 +84,7 @@ class ItemLatestNewsBanner extends StatelessWidget {
         return;
       }
       locator<ItemNewsProvider>().setItemNews(itemNews);
+      context.read<NewsProvider>().setNewsViewedStatus([itemNews.source.id]);
       Navigator.pushNamed(context, PagesNavigator.newsDetailRoute);
     });
   }

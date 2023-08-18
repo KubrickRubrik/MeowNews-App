@@ -54,7 +54,8 @@ class ApiServer with _AdditionAction implements ApiEnvelope {
     // Therefore, a list of news ID inputs is simply returned as a response.
     final queryString = (dto as ViewedNewsDTO).getDataRequest();
     final response = jsonDecode(queryString);
-    return response;
+    final result = (response as List).map((e) => e.toString()).toList();
+    return result;
     // //? Get featured news.
     // final response = await ConfigRequestServer.request(apiServer, query: queryString);
     // //? Data existence check.

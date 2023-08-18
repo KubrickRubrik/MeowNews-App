@@ -6,6 +6,7 @@ final class _PageData {
   final _latestNewsCount = 10;
   // Main data list of news
   final newSet = NewsSet.empty();
+  final newBar = _NewsBar();
 
   // Overwriting the used idSeries and clean for new data.
   void _overwritingPageData(NewsSet data) {
@@ -55,15 +56,10 @@ final class _PageData {
   void _setAllNewsViewedStatus(List<String> listIdNews) {
     for (final idSource in listIdNews) {
       final itemFeaturedNews = newSet.listFeaturedNews.firstWhereOrNull((element) => element.source.id == idSource);
-      if (itemFeaturedNews != null) {
-        itemFeaturedNews.viewed = true;
-        return;
-      }
+      if (itemFeaturedNews != null) itemFeaturedNews.viewed = true;
+
       final itemLatestNews = newSet.listLatestdNews.firstWhereOrNull((element) => element.source.id == idSource);
-      if (itemLatestNews != null) {
-        itemLatestNews.viewed = true;
-        return;
-      }
+      if (itemLatestNews != null) itemLatestNews.viewed = true;
     }
   }
 

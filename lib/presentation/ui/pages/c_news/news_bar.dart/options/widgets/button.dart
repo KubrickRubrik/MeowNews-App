@@ -26,19 +26,7 @@ class SectionButtonSearch extends StatelessWidget {
           if ([model.$1, model.$2].contains(StatusSection.isNoContent)) return const _ButtonUpdateSearch();
           return child!;
         },
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {},
-            child: const Center(
-              child: Icon(
-                Icons.double_arrow_outlined,
-                color: Colors.white,
-                size: 30,
-              ),
-            ),
-          ),
-        ),
+        child: const _ButtonGoSearch(),
       ),
     );
   }
@@ -53,7 +41,7 @@ class _ButtonGoSearch extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          //  context.read<NewsProvider>().getInitNews();
+          context.read<NewsProvider>().getInitNews();
         },
         child: const Center(
           child: Icon(

@@ -11,5 +11,6 @@
    "viewNewsUnavailableToast":"View news unavailable",
    "newsUnavailableToast":"No news available?\r\nTry running a new search",
    "actionViewedToast":"The news is all marked as viewed",
-   "actionNotViewedToast":"Failed to mark news as viewed"
+   "actionNotViewedToast":"Failed to mark news as viewed",
+   "allViewedToast":"All news already read"
 }

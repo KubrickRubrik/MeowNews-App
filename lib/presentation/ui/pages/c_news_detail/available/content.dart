@@ -3,6 +3,7 @@ import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/pages/c_news_detail/available/widgets/banners.dart';
 import 'package:news_test/presentation/ui/pages/c_news_detail/available/widgets/description.dart';
 import 'package:news_test/presentation/ui/pages/c_news_detail/available/widgets/title.dart';
+import 'package:news_test/presentation/ui/pages/c_news_detail/available/widgets/viewed.dart';
 
 class AvailableDetailsNews extends StatelessWidget {
   const AvailableDetailsNews({super.key});
@@ -34,20 +35,27 @@ class AvailableDetailsNews extends StatelessWidget {
         ),
         child: Align(
           alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.only(left: 8, right: 8),
-            child: Column(
-              children: [
-                //? Title of news.
-                ItemTitleNews(),
-                //? Banner of news.
-                ItemBannerNews(),
-                SizedBox(height: 16),
-                //? Description of news.
-                ItemDescriptionNews(),
-                SizedBox(height: 16),
-              ],
-            ),
+          child: Column(
+            children: [
+              //? Viewed news before
+              IsViewedItemNews(),
+              //? Main content
+              SingleChildScrollView(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: Column(
+                  children: [
+                    //? Title of news.
+                    ItemTitleNews(),
+                    //? Banner of news.
+                    ItemBannerNews(),
+                    SizedBox(height: 16),
+                    //? Description of news.
+                    ItemDescriptionNews(),
+                    SizedBox(height: 16),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -13,6 +13,7 @@ class ItemBannerNews extends StatelessWidget {
       aspectRatio: 1.6,
       child: Container(
         decoration: const BoxDecoration(
+          color: Color(0xFF27305E),
           borderRadius: BorderRadius.all(Radius.circular(8)),
           boxShadow: [
             BoxShadow(
