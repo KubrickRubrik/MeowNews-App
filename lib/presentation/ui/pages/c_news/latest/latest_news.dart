@@ -19,6 +19,7 @@ class LatestNews extends StatelessWidget {
           child: Selector<NewsProvider, StatusSection>(
             selector: (_, Model) => Model.status.latest.statusSection,
             builder: (_, status, child) {
+              print(123);
               return switch (status) {
                 StatusSection.isNoContent => const NotAvailableLatestContent(),
                 _ => child!,
