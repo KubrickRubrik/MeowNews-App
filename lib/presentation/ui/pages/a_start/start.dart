@@ -9,6 +9,7 @@ import 'package:news_test/presentation/ui/navigator/navigator.dart';
 import 'package:news_test/presentation/ui/pages/c_news/controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_gen/gen_l10n/app_loc.dart';
+// import 'package:device_preview/device_preview.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
