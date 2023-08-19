@@ -9,4 +9,10 @@ Future<void> main() async {
   ServicesLocator.setup();
   await locator<NewsProvider>().getInitNews();
   runApp(const StartPage());
+  // runApp(
+  //   DevicePreview(
+  //     enabled: true,
+  //     builder: (context) => const StartPage(),
+  //   ),
+  // );
 }

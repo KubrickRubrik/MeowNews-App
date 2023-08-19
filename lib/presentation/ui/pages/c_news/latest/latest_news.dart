@@ -6,42 +6,16 @@ import 'package:news_test/presentation/ui/pages/c_news/latest/not_available/cont
 import 'package:news_test/presentation/ui/pages/c_news/latest/preload/content.dart';
 import 'package:provider/provider.dart';
 
-class LatestNews extends StatelessWidget {
-  const LatestNews({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Selector<NewsProvider, StatusSection>(
-            selector: (_, Model) => Model.status.latest.statusSection,
-            builder: (_, status, child) {
-              print(123);
-              return switch (status) {
-                StatusSection.isNoContent => const NotAvailableLatestContent(),
-                _ => child!,
-              };
-            },
-            child: const WrapLatestContent(),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class WrapLatestContent extends StatelessWidget {
-  const WrapLatestContent({super.key});
+class SectionLatestNews extends StatelessWidget {
+  const SectionLatestNews({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Selector<NewsProvider, StatusSection>(
       selector: (_, Model) => Model.status.latest.statusSection,
-      builder: (_, status, child) {
-        return switch (status) {
+      builder: (_, statusSection, child) {
+        return switch (statusSection) {
+          StatusSection.isNoContent => const NotAvailableLatestContent(),
           StatusSection.isLoadContent => const PreloadLatestContent(),
           _ => child!,
         };

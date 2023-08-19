@@ -50,7 +50,7 @@ class PreloaderContent extends StatelessWidget {
 }
 
 class _Spinner extends StatefulWidget {
-  const _Spinner({super.key});
+  const _Spinner();
 
   @override
   State<_Spinner> createState() => _SpinnerState();

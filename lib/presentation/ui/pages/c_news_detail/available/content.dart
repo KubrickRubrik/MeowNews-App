@@ -40,6 +40,7 @@ class AvailableDetailsNews extends StatelessWidget {
             //? Main content
             Flexible(
               child: SingleChildScrollView(
+                controller: ScrollController(),
                 padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Align(
                   alignment: Alignment.topCenter,

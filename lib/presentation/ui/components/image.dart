@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_test/core/config/image.dart';
+import 'package:news_test/core/config/prohibited.dart';
 
 //! Unfortunately, the news api used does not always provide
 //! correct image data (status 403, 404).
@@ -79,18 +80,11 @@ class _ComponentImageState extends State<ComponentImage> with AutomaticKeepAlive
   // Checking for prohibited sources.
   bool _isCorrectImage(String? url) {
     if (url == null || url.isEmpty) return false;
-    for (final badSourse in listBadSource) {
+    for (final badSourse in ProhibitedResources.listBadSource) {
       if (url.contains(badSourse)) {
         return false;
       }
     }
     return true;
   }
-
-  List<String> get listBadSource => [
-        'gdb.voanews.com',
-        'ichef.bbci.co.uk',
-        'meduza.io',
-        'gagadget.com',
-      ];
 }
