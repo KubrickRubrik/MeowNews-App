@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 class SectionLatestNews extends StatelessWidget {
   const SectionLatestNews(this.scrollController, {super.key});
   final ScrollController scrollController;
+  
   @override
   Widget build(BuildContext context) {
     return Selector<NewsProvider, StatusSection>(

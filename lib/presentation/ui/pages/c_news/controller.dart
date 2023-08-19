@@ -90,7 +90,9 @@ class _MainConntentState extends State<_MainConntent> {
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       slivers: [
+        //? Featured news section.
         const SectionFeaturedNews(),
+        //? Latest news section.
         SectionLatestNews(scrollController),
       ],
     );
