@@ -13,8 +13,8 @@ class NewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => locator<NewsProvider>(),
+    return ChangeNotifierProvider.value(
+        value: locator<NewsProvider>(),
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color(0xFF37474F),
@@ -52,28 +52,38 @@ class _MainConntent extends StatefulWidget {
 class _MainConntentState extends State<_MainConntent> {
   final scrollController = ScrollController();
 
+  void listenScroll() {
+    if (scrollController.position.atEdge) {
+      if (scrollController.position.pixels != 0) {
+        context.read<NewsProvider>().getLatestNews();
+      }
+    }
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.addListener(() {
-        if (scrollController.position.atEdge) {
-          if (scrollController.position.pixels != 0) {
-            context.read<NewsProvider>().getLatestNews();
-          }
-        }
-      });
+      scrollController.addListener(listenScroll);
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(listenScroll);
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       controller: scrollController,
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
-      slivers: const [
-        SectionFeaturedNews(),
-        SectionLatestNews(),
+      slivers: [
+        const SectionFeaturedNews(),
+        SectionLatestNews(scrollController),
       ],
     );
   }

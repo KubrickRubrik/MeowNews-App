@@ -6,5 +6,6 @@ abstract final class ProhibitedResources {
     'gagadget',
     'liga.net',
     '.ua',
+    'dw.com',
   ];
 }

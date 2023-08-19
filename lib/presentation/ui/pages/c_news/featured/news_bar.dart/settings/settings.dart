@@ -1,11 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/settings/widgets/language.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/settings/widgets/sort.dart';
 import 'package:provider/provider.dart';
 
-class BarSettions extends StatelessWidget {
+class BarSettions extends StatefulWidget {
   const BarSettions({super.key});
+
+  @override
+  State<BarSettions> createState() => _BarSettionsState();
+}
+
+class _BarSettionsState extends State<BarSettions> {
+  bool isDispaly = false;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (mounted) {
+          isDispaly = true;
+          setState(() {});
+        }
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,24 +34,24 @@ class BarSettions extends StatelessWidget {
       onTap: () {
         context.read<NewsProvider>().setDisplayNewsBar();
       },
-      child: Container(
-        padding: const EdgeInsets.only(bottom: 56, left: 8, right: 8),
-        color: const Color(0xFFFDFDFD),
-        child: const _WrapVariantOptions(),
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+        opacity: isDispaly ? 1 : 0,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 56),
+          child: Selector<NewsProvider, TargetSettingsNewsBar>(
+            selector: (_, Model) => Model.pageData.newsSearchBar.statusViewedBar,
+            builder: (_, status, __) {
+              return switch (status) {
+                TargetSettingsNewsBar.setLanguage => const NewsLanguageSettings(),
+                TargetSettingsNewsBar.setSort => const NewsSortSettings(),
+                _ => const SizedBox.shrink(),
+              };
+            },
+          ),
+        ),
       ),
     );
-  }
-}
-
-class _WrapVariantOptions extends StatelessWidget {
-  const _WrapVariantOptions();
-
-  @override
-  Widget build(BuildContext context) {
-    int a = 1;
-    return switch (a) {
-      1 => const NewsLanguageSettings(),
-      _ => const NewsSortSettings(),
-    };
   }
 }

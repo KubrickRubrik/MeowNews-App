@@ -26,7 +26,7 @@ class BarOptions extends StatelessWidget {
           ],
         ),
         child: const Flex(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           direction: Axis.horizontal,
           children: [
             Flexible(
@@ -35,7 +35,9 @@ class BarOptions extends StatelessWidget {
             Flexible(
               child: SectionSortBy(),
             ),
-            SectionSearchWord(),
+            Flexible(
+              child: SectionSearchWord(),
+            ),
             //? Button search
             SectionButtonSearch(),
           ],

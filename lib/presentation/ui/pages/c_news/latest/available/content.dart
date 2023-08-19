@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/components/indicator.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/available/item.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,6 @@ class AvailableLatestContent extends StatelessWidget {
       ),
       builder: (_, model, __) {
         return SliverList.separated(
-          addAutomaticKeepAlives: true,
           itemCount: model.length + 1,
           separatorBuilder: (_, __) => const SizedBox(height: 8),
           itemBuilder: (_, index) {
@@ -24,9 +24,7 @@ class AvailableLatestContent extends StatelessWidget {
               return SizedBox(
                   height: 100,
                   child: switch (model.status) {
-                    StatusContent.isLoadContent => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                    StatusContent.isLoadContent => const ProgerssIndicator(color: 0xFF0B38C0, padding: 0),
                     _ => const SizedBox.shrink(),
                   });
             }
