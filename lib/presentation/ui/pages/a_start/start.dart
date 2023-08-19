@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/device_preview.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/session/provider.dart';
@@ -49,7 +49,7 @@ class _StartPageState extends State<StartPage> {
             home: const NewsPage(),
             scrollBehavior: AppScrollBehavior(),
             //? Layout correction
-            builder: DevicePreview.appBuilder,
+            // builder: DevicePreview.appBuilder,
             //? Navigation
             onGenerateRoute: PagesNavigator.goRoutes,
           );

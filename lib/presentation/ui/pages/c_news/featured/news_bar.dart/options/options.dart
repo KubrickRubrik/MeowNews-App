@@ -35,7 +35,9 @@ class BarOptions extends StatelessWidget {
             Flexible(
               child: SectionSortBy(),
             ),
-            SectionSearchWord(),
+            Flexible(
+              child: SectionSearchWord(),
+            ),
             //? Button search
             SectionButtonSearch(),
           ],

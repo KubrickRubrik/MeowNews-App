@@ -26,7 +26,7 @@ class NewsLanguageSettings extends StatelessWidget {
 }
 
 class _ItemOption extends StatelessWidget {
-  const _ItemOption(this.option, {super.key, required this.size});
+  const _ItemOption(this.option, {required this.size});
   final AvailableNewsLanguages option;
   final double size;
 
