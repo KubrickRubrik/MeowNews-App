@@ -19,55 +19,62 @@ class ItemLatestNewsBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final news = context.read<NewsProvider>().pageData.newSet.listLatestdNews.elementAt(index);
-    return InkWell(
-      onTap: () {
-        openItemNewsPage(context, idNews: news.source.id, index: index);
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //? Title
-          TitleLatestNews(news),
-          //? Banner
-          AspectRatio(
-            aspectRatio: 1.5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFE0E0E0),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: const [
-                  BoxShadow(offset: Offset(0, 1), blurRadius: 2, spreadRadius: -1),
-                ],
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        constraints: const BoxConstraints(maxWidth: 600),
+        child: InkWell(
+          onTap: () {
+            openItemNewsPage(context, idNews: news.source.id, index: index);
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //? Title
+              TitleLatestNews(news),
+              //? Banner
+              AspectRatio(
+                aspectRatio: 1.5,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE0E0E0),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: const [
+                      BoxShadow(offset: Offset(0, 1), blurRadius: 2, spreadRadius: -1),
+                    ],
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: Stack(
+                    children: [
+                      //? Banner
+                      Positioned(
+                        top: 0,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: ComponentImage(news.banner.mainUrl),
+                      ),
+                      //? PublishedAt
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: PublishedLatestNews(news),
+                      ),
+                      //? Viewed news
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        child: ViewedLatestNews(index),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              clipBehavior: Clip.hardEdge,
-              child: Stack(
-                children: [
-                  //? Banner
-                  Positioned(
-                    top: 0,
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: ComponentImage(news.banner.mainUrl),
-                  ),
-                  //? PublishedAt
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: PublishedLatestNews(news),
-                  ),
-                  //? Viewed news
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    child: ViewedLatestNews(index),
-                  ),
-                ],
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

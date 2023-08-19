@@ -43,7 +43,6 @@ class _AvailableFeatureContentState extends State<AvailableFeatureContent> {
       builder: (_, model, __) {
         return ListView.separated(
           controller: scrollController,
-          padding: const EdgeInsets.only(bottom: 4),
           scrollDirection: Axis.horizontal,
           itemCount: model.length + 1,
           separatorBuilder: (_, __) => const SizedBox(width: 8),
