@@ -37,7 +37,6 @@ final class _PageData {
       }
       page = page + 1;
     }
-    print(">> PAGE: $page");
     return page;
   }
 
@@ -74,15 +73,4 @@ final class _PageData {
     }
   }
 
-  // News selection
-  // NewsEntity? getItemNews(NewsSignpost data) {
-  //   try {
-  //     return switch (data.target) {
-  //       TargetNews.featured => newSet.listFeaturedNews.elementAt(data.index),
-  //       _ => newSet.listLatestdNews.elementAt(data.index),
-  //     };
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
 }
