@@ -3,6 +3,7 @@ import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/components/icons.dart';
+import 'package:news_test/presentation/ui/components/indicator.dart';
 import 'package:news_test/presentation/ui/components/toast.dart';
 import 'package:provider/provider.dart';
 
@@ -17,13 +18,11 @@ class ButtonettingViewedNews extends StatelessWidget {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
       clipBehavior: Clip.hardEdge,
       child: Selector<NewsProvider, StatusViewed>(
-          selector: (_, Model) => Model.status.statusSetViewed,
+          selector: (_, Model) => Model.status.statusSetViewedButton,
           builder: (_, statusSetViewed, __) {
             Widget widget;
             if (statusSetViewed == StatusViewed.isLoadContent) {
-              widget = const CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.white,
-              );
+              widget = const ProgerssIndicator();
             } else if (statusSetViewed == StatusViewed.isNotViewed) {
               widget = const Icon(
                 IconsApp.completed,

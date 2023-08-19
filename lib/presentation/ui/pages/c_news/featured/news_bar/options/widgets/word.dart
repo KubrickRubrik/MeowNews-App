@@ -13,18 +13,23 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
   bool isFocus = false;
   final myFocusNode = FocusNode();
 
-  @override
-  void initState() {
-    myFocusNode.addListener(() {
+  void _scrollListener() {
+    if (mounted) {
       isFocus = myFocusNode.hasFocus;
       setState(() {});
-    });
+    }
+  }
+
+  @override
+  void initState() {
+    myFocusNode.addListener(_scrollListener);
     super.initState();
   }
 
   @override
   void dispose() {
-    myFocusNode.removeListener(() {});
+    myFocusNode.removeListener(_scrollListener);
+    myFocusNode.dispose();
     super.dispose();
   }
 
@@ -34,7 +39,7 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.ease,
       height: 36,
-      width: isFocus ? MediaQuery.of(context).size.width / 4 : 60,
+      width: isFocus ? MediaQuery.of(context).size.width / 3 : 80,
       margin: const EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -52,6 +57,7 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
           ),
         ],
       ),
+      alignment: Alignment.bottomCenter,
       child: TextField(
         focusNode: myFocusNode,
         maxLength: 24,
@@ -60,18 +66,15 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
           color: Colors.blueGrey.shade800,
           fontWeight: FontWeight.bold,
           fontSize: 16,
-          height: 1.2,
         ),
+        textInputAction: TextInputAction.search,
         onChanged: (value) {
-          context.read<NewsProvider>().setSearchWord(value);
+          context.read<NewsProvider>().pageData.newsSearchBar.setSearchWord(value);
         },
         onSubmitted: (value) {
-          context.read<NewsProvider>().setSearchWord(value);
-          context.read<NewsProvider>().getInitNews();
+          context.read<NewsProvider>().searchLatestNews();
         },
         textAlign: TextAlign.center,
-        cursorColor: Colors.white,
-        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           isCollapsed: true,
           border: InputBorder.none,
@@ -81,11 +84,10 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
             color: Colors.blueGrey.shade700,
             fontWeight: FontWeight.bold,
             fontSize: 16,
-            height: 1.2,
           ),
-          contentPadding: const EdgeInsets.only(left: 4, top: 8),
-          // isCollapsed: true,
+          contentPadding: const EdgeInsets.only(left: 6, right: 6),
         ),
+        showCursor: false,
       ),
     );
   }

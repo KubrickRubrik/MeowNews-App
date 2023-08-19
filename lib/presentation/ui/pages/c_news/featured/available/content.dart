@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/components/indicator.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/item.dart';
 import 'package:provider/provider.dart';
 
@@ -13,22 +14,26 @@ class AvailableFeatureContent extends StatefulWidget {
 
 class _AvailableFeatureContentState extends State<AvailableFeatureContent> {
   final scrollController = ScrollController();
+
+  void listenScroll() {
+    if (scrollController.position.atEdge) {
+      if (scrollController.position.pixels != 0) {
+        context.read<NewsProvider>().getFeaturedNews();
+      }
+    }
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.addListener(() {
-        if (scrollController.position.atEdge) {
-          if (scrollController.position.pixels != 0) {
-            context.read<NewsProvider>().getFeaturedNews();
-          }
-        }
-      });
+      scrollController.addListener(listenScroll);
     });
     super.initState();
   }
 
   @override
   void dispose() {
+    scrollController.removeListener(listenScroll);
     scrollController.dispose();
     super.dispose();
   }
@@ -44,15 +49,17 @@ class _AvailableFeatureContentState extends State<AvailableFeatureContent> {
         return ListView.separated(
           controller: scrollController,
           scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
           itemCount: model.length + 1,
           separatorBuilder: (_, __) => const SizedBox(width: 8),
           itemBuilder: (_, index) {
             if (index == model.length) {
               return SizedBox(
-                  width: 100,
+                  width: 56,
                   child: switch (model.status) {
-                    StatusContent.isLoadContent => const Center(
-                        child: CircularProgressIndicator(),
+                    StatusContent.isLoadContent => const ProgerssIndicator(
+                        color: 0xFF0B38C0,
+                        padding: 0,
                       ),
                     _ => const SizedBox.shrink(),
                   });

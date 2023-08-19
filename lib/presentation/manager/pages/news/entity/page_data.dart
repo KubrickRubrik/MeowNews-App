@@ -1,13 +1,9 @@
 part of '../provider.dart';
 
 final class _PageData {
-  // Number of downloaded news in one request (for one page).
-  final _featuredNewsCount = 6;
-  final _latestNewsCount = 12;
-
   // Main data list of news
   final newSet = NewsSet.empty();
-  final newBar = _NewsBar();
+  final newsSearchBar = NewsSearchBar();
 
   // Overwriting the used idSeries and clean for new data.
   void _overwritingPageData(NewsSet data) {
@@ -17,17 +13,18 @@ final class _PageData {
     if (data.listLatestdNews.isNotEmpty) newSet.listLatestdNews.addAll(data.listLatestdNews);
   }
 
+  // Adding new news data after scrolling the list all the way to the bottom.
   void _addingNewData(NewsSet data) {
     if (data.listFeaturedNews.isNotEmpty) newSet.listFeaturedNews.addAll(data.listFeaturedNews);
     if (data.listLatestdNews.isNotEmpty) newSet.listLatestdNews.addAll(data.listLatestdNews);
   }
 
   // Getting the page number depending on the number of already loaded news.
-  int getItemPage(TargetNews target) {
+  int getPageNumber(TargetNews target) {
     int page = 0;
     ({int length, int countInPage}) data = switch (target) {
-      TargetNews.featured => (length: newSet.listFeaturedNews.length, countInPage: _featuredNewsCount),
-      TargetNews.latest => (length: newSet.listLatestdNews.length, countInPage: _latestNewsCount),
+      TargetNews.featured => (length: newSet.listFeaturedNews.length, countInPage: newsSearchBar.options._featuredNewsCount),
+      TargetNews.latest => (length: newSet.listLatestdNews.length, countInPage: newsSearchBar.options._latestNewsCount),
     };
     if (data.length % data.countInPage == 0) {
       page = (data.length ~/ data.countInPage) + 1;

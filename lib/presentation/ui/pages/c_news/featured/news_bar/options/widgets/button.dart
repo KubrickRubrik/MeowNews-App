@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/components/indicator.dart';
 import 'package:provider/provider.dart';
 
 class SectionButtonSearch extends StatelessWidget {
@@ -8,32 +9,34 @@ class SectionButtonSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 1),
-      width: 56,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(16),
-          bottomRight: Radius.circular(16),
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 1),
+        width: 56,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(4),
+            bottomRight: Radius.circular(4),
+          ),
         ),
-      ),
-      clipBehavior: Clip.hardEdge,
-      alignment: Alignment.center,
-      child: Selector<NewsProvider, (StatusSection, StatusSection)>(
-        selector: (_, Model) => (Model.status.featured.statusSection, Model.status.latest.statusSection),
-        builder: (_, model, child) {
-          if ([model.$1, model.$2].contains(StatusSection.isLoadContent)) return const CircularProgressIndicator.adaptive();
-          if ([model.$1, model.$2].contains(StatusSection.isNoContent)) return const _ButtonUpdateSearch();
-          return child!;
-        },
-        child: const _ButtonGoSearch(),
+        clipBehavior: Clip.hardEdge,
+        child: Selector<NewsProvider, (StatusSection, StatusSection)>(
+          selector: (_, Model) => (Model.status.featured.statusSection, Model.status.latest.statusSection),
+          builder: (_, model, child) {
+            if ([model.$1, model.$2].contains(StatusSection.isLoadContent)) return const ProgerssIndicator();
+            if ([model.$1, model.$2].contains(StatusSection.isNoContent)) return const _ButtonUpdateSearch();
+            return child!;
+          },
+          child: const _ButtonGoSearch(),
+        ),
       ),
     );
   }
 }
 
 class _ButtonGoSearch extends StatelessWidget {
-  const _ButtonGoSearch({super.key});
+  const _ButtonGoSearch();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class _ButtonGoSearch extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          context.read<NewsProvider>().getInitNews();
+          context.read<NewsProvider>().searchLatestNews();
         },
         child: const Center(
           child: Icon(
@@ -56,7 +59,7 @@ class _ButtonGoSearch extends StatelessWidget {
 }
 
 class _ButtonUpdateSearch extends StatelessWidget {
-  const _ButtonUpdateSearch({super.key});
+  const _ButtonUpdateSearch();
 
   @override
   Widget build(BuildContext context) {

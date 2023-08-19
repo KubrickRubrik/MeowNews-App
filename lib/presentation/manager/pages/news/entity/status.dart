@@ -10,7 +10,7 @@ part of '../provider.dart';
 ///
 final class _StatusData {
   // Button status in AppBar (set `viewed` for news)
-  var statusSetViewed = StatusViewed.isNotViewed;
+  var statusSetViewedButton = StatusViewed.isNotViewed;
   // ItemNews loading status
   var statusPreload = ActionStatus.isDone;
   // News `ALL` section download statuses
@@ -24,7 +24,7 @@ final class _StatusData {
 
   //
   void reset() {
-    statusSetViewed = StatusViewed.isNotViewed;
+    statusSetViewedButton = StatusViewed.isNotViewed;
     statusPreload = ActionStatus.isDone;
     featured.reset();
     latest.reset();

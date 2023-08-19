@@ -5,7 +5,8 @@ final class NewsDTO extends Dto<String> {
   final String? searchWord;
   final TargetNews target;
   final int page;
-  final AvailableLanguageNews? language;
+  final AvailableNewsLanguages? language;
+  final AvailableNewsSorting? sort;
   final int pageSize;
 
   NewsDTO(
@@ -13,6 +14,7 @@ final class NewsDTO extends Dto<String> {
     required this.target,
     this.searchWord,
     this.language,
+    this.sort,
     this.pageSize = 30,
   });
 
@@ -22,11 +24,11 @@ final class NewsDTO extends Dto<String> {
     if (target == TargetNews.featured) {
       requestString = 'everything?';
       requestString += 'q=$searchWord';
-      requestString += '&sortBy=popularity';
+      requestString += '&sortBy=${sort!.name}';
     } else {
       requestString = 'everything?';
       requestString += 'q=$searchWord';
-      requestString += '&sortBy=publishedAt';
+      requestString += '&sortBy=${sort!.name}';
     }
 
     if (language != null) requestString += '&language=${language!.name}';
