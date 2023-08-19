@@ -19,29 +19,35 @@ abstract final class ToastMassage {
         behavior: SnackBarBehavior.floating,
         margin: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
         backgroundColor: Colors.transparent,
-        content: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          decoration: BoxDecoration(
-            color: data.colorBackground,
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(0, 4),
-                blurRadius: 4,
-                spreadRadius: -4,
-              )
-            ],
-          ),
-          clipBehavior: Clip.hardEdge,
+        content: Align(
           alignment: Alignment.center,
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: data.colorText,
-              fontWeight: FontWeight.bold,
-              fontSize: 17,
-              height: 1.4,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              decoration: BoxDecoration(
+                color: data.colorBackground,
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                boxShadow: const [
+                  BoxShadow(
+                    offset: Offset(0, 4),
+                    blurRadius: 4,
+                    spreadRadius: -4,
+                  )
+                ],
+              ),
+              clipBehavior: Clip.hardEdge,
+              alignment: Alignment.center,
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: data.colorText,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                  height: 1.4,
+                ),
+              ),
             ),
           ),
         ),

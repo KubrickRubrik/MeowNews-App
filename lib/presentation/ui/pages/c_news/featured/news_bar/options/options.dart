@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/options/widgets/button.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/options/widgets/language.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/options/widgets/sort.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/options/widgets/word.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/options/widgets/button.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/options/widgets/language.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/options/widgets/sort.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/options/widgets/word.dart';
 
 class BarOptions extends StatelessWidget {
   const BarOptions({super.key});
@@ -26,7 +26,7 @@ class BarOptions extends StatelessWidget {
           ],
         ),
         child: const Flex(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           direction: Axis.horizontal,
           children: [
             Flexible(
@@ -35,7 +35,9 @@ class BarOptions extends StatelessWidget {
             Flexible(
               child: SectionSortBy(),
             ),
-            SectionSearchWord(),
+            Flexible(
+              child: SectionSearchWord(),
+            ),
             //? Button search
             SectionButtonSearch(),
           ],

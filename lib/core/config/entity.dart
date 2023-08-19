@@ -38,4 +38,10 @@ enum TypeMassage { good, massage, error, warning }
 /// Тews country
 enum TargetNews { latest, featured }
 
-enum AvailableLanguageNews { en, ru }
+/// Available languages for news search.
+enum AvailableNewsLanguages { en, ru }
+
+/// Available languages for news search.
+enum AvailableNewsSorting { relevancy, popularity, publishedAt }
+
+enum TargetSettingsNewsBar { isClosed, setLanguage, setSort, publishedAt }

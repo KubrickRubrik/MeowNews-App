@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/content.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/settings/settings.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/settings/settings.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/not_available/content.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/preload/content.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/options/options.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/options/options.dart';
 import 'package:provider/provider.dart';
 
 class SectionFeaturedNews extends StatelessWidget {
@@ -32,8 +32,8 @@ class SectionFeaturedNews extends StatelessWidget {
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16),
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8),
               ),
             ),
             clipBehavior: Clip.hardEdge,
@@ -61,15 +61,16 @@ class SwitchContentFeaturedNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Selector<NewsProvider, bool>(
-        selector: (_, Model) => Model.pageData.newBar.statusOpen,
-        builder: (_, statusOpen, child) {
+      child: Selector<NewsProvider, TargetSettingsNewsBar>(
+        selector: (_, Model) => Model.pageData.newsSearchBar.statusViewedBar,
+        builder: (_, status, child) {
           return AnimatedCrossFade(
             duration: const Duration(milliseconds: 300),
             sizeCurve: Curves.ease,
-            crossFadeState: (!statusOpen) ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+            crossFadeState: (status == TargetSettingsNewsBar.isClosed) ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             firstChild: child!,
             layoutBuilder: (topChild, topChildKey, bottomChild, bottomChildKey) {
+              // Used to avoid abrupt jumps between widgets.
               return Stack(
                 alignment: Alignment.center,
                 children: [
@@ -108,6 +109,9 @@ class _FeaturedNews extends StatelessWidget {
       child: Selector<NewsProvider, StatusSection>(
         selector: (_, Model) => Model.status.featured.statusSection,
         builder: (_, status, child) {
+          // To update the news section UI state, only the `statusSection` is updated.
+          // To update the state of the UI caused by a content loading scroll,
+          // use statusScroll in [AvailableFeatureContent].
           return switch (status) {
             StatusSection.isNoContent => const NotAvailableFeaturedContent(),
             StatusSection.isLoadContent => const PreloadFeaturedContent(),

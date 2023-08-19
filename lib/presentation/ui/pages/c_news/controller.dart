@@ -13,30 +13,38 @@ class NewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => locator<NewsProvider>(),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color(0xFF37474F),
-            centerTitle: false,
-            title: Text(
-              context.lcz.titleNewsPage,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+    return ChangeNotifierProvider.value(
+        value: locator<NewsProvider>(),
+        child: Listener(
+          onPointerDown: (_) {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.focusedChild?.unfocus();
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color(0xFF37474F),
+              centerTitle: false,
+              title: Text(
+                context.lcz.titleNewsPage,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
+              actions: const [
+                ButtonettingViewedNews(),
+              ],
             ),
-            actions: const [
-              ButtonettingViewedNews(),
-            ],
-          ),
-          body: const Stack(
-            children: [
-              //? Main content
-              _MainConntent(),
-              //? Preload
-              PreloaderContent(),
-            ],
+            body: const Stack(
+              children: [
+                //? Main content
+                _MainConntent(),
+                //? Preload
+                PreloaderContent(),
+              ],
+            ),
           ),
         ));
   }
@@ -52,28 +60,38 @@ class _MainConntent extends StatefulWidget {
 class _MainConntentState extends State<_MainConntent> {
   final scrollController = ScrollController();
 
+  void listenScroll() {
+    if (scrollController.position.atEdge) {
+      if (scrollController.position.pixels != 0) {
+        context.read<NewsProvider>().getLatestNews();
+      }
+    }
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.addListener(() {
-        if (scrollController.position.atEdge) {
-          if (scrollController.position.pixels != 0) {
-            context.read<NewsProvider>().getLatestNews();
-          }
-        }
-      });
+      scrollController.addListener(listenScroll);
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(listenScroll);
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       controller: scrollController,
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
-      slivers: const [
-        SectionFeaturedNews(),
-        SectionLatestNews(),
+      slivers: [
+        const SectionFeaturedNews(),
+        SectionLatestNews(scrollController),
       ],
     );
   }
