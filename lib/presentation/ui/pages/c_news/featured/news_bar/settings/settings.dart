@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/settings/widgets/language.dart';
-import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar.dart/settings/widgets/sort.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/settings/widgets/language.dart';
+import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/settings/widgets/sort.dart';
 import 'package:provider/provider.dart';
 
 class BarSettions extends StatefulWidget {

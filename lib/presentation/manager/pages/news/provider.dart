@@ -59,10 +59,14 @@ final class NewsProvider extends ChangeNotifier with _State {
     //? Checking for failure.
     if (_isFail(response.fail)) {
       status._setAll(StatusSection.isNoContent);
+      notifyListeners();
       return;
     }
     //? Data verification.
-    if (!_isCorrectData(response.data)) return;
+    if (!_isCorrectData(response.data)) {
+      notifyListeners();
+      return;
+    }
     //? Adding new data.
     pageData._overwritingPageData(response.data!);
     _setDisplayingDownloadedData();
@@ -219,11 +223,13 @@ final class NewsProvider extends ChangeNotifier with _State {
     }
     final dto = ViewedNewsDTO(list);
     //? Request.
-    _setActionSetViewed(StatusViewed.isLoadContent);
     final response = await _newsCase.setViewedNews(dto);
 
     //? Checking for failure.
-    if (_isFail(response.fail)) return false;
+    if (_isFail(response.fail)) {
+      _setActionSetViewed(StatusViewed.isNotViewed);
+      return false;
+    }
     //? Data verification.
     if (response.data == null || response.data!.isEmpty) {
       _setActionSetViewed(StatusViewed.isNotViewed);
@@ -261,7 +267,6 @@ final class NewsProvider extends ChangeNotifier with _State {
   bool _isCorrectData(NewsSet? data) {
     if (data != null) return true;
     status._setAll(StatusSection.isNoContent);
-    notifyListeners();
     return false;
   }
 

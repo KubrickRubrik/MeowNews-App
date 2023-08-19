@@ -1,5 +1,5 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-// import 'package:device_preview/device_preview.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/session/provider.dart';
@@ -48,7 +48,7 @@ class _StartPageState extends State<StartPage> {
             //? Main
             title: 'MeowNews',
             home: const NewsPage(),
-            scrollBehavior: AppScrollBehavior(),
+            scrollBehavior: _checksPlatform(),
             //? Layout correction
             // builder: DevicePreview.appBuilder,
             //? Navigation
@@ -60,7 +60,13 @@ class _StartPageState extends State<StartPage> {
   }
 }
 
-class AppScrollBehavior extends MaterialScrollBehavior {
+// Adding a mouse gesture handler for desktop platforms.
+ScrollBehavior? _checksPlatform() {
+  if (Platform.isAndroid || Platform.isIOS) return null;
+  return _AppScrollBehavior();
+}
+
+class _AppScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {
         PointerDeviceKind.touch,

@@ -15,28 +15,36 @@ class NewsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
         value: locator<NewsProvider>(),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color(0xFF37474F),
-            centerTitle: false,
-            title: Text(
-              context.lcz.titleNewsPage,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+        child: Listener(
+          onPointerDown: (_) {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.focusedChild?.unfocus();
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color(0xFF37474F),
+              centerTitle: false,
+              title: Text(
+                context.lcz.titleNewsPage,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
+              actions: const [
+                ButtonettingViewedNews(),
+              ],
             ),
-            actions: const [
-              ButtonettingViewedNews(),
-            ],
-          ),
-          body: const Stack(
-            children: [
-              //? Main content
-              _MainConntent(),
-              //? Preload
-              PreloaderContent(),
-            ],
+            body: const Stack(
+              children: [
+                //? Main content
+                _MainConntent(),
+                //? Preload
+                PreloaderContent(),
+              ],
+            ),
           ),
         ));
   }
