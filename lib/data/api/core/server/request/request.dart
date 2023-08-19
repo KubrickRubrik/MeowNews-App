@@ -7,7 +7,8 @@ final class ConfigRequestServer {
   //? Access key
   // static const _apIKey = '6a22a58eaf4a4ed6b6e5e06e6addeb89';
   // static const _apIKey = 'b0b6c5d2af35492ab5a95bd1e63c9561';
-  static const _apIKey = '70f78b9e19524f5aa9e2ab72f16391fb';
+  // static const _apIKey = '70f78b9e19524f5aa9e2ab72f16391fb';
+  static const _apIKey = '707cad8fe9b64a37b36a526608529bf2';
 
   // Makes a request to the server.
   static Future<Map<String, dynamic>?> request(Client api, {required String query}) async {
@@ -20,7 +21,7 @@ final class ConfigRequestServer {
   // Forming a data object for a request.
   static String _formDataObject(String query) {
     final request = 'https://newsapi.org/v2/$query&apiKey=$_apIKey';
-    print(request);
+    print("REQUEST API: $request");
     return request;
   }
 

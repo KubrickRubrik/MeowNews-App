@@ -26,7 +26,7 @@ class BarOptions extends StatelessWidget {
           ],
         ),
         child: const Flex(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           direction: Axis.horizontal,
           children: [
             Flexible(

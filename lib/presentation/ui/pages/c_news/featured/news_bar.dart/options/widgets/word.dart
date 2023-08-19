@@ -13,20 +13,22 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
   bool isFocus = false;
   final myFocusNode = FocusNode();
 
+  void _scrollListener() {
+    if (mounted) {
+      isFocus = myFocusNode.hasFocus;
+      setState(() {});
+    }
+  }
+
   @override
   void initState() {
-    myFocusNode.addListener(() {
-      if (mounted) {
-        isFocus = myFocusNode.hasFocus;
-        // setState(() {});
-      }
-    });
+    myFocusNode.addListener(_scrollListener);
     super.initState();
   }
 
   @override
   void dispose() {
-    myFocusNode.removeListener(() {});
+    myFocusNode.removeListener(_scrollListener);
     super.dispose();
   }
 
@@ -56,7 +58,7 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
       ),
       alignment: Alignment.bottomCenter,
       child: TextField(
-        // focusNode: myFocusNode,
+        focusNode: myFocusNode,
         maxLength: 24,
         style: TextStyle(
           overflow: TextOverflow.ellipsis,
@@ -66,11 +68,10 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
         ),
         textInputAction: TextInputAction.search,
         onChanged: (value) {
-          context.read<NewsProvider>().setSearchWord(value);
+          context.read<NewsProvider>().pageData.newsSearchBar.setSearchWord(value);
         },
         onSubmitted: (value) {
-          context.read<NewsProvider>().setSearchWord(value);
-          context.read<NewsProvider>().getInitNews();
+          context.read<NewsProvider>().searchLatestNews();
         },
         textAlign: TextAlign.center,
         decoration: InputDecoration(
@@ -83,6 +84,7 @@ class _SectionSearchWordState extends State<SectionSearchWord> {
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 6),
         ),
         showCursor: false,
       ),

@@ -21,30 +21,39 @@ final class NewsProvider extends ChangeNotifier with _State {
   final NewsCase _newsCase;
   final ItemNewsCase _itemNewsCase;
 
-  /// Getting featured and latest news
+  /// Getting featured and latest news.
   Future<void> getInitNews() async {
     //? Launchability check
     if (actionStatus == ActionStatus.isAction) return;
     _setActionsPage(ActionStatus.isAction);
     status.reset();
+    pageData.newsSearchBar._setStatusOpen(null);
     //? Formation of request parameters.
+    final options = pageData.newsSearchBar.options;
+    // 1. For featured news, the parameters are assigned independently
+    //    so that they differ from the latest news.
     final featuredNewsDTO = NewsDTO(
       1,
       target: TargetNews.featured,
-      searchWord: pageData.newBar.getSearchString(),
-      language: AvailableLanguageNews.ru,
-      pageSize: pageData._featuredNewsCount,
+      searchWord: 'IT',
+      language: AvailableNewsLanguages.ru,
+      sort: AvailableNewsSorting.popularity,
+      pageSize: options._featuredNewsCount,
     );
+    // 2. For the latest news, the parameters are assigned by the
+    //    user from the [newsBar] object. These parameters can be changed
+    //    by the user when performing a search in the NewsBar.
     final latestNewsDTO = NewsDTO(
       1,
       target: TargetNews.latest,
-      searchWord: pageData.newBar.getSearchString(),
-      language: AvailableLanguageNews.ru,
-      pageSize: 10,
+      searchWord: options.getSearchWord,
+      language: options.languageOptions,
+      sort: options.sortOptions,
+      pageSize: options._latestNewsCount,
     );
     //? Request.
     status._setAll(StatusSection.isLoadContent);
-    notifyListeners(); // to display the loading screen
+    notifyListeners(); // to display the loading screen.
     final response = await _newsCase.getInitNews(featuredNews: featuredNewsDTO, latestNews: latestNewsDTO);
     _setActionsPage(ActionStatus.isDone);
     //? Checking for failure.
@@ -59,19 +68,21 @@ final class NewsProvider extends ChangeNotifier with _State {
     _setDisplayingDownloadedData();
   }
 
-  /// Getting featured news on scroll
+  /// Getting featured news on scroll.
   Future<void> getFeaturedNews() async {
     //? Launchability check
     if (status.featured.statusScroll != StatusContent.isViewContent) return;
     status.featured._setScroll(StatusContent.isLoadContent);
     notifyListeners();
     //? Formation of request parameters.
+    final options = pageData.newsSearchBar.options;
     final dto = NewsDTO(
-      pageData.getItemPage(TargetNews.featured),
-      searchWord: pageData.newBar.getSearchString(),
+      pageData.getPageNumber(TargetNews.featured),
       target: TargetNews.featured,
-      language: AvailableLanguageNews.en,
-      pageSize: pageData._featuredNewsCount,
+      searchWord: 'IT',
+      language: AvailableNewsLanguages.ru,
+      sort: AvailableNewsSorting.popularity,
+      pageSize: options._featuredNewsCount,
     );
     //? Request.
     final response = await _newsCase.getMoreNews(dto);
@@ -92,26 +103,28 @@ final class NewsProvider extends ChangeNotifier with _State {
       featuredNews: response.data,
       latestdNews: null,
     ));
-    status.statusSetViewed = StatusViewed.isNotViewed;
+    status.statusSetViewedButton = StatusViewed.isNotViewed;
     status.featured._setScroll(StatusContent.isViewContent);
     notifyListeners();
   }
 
-  /// Getting the latest news on scroll
+  /// Getting the latest news on scroll.
   Future<void> getLatestNews() async {
     //? Launchability check
     if (status.latest.statusScroll != StatusContent.isViewContent) return;
     status.latest._setScroll(StatusContent.isLoadContent);
     notifyListeners();
     //? Formation of request parameters.
+    final options = pageData.newsSearchBar.options;
     final dto = NewsDTO(
-      pageData.getItemPage(TargetNews.latest),
-      searchWord: pageData.newBar.getSearchString(),
+      pageData.getPageNumber(TargetNews.latest),
       target: TargetNews.latest,
-      pageSize: pageData._latestNewsCount,
+      searchWord: options.getSearchWord,
+      language: options.languageOptions,
+      sort: options.sortOptions,
+      pageSize: options._latestNewsCount,
     );
     //? Request.
-    notifyListeners(); // to display the loading screen
     final response = await _newsCase.getMoreNews(dto);
     //? Checking for failure.
     if (_isFail(response.fail)) {
@@ -130,8 +143,50 @@ final class NewsProvider extends ChangeNotifier with _State {
       featuredNews: null,
       latestdNews: response.data,
     ));
-    status.statusSetViewed = StatusViewed.isNotViewed;
+    status.statusSetViewedButton = StatusViewed.isNotViewed;
     status.latest._setScroll(StatusContent.isViewContent);
+    notifyListeners();
+  }
+
+  /// Search new latest news.
+  Future<void> searchLatestNews() async {
+    //? Launchability check
+    if (status.latest.statusSection == StatusSection.isLoadContent) return;
+    pageData.newsSearchBar._setStatusOpen(null);
+    status.latest.reset();
+    notifyListeners();
+    //? Formation of request parameters.
+    final options = pageData.newsSearchBar.options;
+    final dto = NewsDTO(
+      1,
+      target: TargetNews.latest,
+      searchWord: options.getSearchWord,
+      language: options.languageOptions,
+      sort: options.sortOptions,
+      pageSize: options._latestNewsCount,
+    );
+    //? Request.
+    final response = await _newsCase.getMoreNews(dto);
+    //? Checking for failure.
+    if (_isFail(response.fail)) {
+      status.latest._setSection(StatusSection.isNoContent);
+      notifyListeners();
+      return;
+    }
+    //? Data verification.
+    if (response.data == null || response.data!.isEmpty) {
+      status.latest._setSection(StatusSection.isNoContent);
+      notifyListeners();
+      return;
+    }
+    //? Adding new data.
+    pageData.newSet.listLatestdNews.clear();
+    pageData._addingNewData(NewsSet(
+      featuredNews: null,
+      latestdNews: response.data,
+    ));
+    status.statusSetViewedButton = StatusViewed.isNotViewed;
+    status.latest._setSection(StatusSection.isViewContent);
     notifyListeners();
   }
 
@@ -152,9 +207,9 @@ final class NewsProvider extends ChangeNotifier with _State {
     return response.data!;
   }
 
-  /// Marking all downloaded news as `viewed`
+  /// Marking all downloaded news as `viewed`.
   Future<bool?> setAllNewsViewed() async {
-    if (status.statusSetViewed == StatusViewed.isLoadContent) return null;
+    if (status.statusSetViewedButton == StatusViewed.isLoadContent) return null;
     _setActionSetViewed(StatusViewed.isLoadContent);
     //? Formation of request parameters.
     final list = pageData.getAllIdNews();
@@ -180,7 +235,7 @@ final class NewsProvider extends ChangeNotifier with _State {
     return true;
   }
 
-  /// Setting the data display status for the `featured` and `latest` list news
+  /// Setting the data display status for the `featured` and `latest` list news.
   void _setDisplayingDownloadedData() {
     if (pageData.newSet.listFeaturedNews.isNotEmpty) {
       status.featured._setSection(StatusSection.isViewContent);
@@ -210,24 +265,35 @@ final class NewsProvider extends ChangeNotifier with _State {
     return false;
   }
 
-  /// Setting the status of the news status setting button `viewed`
+  /// Setting the status of the news status setting button `viewed`.
   void _setActionSetViewed(StatusViewed val) {
-    status.statusSetViewed = val;
+    status.statusSetViewedButton = val;
     notifyListeners();
   }
 
-  /// Setting the status of ItemNews
+  /// Setting the status of ItemNews.
   void _setActionPreloadNews(ActionStatus val) {
     status.statusPreload = val;
     notifyListeners();
   }
 
-  void setDisplayNewsBar([bool? val]) {
-    pageData.newBar._setStatusOpen(val);
+  /// Hide/show search options settings.
+  void setDisplayNewsBar([TargetSettingsNewsBar? val]) {
+    pageData.newsSearchBar._setStatusOpen(val);
     notifyListeners();
   }
 
-  void setSearchWord(String val) {
-    pageData.newBar._setSearchWord(val);
+  /// Setting the news search language.
+  void setLanguageOptions(AvailableNewsLanguages val) {
+    pageData.newsSearchBar._setStatusOpen(null);
+    pageData.newsSearchBar.setLanguageOptions(val);
+    notifyListeners();
+  }
+
+  /// Setting the type of news search sorting.
+  void setSortOptions(AvailableNewsSorting val) {
+    pageData.newsSearchBar._setStatusOpen(null);
+    pageData.newsSearchBar.setSortOptions(val);
+    notifyListeners();
   }
 }
