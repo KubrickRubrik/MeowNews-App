@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:news_test/presentation/locator/locator.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
 import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
-import 'package:news_test/presentation/ui/pages/c_news/appbar/button.dart';
+import 'package:news_test/presentation/ui/pages/c_news/appbar/actions/viewed.dart';
+import 'package:news_test/presentation/ui/pages/c_news/appbar/actions/settings.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/featured_news.dart';
 import 'package:news_test/presentation/ui/pages/c_news/latest/latest_news.dart';
 import 'package:news_test/presentation/ui/pages/c_news/preloader/preloader.dart';
+import 'package:news_test/presentation/ui/pages/c_news/settings/settings.dart';
 import 'package:provider/provider.dart';
 
 class NewsPage extends StatelessWidget {
@@ -34,7 +36,8 @@ class NewsPage extends StatelessWidget {
                 ),
               ),
               actions: const [
-                ButtonettingViewedNews(),
+                ButtonSetViewedNews(),
+                ButtonSettingsNews(),
               ],
             ),
             body: const Stack(
@@ -43,6 +46,8 @@ class NewsPage extends StatelessWidget {
                 _MainConntent(),
                 //? Preload
                 PreloaderContent(),
+                //? Settings
+                SettingsContent(),
               ],
             ),
           ),

@@ -14,7 +14,6 @@ class TitleLatestNews extends StatelessWidget {
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(
-          color: Color(0xFF37474F),
           fontWeight: FontWeight.bold,
           fontSize: 16,
           height: 1.4,

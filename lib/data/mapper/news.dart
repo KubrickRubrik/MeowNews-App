@@ -1,5 +1,5 @@
-import 'package:news_test/data/models/vo/item_news.dart';
-import 'package:news_test/data/models/vo/news.dart';
+import 'package:news_test/data/models/item_news.dart';
+import 'package:news_test/data/models/news.dart';
 import 'package:news_test/domain/entities/vo/item_news.dart';
 import 'package:news_test/domain/entities/vo/news.dart';
 

@@ -16,21 +16,19 @@ class SectionSortBy extends StatelessWidget {
           context.read<NewsProvider>().setDisplayNewsBar(TargetSettingsNewsBar.setSort);
         },
         child: Center(
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: Selector<NewsProvider, AvailableNewsSorting>(
-              selector: (_, Model) => Model.pageData.newsSearchBar.options.sortOptions,
-              builder: (_, option, __) {
-                return Text(
-                  prepareTitleOptions(context, option),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                );
-              },
-            ),
+          child: Selector<NewsProvider, AvailableNewsSorting>(
+            selector: (_, Model) => Model.pageData.newsSearchBar.options.sortOptions,
+            builder: (_, option, __) {
+              return Text(
+                prepareTitleOptions(context, option),
+                style: const TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              );
+            },
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/content.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/news_bar/settings/settings.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/not_available/content.dart';
@@ -29,9 +30,9 @@ class SectionFeaturedNews extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 4),
             padding: const EdgeInsets.symmetric(horizontal: 4),
             constraints: const BoxConstraints(maxWidth: 600),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: context.theme.scaffoldBackgroundColor,
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(8),
                 bottomRight: Radius.circular(8),
               ),

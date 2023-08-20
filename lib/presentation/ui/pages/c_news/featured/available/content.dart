@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/manager/pages/news/provider.dart';
+import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:news_test/presentation/ui/components/indicator.dart';
 import 'package:news_test/presentation/ui/pages/c_news/featured/available/item.dart';
 import 'package:provider/provider.dart';
@@ -57,8 +58,8 @@ class _AvailableFeatureContentState extends State<AvailableFeatureContent> {
               return SizedBox(
                   width: 56,
                   child: switch (model.status) {
-                    StatusContent.isLoadContent => const ProgerssIndicator(
-                        color: 0xFF0B38C0,
+                    StatusContent.isLoadContent => ProgerssIndicator(
+                        color: context.theme.indicatorColor,
                         padding: 0,
                       ),
                     _ => const SizedBox.shrink(),
