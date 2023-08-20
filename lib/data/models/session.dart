@@ -1,4 +1,3 @@
-import 'package:news_test/core/config/entity.dart';
 
 final class SessionModel {
   final String theme;

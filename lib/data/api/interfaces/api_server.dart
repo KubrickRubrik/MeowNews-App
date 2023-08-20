@@ -1,4 +1,3 @@
-import 'package:news_test/data/models/news_bar.dart';
 import 'package:news_test/domain/entities/interfaces/server_dto.dart';
 import 'package:news_test/data/models/item_news.dart';
 import 'package:news_test/data/models/news.dart';
