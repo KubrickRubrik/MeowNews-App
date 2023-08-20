@@ -34,7 +34,7 @@ class _ItemOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.read<NewsProvider>().setLanguageOptions(option);
+        context.read<NewsProvider>().setNewsBarOptions(language: option);
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8),

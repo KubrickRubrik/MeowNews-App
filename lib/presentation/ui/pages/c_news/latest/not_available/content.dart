@@ -14,7 +14,12 @@ class NotAvailableLatestContent extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             constraints: const BoxConstraints(maxWidth: 600),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: Column(
               children: [
                 //? Image

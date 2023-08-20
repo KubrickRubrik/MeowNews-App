@@ -19,6 +19,12 @@ final class NewsSearchBar {
     }
   }
 
+  // Set settings NewsSearchBar
+  void setOptions({required String? languageOptions, required String? sortOptions}) {
+    if (languageOptions != null) options.languageOptions = options.getAvailableLanguage(languageOptions);
+    if (sortOptions != null) options.sortOptions = options.getAvailableSort(sortOptions);
+  }
+
   // Setting the news search word.
   void setSearchWord(String val) {
     options.wordOptions = val;
@@ -45,4 +51,21 @@ final class _SearchOptions {
 
   // Getting the search word.
   String get getSearchWord => wordOptions.isEmpty ? 'IT' : wordOptions;
+
+  // Setting the news language.
+  AvailableNewsLanguages getAvailableLanguage(String locale) {
+    return switch (locale) {
+      'ru' => AvailableNewsLanguages.ru,
+      _ => AvailableNewsLanguages.en,
+    };
+  }
+
+  // Setting the type of news sorting.
+  AvailableNewsSorting getAvailableSort(String sort) {
+    return switch (sort) {
+      'popularity' => AvailableNewsSorting.popularity,
+      'relevancy' => AvailableNewsSorting.relevancy,
+      _ => AvailableNewsSorting.publishedAt,
+    };
+  }
 }

@@ -67,7 +67,7 @@ class _ButtonUpdateSearch extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          context.read<NewsProvider>().getInitNews();
+          context.read<NewsProvider>().getNews();
         },
         child: const Center(
           child: Icon(

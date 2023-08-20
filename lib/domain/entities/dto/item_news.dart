@@ -1,7 +1,7 @@
 import 'package:news_test/core/config/entity.dart';
-import 'package:news_test/domain/entities/interfaces/dto.dart';
+import 'package:news_test/domain/entities/interfaces/server_dto.dart';
 
-final class ItemNewsDTO extends Dto<String> {
+final class ItemNewsDTO extends ServerDTO<String> {
   final String? idSource;
   final TargetNews target;
   final int index;

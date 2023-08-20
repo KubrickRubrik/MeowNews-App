@@ -1,18 +1,18 @@
 import 'package:news_test/core/errors/exception.dart';
 import 'package:news_test/core/errors/failure.dart';
-import 'package:news_test/data/api/interfaces/api.dart';
+import 'package:news_test/data/api/interfaces/api_server.dart';
 import 'package:news_test/data/mapper/news.dart';
-import 'package:news_test/domain/entities/interfaces/dto.dart';
+import 'package:news_test/domain/entities/interfaces/server_dto.dart';
 import 'package:news_test/domain/entities/vo/item_news.dart';
 import 'package:news_test/domain/repository/item_news.dart';
 
 /// Description of implements ItemNewsRepositoryImpl.
 class ItemNewsRepositoryImpl implements ItemNewsRepository {
   ItemNewsRepositoryImpl(this._apiEnvelope);
-  final ApiEnvelope _apiEnvelope;
+  final ServerApiRepository _apiEnvelope;
 
   @override
-  Future<({ItemNewsEntity? data, Failure? fail})> getItemNews(Dto dto) async {
+  Future<({ItemNewsEntity? data, Failure? fail})> getItemNews(ServerDTO dto) async {
     try {
       //?
       final response = await _apiEnvelope.getItemNews(dto);

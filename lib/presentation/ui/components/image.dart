@@ -47,14 +47,7 @@ class _ComponentImageState extends State<ComponentImage> with AutomaticKeepAlive
   Widget build(BuildContext context) {
     return switch (imageBytes) {
       null => Image.asset(widget.asset),
-      _ => FadeInImage(
-          placeholder: AssetImage(widget.asset),
-          image: MemoryImage(imageBytes!),
-          fit: BoxFit.cover,
-          imageErrorBuilder: (context, error, stackTrace) {
-            return Image.asset(widget.asset);
-          },
-        ),
+      _ => _Banner(imageBytes!),
     };
   }
 
@@ -86,5 +79,42 @@ class _ComponentImageState extends State<ComponentImage> with AutomaticKeepAlive
       }
     }
     return true;
+  }
+}
+
+class _Banner extends StatefulWidget {
+  const _Banner(this.imageBytes);
+  final Uint8List imageBytes;
+
+  @override
+  State<_Banner> createState() => _BannerState();
+}
+
+class _BannerState extends State<_Banner> {
+  bool isDisplay = false;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (mounted) {
+        isDisplay = true;
+        setState(() {});
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      duration: const Duration(seconds: 1),
+      curve: Curves.ease,
+      opacity: (isDisplay) ? 1 : 0,
+      child: Image.memory(
+        widget.imageBytes,
+        fit: BoxFit.cover,
+      ),
+    );
   }
 }

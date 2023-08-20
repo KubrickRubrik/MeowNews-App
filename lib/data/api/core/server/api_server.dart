@@ -3,22 +3,22 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:news_test/core/errors/exception.dart';
 import 'package:news_test/data/api/core/server/request/request.dart';
-import 'package:news_test/data/api/interfaces/api.dart';
-import 'package:news_test/domain/entities/interfaces/dto.dart';
-import 'package:news_test/data/models/vo/item_news.dart';
-import 'package:news_test/data/models/vo/news.dart';
+import 'package:news_test/data/api/interfaces/api_server.dart';
+import 'package:news_test/domain/entities/interfaces/server_dto.dart';
+import 'package:news_test/data/models/item_news.dart';
+import 'package:news_test/data/models/news.dart';
 import 'package:news_test/domain/entities/dto/item_news.dart';
 import 'package:news_test/domain/entities/dto/news.dart';
 import 'package:news_test/domain/entities/dto/viewed.dart';
 
 /// Description ApiServer.
-class ApiServer with _AdditionAction implements ApiEnvelope {
+class ServerApi with _AdditionAction implements ServerApiRepository {
   final apiServer = http.Client();
 
   @override
-  Future<({List<NewsModel>? featuredNews, List<NewsModel>? latestNews})> getInitNews({
-    required Dto featuredNews,
-    required Dto latestNews,
+  Future<({List<NewsModel>? featuredNews, List<NewsModel>? latestNews})> getNews({
+    required ServerDTO featuredNews,
+    required ServerDTO latestNews,
   }) async {
     final featuredQueryString = (featuredNews as NewsDTO).getDataRequest();
     final latestQueryString = (latestNews as NewsDTO).getDataRequest();
@@ -34,7 +34,7 @@ class ApiServer with _AdditionAction implements ApiEnvelope {
   }
 
   @override
-  Future<List<NewsModel>?> getMoreNews(Dto dto) async {
+  Future<List<NewsModel>?> getMoreNews(ServerDTO dto) async {
     final queryString = (dto as NewsDTO).getDataRequest();
     //? Get featured news.
     final response = await ConfigRequestServer.request(apiServer, query: queryString);
@@ -47,7 +47,7 @@ class ApiServer with _AdditionAction implements ApiEnvelope {
   }
 
   @override
-  Future<List<String>?> setViewedNews(Dto dto) async {
+  Future<List<String>?> setViewedNews(ServerDTO dto) async {
     // The news source API does not have an implementation of
     // setting the news status to "viewed".
     //
@@ -66,7 +66,7 @@ class ApiServer with _AdditionAction implements ApiEnvelope {
   }
 
   @override
-  Future<ItemNewsModel?> getItemNews(Dto dto) async {
+  Future<ItemNewsModel?> getItemNews(ServerDTO dto) async {
     final request = (dto as ItemNewsDTO).getDataRequest();
     //? Get featured news.
     final response = await ConfigRequestServer.request(apiServer, query: request);
