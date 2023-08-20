@@ -1,23 +1,22 @@
 {
     "titleApp": "MeowNews",
     "titleNewsPage": "MeowNews",
-    "titleNewsDetailPage":"Meow, reading...",
-
-   "newsNotFound": "Oops, news not found...",
-   "whereIsNews": "Meow, where's my news?",
-
-   "newsUnavailableMessage":"Meow, news????",
-   
-   "viewNewsUnavailableToast":"View news unavailable",
-   "newsUnavailableToast":"No news available?\r\nTry running a new search",
-   "actionViewedToast":"The news is all marked as viewed",
-   "actionNotViewedToast":"Failed to mark news as viewed",
-   "allViewedToast":"All news already read",
-
-   "sortRelevance":"Relevance",
-   "sortPopularity":"Popularity",
-   "sortLast":"Last news"
+    "titleNewsDetailPage": "Meow, reading...",
+    "newsNotFound": "Oops, news not found...",
+    "whereIsNews": "Meow, where's my news?",
+    "newsUnavailableMessage": "Meow, news????",
+    "viewNewsUnavailableToast": "View news unavailable",
+    "newsUnavailableToast": "No news available?\r\nTry running a new search",
+    "actionViewedToast": "The news is all marked as viewed",
+    "actionNotViewedToast": "Failed to mark news as viewed",
+    "allViewedToast": "All news already read",
+    "sortRelevance": "Relevance",
+    "sortPopularity": "Popularity",
+    "sortLast": "Last news",
+    "themeSettings": "App theme",
+    "themeSettingsLight": "Light",
+    "themeSettingsDark": "Dark",
+    "languageSettings": "Language",
+    "infoSettings": "Information",
+    "infoSettingsDescription": "Sometimes my cat looks\r\nat me, as if saying:\r\n\r\n\"Here I am - a cat.\r\n\r\nAnd what have you\r\nachieved in life?\""
 }
-
-
-

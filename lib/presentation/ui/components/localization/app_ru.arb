@@ -1,22 +1,22 @@
 {
     "titleApp": "MeowNews",
     "titleNewsPage": "МяуНовости",
-    "titleNewsDetailPage":"Мяу, почитаем...",
-
-   "newsNotFound": "Упс, новости не найдено...",
-   "whereIsNews": "Мяу, где мои новости?",
-
-   "newsUnavailableMessage":"Мяу, новости????",
-   
-   "viewNewsUnavailableToast":"Просмотр новостей недоступен",
-   "newsUnavailableToast":"Новости недоступны?\r\nПопробуйте выполнить новый поиск",
-   "actionViewedToast":"Все новости отмечены\r\nкак просмотренные",
-   "actionNotViewedToast":"Не удалось отметить новости\r\nкак просмотренные",
-   "allViewedToast":"Все новости уже прочитаны",
-
-   "sortRelevance":"По релевантности",
-   "sortPopularity":"По популярности",
-   "sortLast":"Последнее"
+    "titleNewsDetailPage": "Мяу, почитаем...",
+    "newsNotFound": "Упс, новости не найдено...",
+    "whereIsNews": "Мяу, где мои новости?",
+    "newsUnavailableMessage": "Мяу, новости????",
+    "viewNewsUnavailableToast": "Просмотр новостей недоступен",
+    "newsUnavailableToast": "Новости недоступны?\r\nПопробуйте выполнить новый поиск",
+    "actionViewedToast": "Все новости отмечены\r\nкак просмотренные",
+    "actionNotViewedToast": "Не удалось отметить новости\r\nкак просмотренные",
+    "allViewedToast": "Все новости уже прочитаны",
+    "sortRelevance": "По релевантности",
+    "sortPopularity": "По популярности",
+    "sortLast": "Последнее",
+    "themeSettings": "Тема приложения",
+    "themeSettingsLight": "Светлая",
+    "themeSettingsDark": "Темная",
+    "languageSettings": "Язык",
+    "infoSettings": "Информация",
+    "infoSettingsDescription": "Иногда мой кот\r\nсмотрит на меня,\r\nкак бы говоря:\r\n\r\n\"Вот я - кот.\r\n\r\nА чего в жизни\r\nдобился ты?\""
 }
-
-

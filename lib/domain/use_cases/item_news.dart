@@ -1,5 +1,5 @@
 import 'package:news_test/core/errors/failure.dart';
-import 'package:news_test/domain/entities/interfaces/dto.dart';
+import 'package:news_test/domain/entities/interfaces/server_dto.dart';
 import 'package:news_test/domain/entities/vo/item_news.dart';
 import 'package:news_test/domain/repository/item_news.dart';
 import 'package:news_test/presentation/locator/locator.dart';
@@ -11,7 +11,7 @@ class ItemNewsCase implements ItemNewsRepository {
   final ItemNewsRepository _itemNewsRepository;
 
   @override
-  Future<({ItemNewsEntity? data, Failure? fail})> getItemNews(Dto dto) async {
+  Future<({ItemNewsEntity? data, Failure? fail})> getItemNews(ServerDTO dto) async {
     final response = await _itemNewsRepository.getItemNews(dto);
     // return response;
     //! Little trick - `response` will always be null, since the data
@@ -22,7 +22,7 @@ class ItemNewsCase implements ItemNewsRepository {
 
   // Little trick: the [ItemNewsEntity] object of the detailed view of the news
   // is created from the [NewsEntity] object of the list of [NewsProvider].
-  ItemNewsEntity? _useLittleTrick(Dto dto) {
+  ItemNewsEntity? _useLittleTrick(ServerDTO dto) {
     final response2 = locator<NewsProvider>().pageData.useLittleTrick(dto);
     if (response2 == null) return null;
     return ItemNewsEntity(

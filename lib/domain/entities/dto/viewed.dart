@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:news_test/domain/entities/interfaces/dto.dart';
+import 'package:news_test/domain/entities/interfaces/server_dto.dart';
 
-final class ViewedNewsDTO extends Dto<String> {
+final class ViewedNewsDTO extends ServerDTO<String> {
   final List<String> listIdNews;
   ViewedNewsDTO(this.listIdNews);
 

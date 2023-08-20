@@ -1,22 +1,22 @@
 import 'package:news_test/core/errors/exception.dart';
 import 'package:news_test/core/errors/failure.dart';
-import 'package:news_test/data/api/interfaces/api.dart';
+import 'package:news_test/data/api/interfaces/api_server.dart';
 import 'package:news_test/data/mapper/news.dart';
-import 'package:news_test/domain/entities/interfaces/dto.dart';
-import 'package:news_test/data/models/vo/news.dart';
+import 'package:news_test/domain/entities/interfaces/server_dto.dart';
+import 'package:news_test/data/models/news.dart';
 import 'package:news_test/domain/entities/vo/news.dart';
 import 'package:news_test/domain/entities/vo/news_set.dart';
 import 'package:news_test/domain/repository/news.dart';
 
 /// Description of implements NewsRepository.
 class NewsRepositoryImpl implements NewsRepository {
-  NewsRepositoryImpl(this._apiEnvelope);
-  final ApiEnvelope _apiEnvelope;
+  NewsRepositoryImpl(this._serverApi);
+  final ServerApiRepository _serverApi;
 
   @override
-  Future<({NewsSet? data, Failure? fail})> getInitNews({required Dto featuredNews, required Dto latestNews}) async {
+  Future<({NewsSet? data, Failure? fail})> getNews({required ServerDTO featuredNews, required ServerDTO latestNews}) async {
     try {
-      final response = await _apiEnvelope.getInitNews(featuredNews: featuredNews, latestNews: latestNews);
+      final response = await _serverApi.getNews(featuredNews: featuredNews, latestNews: latestNews);
       //?
       final resFeaturedNews = _prepareResponse(response.featuredNews);
       final resLatestNews = _prepareResponse(response.latestNews);
@@ -33,9 +33,9 @@ class NewsRepositoryImpl implements NewsRepository {
   }
 
   @override
-  Future<({List<NewsEntity>? data, Failure? fail})> getMoreNews(Dto dto) async {
+  Future<({List<NewsEntity>? data, Failure? fail})> getMoreNews(ServerDTO dto) async {
     try {
-      final response = await _apiEnvelope.getMoreNews(dto);
+      final response = await _serverApi.getMoreNews(dto);
       //?
       final result = _prepareResponse(response);
       //? Parsing
@@ -48,9 +48,9 @@ class NewsRepositoryImpl implements NewsRepository {
   }
 
   @override
-  Future<({List<String>? data, Failure? fail})> setViewedNews(Dto dto) async {
+  Future<({List<String>? data, Failure? fail})> setViewedNews(ServerDTO dto) async {
     try {
-      final response = await _apiEnvelope.setViewedNews(dto);
+      final response = await _serverApi.setViewedNews(dto);
       //? Parsing
       return (data: response, fail: null);
     } on ApiException catch (e) {

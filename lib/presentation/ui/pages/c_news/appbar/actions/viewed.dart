@@ -7,8 +7,8 @@ import 'package:news_test/presentation/ui/components/indicator.dart';
 import 'package:news_test/presentation/ui/components/toast.dart';
 import 'package:provider/provider.dart';
 
-class ButtonettingViewedNews extends StatelessWidget {
-  const ButtonettingViewedNews({super.key});
+class ButtonSetViewedNews extends StatelessWidget {
+  const ButtonSetViewedNews({super.key});
 
   @override
   Widget build(BuildContext context) {
