@@ -9,14 +9,18 @@ class NotAvailableFeaturedContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
         //? Image
-        Center(
-          child: InkWell(
-            onTap: () {
-              ToastMassage.toast(context, context.lcz.viewNewsUnavailableToast);
-            },
-            child: Image.asset(ImagesApp.image2),
+        InkWell(
+          onTap: () {
+            ToastMassage.toast(context, context.lcz.viewNewsUnavailableToast);
+          },
+          child: DecoratedBox(
+            decoration: const BoxDecoration(color: Colors.white),
+            child: Image.asset(
+              ImagesApp.image2,
+            ),
           ),
         ),
         //? Message

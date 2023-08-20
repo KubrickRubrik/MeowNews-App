@@ -58,7 +58,6 @@ class _ItemHeader extends StatelessWidget {
               alignment: Alignment.center,
               child: const Icon(
                 IconsApp.sort,
-                color: Color(0xFF745291),
                 size: 22,
               ),
             ),
@@ -100,8 +99,14 @@ class _ItemBody extends StatelessWidget {
                     child: Center(
                       child: Icon(
                         IconsApp.favorite,
-                        color: (theme == e.key) ? const Color(0xFF00C110) : const Color(0xFF97ADB9),
+                        color: (theme == e.key) ? const Color(0xFF00FF15) : const Color(0xFF97ADB9),
                         size: 18,
+                        shadows: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0, 0.5),
+                          ),
+                        ],
                       ),
                     ),
                   ),

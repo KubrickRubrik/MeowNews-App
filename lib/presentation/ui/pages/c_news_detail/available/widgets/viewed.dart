@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/presentation/manager/pages/news_item/provider.dart';
+import 'package:news_test/presentation/ui/components/extensions/econtext.dart';
 import 'package:provider/provider.dart';
 
 class IsViewedItemNews extends StatelessWidget {
@@ -57,9 +58,9 @@ class _ViewedMessageState extends State<_ViewedMessage> {
         ],
       ),
       alignment: Alignment.center,
-      child: const Text(
-        "Вы уже читали эту новость",
-        style: TextStyle(
+      child: Text(
+        context.lcz.alreadySeenNews,
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 14,
           letterSpacing: 1.2,

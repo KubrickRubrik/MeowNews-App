@@ -54,7 +54,6 @@ class _ItemHeader extends StatelessWidget {
               alignment: Alignment.center,
               child: const Icon(
                 IconsApp.info,
-                color: Color(0xFF745291),
                 size: 22,
               ),
             ),

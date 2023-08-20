@@ -37,7 +37,6 @@ class _StartPageState extends State<StartPage> {
       child: Selector<SessionProvider, ({AvailableAppLocale locale, CurrentThemeApp theme})>(
         selector: (_, Model) => (locale: Model.session.settings.locale, theme: Model.session.settings.theme),
         builder: (_, model, __) {
-          print(model.locale);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             //? Installing a theme
