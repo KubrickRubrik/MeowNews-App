@@ -39,7 +39,7 @@ class _ItemOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.read<NewsProvider>().setSortOptions(option);
+        context.read<NewsProvider>().setNewsBarOptions(sort: option);
       },
       child: Container(
         padding: EdgeInsets.only(top: size / 2 - 10, left: 20, right: 20),

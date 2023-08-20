@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/core/errors/failure.dart';
-import 'package:news_test/domain/entities/interfaces/dto.dart';
+import 'package:news_test/domain/entities/dto/news_bar.dart';
+import 'package:news_test/domain/entities/interfaces/server_dto.dart';
 import 'package:news_test/domain/entities/dto/item_news.dart';
 import 'package:news_test/domain/entities/dto/news.dart';
 import 'package:news_test/domain/entities/dto/viewed.dart';
@@ -21,8 +22,22 @@ final class NewsProvider extends ChangeNotifier with _State {
   final NewsCase _newsCase;
   final ItemNewsCase _itemNewsCase;
 
+  /// Initialization of news section parameters.
+  Future<void> initNews() async {
+    //?  Get data for NewsSearchBar.
+    final response = await _newsCase.getNewsBarData();
+    //? Checking for failure.
+    if (response.fail != null) {
+      print(response.fail!.msg);
+    } else if (response.data != null) {
+      pageData.newsSearchBar.setOptions(languageOptions: response.data!.languageOptions, sortOptions: response.data!.sortOptions);
+    }
+    //? Get news.
+    await getNews();
+  }
+
   /// Getting featured and latest news.
-  Future<void> getInitNews() async {
+  Future<void> getNews() async {
     //? Launchability check
     if (actionStatus == ActionStatus.isAction) return;
     _setActionsPage(ActionStatus.isAction);
@@ -54,7 +69,7 @@ final class NewsProvider extends ChangeNotifier with _State {
     //? Request.
     status._setAll(StatusSection.isLoadContent);
     notifyListeners(); // to display the loading screen.
-    final response = await _newsCase.getInitNews(featuredNews: featuredNewsDTO, latestNews: latestNewsDTO);
+    final response = await _newsCase.getNews(featuredNews: featuredNewsDTO, latestNews: latestNewsDTO);
     _setActionsPage(ActionStatus.isDone);
     //? Checking for failure.
     if (_isFail(response.fail)) {
@@ -289,16 +304,27 @@ final class NewsProvider extends ChangeNotifier with _State {
   }
 
   /// Setting the news search language.
-  void setLanguageOptions(AvailableNewsLanguages val) {
-    pageData.newsSearchBar._setStatusOpen(null);
-    pageData.newsSearchBar.setLanguageOptions(val);
-    notifyListeners();
-  }
-
   /// Setting the type of news search sorting.
-  void setSortOptions(AvailableNewsSorting val) {
+  void setNewsBarOptions({AvailableNewsLanguages? language, AvailableNewsSorting? sort}) async {
+    if (language == null && sort == null) return;
+    if (language == pageData.newsSearchBar.options.languageOptions || sort == pageData.newsSearchBar.options.sortOptions) return;
+    //? Launchability check
+    if (actionStatus == ActionStatus.isAction) return;
+    _setActionsPage(ActionStatus.isAction);
+    //? Formation of request parameters.
+    final dto = NewsBarDTO(languageOptions: language?.name, sortOptions: sort?.name);
+    //? Request
+    final response = await _newsCase.setNewsBarOptions(dto);
+    _setActionsPage(ActionStatus.isDone);
+    //? Checking for failure.
+    if (response.fail != null || response.data == null) {
+      print(response.fail?.msg);
+      return;
+    }
+    //? Check correct data
+    if (!response.data!) return;
     pageData.newsSearchBar._setStatusOpen(null);
-    pageData.newsSearchBar.setSortOptions(val);
+    pageData.newsSearchBar.setOptions(languageOptions: dto.languageOptions, sortOptions: dto.sortOptions);
     notifyListeners();
   }
 }

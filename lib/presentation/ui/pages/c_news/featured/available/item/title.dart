@@ -41,7 +41,7 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
           ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 36),
               child: Text(
                 news.content.title,
                 maxLines: 3,
@@ -76,7 +76,7 @@ class _TitleFeaturedNewsState extends State<TitleFeaturedNews> {
       context.read<NewsProvider>().setNewsViewedStatus([itemNews.source.id]);
       Navigator.pushNamed(context, PagesNavigator.newsDetailRoute);
       isDisplayTitle = false;
-      setState(() {});
+      if (mounted) setState(() {});
     });
   }
 }

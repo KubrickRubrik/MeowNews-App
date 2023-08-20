@@ -1,7 +1,7 @@
 import 'package:news_test/core/config/entity.dart';
-import 'package:news_test/domain/entities/interfaces/dto.dart';
+import 'package:news_test/domain/entities/interfaces/server_dto.dart';
 
-final class NewsDTO extends Dto<String> {
+final class NewsDTO extends ServerDTO<String> {
   final String? searchWord;
   final TargetNews target;
   final int page;

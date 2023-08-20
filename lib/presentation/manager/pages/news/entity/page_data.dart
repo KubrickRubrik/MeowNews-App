@@ -61,7 +61,7 @@ final class _PageData {
   }
 
   // Little trick to get news data in [ItemNewsProvider].
-  NewsEntity? useLittleTrick(Dto dto) {
+  NewsEntity? useLittleTrick(ServerDTO dto) {
     (dto as ItemNewsDTO);
     try {
       return switch (dto.target) {
@@ -72,5 +72,4 @@ final class _PageData {
       return null;
     }
   }
-
 }
