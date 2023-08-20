@@ -16,7 +16,10 @@ final class ConfigRequestServer {
   // Makes a request to the server.
   static Future<Map<String, dynamic>?> request(Client api, {required String query}) async {
     final request = Uri.parse(_formDataObject(query));
-    final response = await api.get(request);
+    final response = await api.get(request, headers: {
+      "Accept": "application/json",
+    });
+    print(response);
     _checkResponse(response);
     return jsonDecode(response.body);
   }

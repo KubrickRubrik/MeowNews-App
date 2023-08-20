@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:news_test/core/config/entity.dart';
 import 'package:news_test/presentation/locator/locator.dart';
@@ -62,8 +63,12 @@ class _StartPageState extends State<StartPage> {
 
 // Adding a mouse gesture handler for desktop platforms.
 ScrollBehavior? _checksPlatform() {
-  if (Platform.isAndroid || Platform.isIOS) return null;
-  return _AppScrollBehavior();
+  if (kIsWeb) {
+    return _AppScrollBehavior();
+  } else {
+    if (Platform.isAndroid || Platform.isIOS) return null;
+    return _AppScrollBehavior();
+  }
 }
 
 class _AppScrollBehavior extends MaterialScrollBehavior {
